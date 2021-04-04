@@ -22,7 +22,6 @@ import java.util.List;
 
 public class ViewTopics extends AppCompatActivity {
 
-    private RecyclerView recyclerviewTopics;
     private FloatingActionButton fabtnAdd;
 
     private AppDatabase db;
@@ -40,7 +39,7 @@ public class ViewTopics extends AppCompatActivity {
         this.getSupportActionBar().setTitle(null);
         this.getSupportActionBar().setSubtitle(R.string.topics);
 
-        recyclerviewTopics = findViewById(R.id.recyclerview_topics);
+        RecyclerView recyclerviewTopics = findViewById(R.id.recyclerview_topics);
         fabtnAdd = findViewById(R.id.fabtn_add);
 
         fabtnAdd.setOnClickListener((view) -> {
@@ -52,7 +51,7 @@ public class ViewTopics extends AppCompatActivity {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
                 3, StaggeredGridLayoutManager.VERTICAL
         );
-        this.recyclerviewTopics.setLayoutManager(layoutManager);
+        recyclerviewTopics.setLayoutManager(layoutManager);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),

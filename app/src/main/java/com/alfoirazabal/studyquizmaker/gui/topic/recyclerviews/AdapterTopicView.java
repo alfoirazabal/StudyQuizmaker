@@ -24,7 +24,7 @@ import java.util.List;
 
 public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.ViewHolder> {
 
-    private List<Topic> topics;
+    private final List<Topic> topics;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtSubjectName;
@@ -36,29 +36,28 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
             txtSubjectName = view.findViewById(R.id.txt_topic_name);
             txtSubjectDescription = view.findViewById(R.id.txt_topic_description);
 
-            view.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(view.getContext(), txtSubjectName);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        popupMenu.setForceShowIcon(true);
-                    }
-                    popupMenu.inflate(R.menu.menu_topic);
-                    popupMenu.show();
-                    popupMenu.setOnMenuItemClickListener((menuItem) -> {
-                        switch (menuItem.getItemId()) {
-                            case R.id.item_edit:
-                                handleEdit();
-                                return true;
-                            case R.id.item_delete:
-                                handleDelete();
-                                return true;
-                            default:
-                                return false;
-                        }
-                    });
-                    return false;
+            view.setOnLongClickListener(v -> {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), txtSubjectName);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    popupMenu.setForceShowIcon(true);
                 }
+                popupMenu.inflate(R.menu.menu_topic);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener((menuItem) -> {
+                    int menuItemId = menuItem.getItemId();
+                    if (menuItemId == R.id.item_edit) {
+                        handleEdit();
+                        return true;
+                    }
+                    else if (menuItemId == R.id.item_delete) {
+                        handleDelete();
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+                return false;
             });
 
         }

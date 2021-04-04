@@ -45,23 +45,23 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                 popupMenu.inflate(R.menu.menu_subject);
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
-                    switch (menuItem.getItemId()) {
-                        case R.id.item_edit:
-                            handleEdit();
-                            return true;
-                        case R.id.item_delete:
-                            handleDelete();
-                            return true;
-                        default:
-                            return false;
+                    int menuItemId = menuItem.getItemId();
+                    if (menuItemId == R.id.item_edit) {
+                        handleEdit();
+                        return true;
+                    }
+                    else if (menuItemId == R.id.item_delete) {
+                        handleDelete();
+                        return true;
+                    }
+                    else {
+                        return false;
                     }
                 });
                 return false;
             });
 
-            view.setOnClickListener(v -> {
-                handleViewTopics();
-            });
+            view.setOnClickListener(v -> handleViewTopics());
         }
 
         private void handleEdit() {
