@@ -1,5 +1,8 @@
 package com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
+import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 
 import java.util.List;
@@ -42,7 +48,7 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                             // TODO
                             return true;
                         case R.id.item_delete:
-                            // TODO
+                            handleDelete();
                             return true;
                         default:
                             return false;
@@ -50,6 +56,33 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                 });
                 return false;
             });
+        }
+
+        public void handleDelete() {
+            int subjectPosition = getAdapterPosition();
+            Subject subject = subjects.get(subjectPosition);
+            Context context = itemView.getContext();
+            String subjectDeletionDescription =
+                    context.getString(R.string.msg_delete_confirmation_subject) + "\n" +
+                    subject.toString(context);
+            new AlertDialog.Builder(itemView.getContext())
+                    .setTitle(context.getString(R.string.delete_confirmation))
+                    .setMessage(subjectDeletionDescription)
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> {
+                        new Thread(() -> {
+                            AppDatabase db = Room.databaseBuilder(
+                                    itemView.getContext(),
+                                    AppDatabase.class,
+                                    AppConstants.DATABASE_LOCATION
+                            ).build();
+                            db.subjectDAO().delete(subject);
+                        }).start();
+                        subjects.remove(subject);
+                        notifyItemRangeRemoved(subjectPosition, subjects.size());
+                    })
+                    .setNegativeButton(context.getString(R.string.no), null)
+                    .show();
         }
 
         public TextView getTxtSubjectName() {

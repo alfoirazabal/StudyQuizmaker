@@ -9,4 +9,9 @@
     <string name="subject_name_exists_already">El nombre de la asignatura ya existe</string>
     <string name="delete">Borrar</string>
     <string name="edit">Editar</string>
+    <string name="delete_confirmation">Confirmación de borrado</string>
+    <string name="msg_delete_confirmation_subject">¿Seguro de que desea borrar la siguiente asignatura?</string>
+    <string name="name">Nombre</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
 </resources>

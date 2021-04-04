@@ -8,4 +8,9 @@
     <string name="subject_name_exists_already">Subject name exists already</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="delete_confirmation">Delete confirmation</string>
+    <string name="msg_delete_confirmation_subject">Are you sure you want to delete the following subject?</string>
+    <string name="name">Name</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
