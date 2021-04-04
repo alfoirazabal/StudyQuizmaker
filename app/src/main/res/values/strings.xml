@@ -14,4 +14,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="update">Update</string>
+    <string name="topics">Topics</string>
+    <string name="topic">Topic</string>
+    <string name="subjects">Subjects</string>
 </resources>

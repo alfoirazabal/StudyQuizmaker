@@ -22,6 +22,9 @@ public interface TopicDAO {
     @Query("SELECT * FROM topic WHERE id = :topicId")
     Topic getById(String topicId);
 
+    @Query("SELECT * FROM topic WHERE subjectId = :subjectId")
+    List<Topic> getFromSubject(String subjectId);
+
     @Update
     void update(Topic topic);
 

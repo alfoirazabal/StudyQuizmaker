@@ -35,6 +35,8 @@ public class ViewSubjects extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects_view);
 
+        getSupportActionBar().setSubtitle(R.string.subjects);
+
         initialSetting();
 
         RecyclerView recyclerviewSubjects = findViewById(R.id.recyclerview_subjects);

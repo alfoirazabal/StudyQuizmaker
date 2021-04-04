@@ -15,4 +15,7 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="update">Actualizar</string>
+    <string name="topics">Temas</string>
+    <string name="topic">Tema</string>
+    <string name="subjects">Asignaturas</string>
 </resources>

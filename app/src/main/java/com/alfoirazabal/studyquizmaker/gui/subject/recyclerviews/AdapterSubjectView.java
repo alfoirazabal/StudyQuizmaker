@@ -19,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.gui.subject.UpdateSubject;
+import com.alfoirazabal.studyquizmaker.gui.topic.ViewTopics;
 
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                 });
                 return false;
             });
+
+            view.setOnClickListener(v -> {
+                handleViewTopics();
+            });
         }
 
         private void handleEdit() {
@@ -93,6 +98,15 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();
+        }
+
+        private void handleViewTopics() {
+            int subjectPosition = getAdapterPosition();
+            Subject subject = subjects.get(subjectPosition);
+            Context context = itemView.getContext();
+            Intent intentViewTopics = new Intent(context, ViewTopics.class);
+            intentViewTopics.putExtra("SUBJECTID", subject.id);
+            context.startActivity(intentViewTopics);
         }
 
         public TextView getTxtSubjectName() {
