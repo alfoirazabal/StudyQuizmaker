@@ -21,4 +21,5 @@
     <string name="topic_description">Descripción del tema</string>
     <string name="msg_err_topic_name_exists_already">Ya existe otro tema con ese nombre</string>
     <string name="msg_err_subject_name_exists_already">Ya existe otra asignatura con ese nombre</string>
+    <string name="msg_delete_confirmation_topic">¿Seguro de que desea borrar el siguiente tema?</string>
 </resources>
