@@ -43,7 +43,7 @@ public class ViewSubjects extends AppCompatActivity {
         fabnAdd = findViewById(R.id.fabtn_add);
 
         StaggeredGridLayoutManager layoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         this.recyclerviewSubjects.setLayoutManager(layoutManager);
 
         fabnAdd.setOnClickListener(v -> {

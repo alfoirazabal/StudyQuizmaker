@@ -1,8 +1,10 @@
 package com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,28 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
 
             txtSubjectName = view.findViewById(R.id.txt_subject_name);
             txtSubjectDescription = view.findViewById(R.id.txt_subject_description);
+
+            view.setOnLongClickListener(v -> {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), txtSubjectName);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    popupMenu.setForceShowIcon(true);
+                }
+                popupMenu.inflate(R.menu.menu_subject);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener((menuItem) -> {
+                    switch (menuItem.getItemId()) {
+                        case R.id.item_edit:
+                            // TODO
+                            return true;
+                        case R.id.item_delete:
+                            // TODO
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                return false;
+            });
         }
 
         public TextView getTxtSubjectName() {

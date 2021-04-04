@@ -7,4 +7,6 @@
     <string name="subject_description">Descripción de la Asignatura</string>
     <string name="add">Agregar</string>
     <string name="subject_name_exists_already">El nombre de la asignatura ya existe</string>
+    <string name="delete">Borrar</string>
+    <string name="edit">Editar</string>
 </resources>
