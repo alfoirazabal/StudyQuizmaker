@@ -14,7 +14,6 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews.AdapterSubjectView;
-import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
@@ -34,6 +33,8 @@ public class ViewSubjects extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects_view);
+
+        getSupportActionBar().setSubtitle(R.string.subjects);
 
         initialSetting();
 
@@ -74,6 +75,12 @@ public class ViewSubjects extends AppCompatActivity {
     private void initialSetting() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        new File(DATABASE_PATH).mkdirs();
+        File pathToDatabase = new File(DATABASE_PATH);
+        if (!pathToDatabase.exists()) {
+            boolean directoriesCreated = pathToDatabase.mkdirs();
+            if (!directoriesCreated) {
+                throw new Error("The directories were not created!");
+            }
+        }
     }
 }
