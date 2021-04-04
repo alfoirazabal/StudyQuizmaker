@@ -10,13 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudyQuizmaker"
         android:requestLegacyExternalStorage="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".gui.subject.ViewSubjects">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".gui.subject.AddSubject" />
+        <activity android:name=".gui.subject.UpdateSubject" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
