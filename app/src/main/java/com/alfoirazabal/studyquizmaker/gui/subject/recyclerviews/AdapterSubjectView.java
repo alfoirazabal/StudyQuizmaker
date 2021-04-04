@@ -3,6 +3,7 @@ package com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
+import com.alfoirazabal.studyquizmaker.gui.subject.UpdateSubject;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
                     switch (menuItem.getItemId()) {
                         case R.id.item_edit:
-                            // TODO
+                            handleEdit();
                             return true;
                         case R.id.item_delete:
                             handleDelete();
@@ -58,7 +60,16 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
             });
         }
 
-        public void handleDelete() {
+        private void handleEdit() {
+            int subjectPosition = getAdapterPosition();
+            Subject subject = subjects.get(subjectPosition);
+            Context context = itemView.getContext();
+            Intent intentSubjectUpdate = new Intent(context, UpdateSubject.class);
+            intentSubjectUpdate.putExtra("SUBJECTID", subject.id);
+            itemView.getContext().startActivity(intentSubjectUpdate);
+        }
+
+        private void handleDelete() {
             int subjectPosition = getAdapterPosition();
             Subject subject = subjects.get(subjectPosition);
             Context context = itemView.getContext();

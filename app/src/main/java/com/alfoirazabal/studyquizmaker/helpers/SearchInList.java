@@ -21,4 +21,19 @@ public class SearchInList {
         return stringContainedInList;
     }
 
+    public boolean deleteIgnoreCase(String stringToSearchFor) {
+        Iterator<String> itStringList = (Iterator<String>) list.iterator();
+        boolean stringContainedInList = false;
+        String current = null;
+        while (!stringContainedInList && itStringList.hasNext()) {
+            current = itStringList.next();
+            stringContainedInList = current.equalsIgnoreCase(stringToSearchFor);
+        }
+        boolean stringRemoved = false;
+        if (stringContainedInList) {
+            stringRemoved = this.list.remove(current);
+        }
+        return stringRemoved;
+    }
+
 }

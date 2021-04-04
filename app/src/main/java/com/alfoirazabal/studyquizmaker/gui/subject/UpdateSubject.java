@@ -3,7 +3,6 @@ package com.alfoirazabal.studyquizmaker.gui.subject;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -20,28 +19,29 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
-public class AddSubject extends AppCompatActivity {
+public class UpdateSubject extends AppCompatActivity {
 
     private TextInputLayout txtilSubjectName;
     private TextInputLayout txtilSubjectDescription;
     private TextInputEditText txtSubjectName;
     private TextInputEditText txtSubjectDescription;
-    private Button btnAdd;
+    private Button btnUpdate;
 
     private List<String> subjectNames;
+    private Subject subject;
 
     private AppDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subject_add);
+        setContentView(R.layout.activity_subject_update);
 
         txtilSubjectName = findViewById(R.id.txtil_subject_name);
         txtilSubjectDescription = findViewById(R.id.txtil_subject_description);
         txtSubjectName = findViewById(R.id.txt_subject_name);
         txtSubjectDescription = findViewById(R.id.txt_subject_description);
-        btnAdd = findViewById(R.id.btn_add);
+        btnUpdate = findViewById(R.id.btn_update);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -50,10 +50,19 @@ public class AddSubject extends AppCompatActivity {
         ).build();
 
         new Thread(() -> {
-            subjectNames = db.subjectDAO().getAllSubjectNames();
-            btnAdd.setEnabled(true);
-            txtilSubjectDescription.setEnabled(true);
-            txtilSubjectName.setEnabled(true);
+            Bundle bundle = getIntent().getExtras();
+            String subjectId = bundle.getString("SUBJECTID");
+            this.subject = db.subjectDAO().getById(subjectId);
+            this.subjectNames = db.subjectDAO().getAllSubjectNames();
+            SearchInList searchInList = new SearchInList(this.subjectNames);
+            searchInList.deleteIgnoreCase(subject.name);
+            runOnUiThread(() -> {
+                txtSubjectName.setText(this.subject.name);
+                txtSubjectDescription.setText(this.subject.description);
+                txtilSubjectName.setEnabled(true);
+                txtilSubjectDescription.setEnabled(true);
+                btnUpdate.setEnabled(true);
+            });
         }).start();
 
         txtSubjectName.addTextChangedListener(new TextWatcher() {
@@ -63,32 +72,27 @@ public class AddSubject extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-                String currentSubjectName = s.toString();
                 SearchInList searchInList = new SearchInList(subjectNames);
-                if (searchInList.containsStringIgnoreCase(currentSubjectName)) {
-                    btnAdd.setEnabled(false);
-                    txtilSubjectName.setError(getString(R.string.msg_err_subject_name_exists_already));
+                if (searchInList.containsStringIgnoreCase(s.toString())) {
+                    txtilSubjectName.setError(getString(
+                            R.string.msg_err_subject_name_exists_already)
+                    );
+                    btnUpdate.setEnabled(false);
                 }
                 else {
-                    btnAdd.setEnabled(true);
                     txtilSubjectName.setError(null);
+                    btnUpdate.setEnabled(true);
                 }
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(() -> {
-                    Subject newSubject = new Subject();
-                    newSubject.name = txtSubjectName.getText().toString();
-                    newSubject.description = txtSubjectDescription.getText().toString();
-                    db.subjectDAO().insert(newSubject);
-                    finish();
-                }).start();
-            }
+        btnUpdate.setOnClickListener((view) -> {
+            subject.name = txtSubjectName.getText().toString();
+            subject.description = txtSubjectDescription.getText().toString();
+            new Thread(() -> {
+                db.subjectDAO().update(subject);
+                finish();
+            }).start();
         });
-
     }
-
 }

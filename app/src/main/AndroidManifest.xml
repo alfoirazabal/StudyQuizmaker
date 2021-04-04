@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".gui.subject.AddSubject" />
+        <activity android:name=".gui.subject.UpdateSubject" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
