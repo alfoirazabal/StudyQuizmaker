@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SearchInList {
 
-    private List list;
+    private final List list;
 
     public<T> SearchInList(List<T> list) {
         this.list = list;
@@ -21,7 +21,7 @@ public class SearchInList {
         return stringContainedInList;
     }
 
-    public boolean deleteIgnoreCase(String stringToSearchFor) {
+    public void deleteIgnoreCase(String stringToSearchFor) {
         Iterator<String> itStringList = (Iterator<String>) list.iterator();
         boolean stringContainedInList = false;
         String current = null;
@@ -29,11 +29,9 @@ public class SearchInList {
             current = itStringList.next();
             stringContainedInList = current.equalsIgnoreCase(stringToSearchFor);
         }
-        boolean stringRemoved = false;
         if (stringContainedInList) {
-            stringRemoved = this.list.remove(current);
+            this.list.remove(current);
         }
-        return stringRemoved;
     }
 
 }

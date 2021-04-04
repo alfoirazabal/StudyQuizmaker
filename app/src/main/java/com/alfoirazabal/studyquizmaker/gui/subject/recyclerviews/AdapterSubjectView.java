@@ -2,7 +2,6 @@ package com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ import java.util.List;
 
 public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.ViewHolder> {
 
-    private List<Subject> subjects;
+    private final List<Subject> subjects;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtSubjectName;

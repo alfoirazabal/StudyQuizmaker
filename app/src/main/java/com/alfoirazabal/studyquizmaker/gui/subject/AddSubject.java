@@ -3,7 +3,6 @@ package com.alfoirazabal.studyquizmaker.gui.subject;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -19,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AddSubject extends AppCompatActivity {
 
@@ -76,18 +76,15 @@ public class AddSubject extends AppCompatActivity {
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(() -> {
-                    Subject newSubject = new Subject();
-                    newSubject.name = txtSubjectName.getText().toString();
-                    newSubject.description = txtSubjectDescription.getText().toString();
-                    db.subjectDAO().insert(newSubject);
-                    finish();
-                }).start();
-            }
-        });
+        btnAdd.setOnClickListener(v -> new Thread(() -> {
+            Subject newSubject = new Subject();
+            newSubject.name = Objects.requireNonNull(txtSubjectName.getText()).toString();
+            newSubject.description = Objects.requireNonNull(
+                    txtSubjectDescription.getText()
+            ).toString();
+            db.subjectDAO().insert(newSubject);
+            finish();
+        }).start());
 
     }
 

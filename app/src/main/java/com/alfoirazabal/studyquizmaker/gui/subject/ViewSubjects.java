@@ -1,31 +1,29 @@
 package com.alfoirazabal.studyquizmaker.gui.subject;
 
+import android.Manifest;
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.room.Room;
 
-import android.Manifest;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.LinearLayout;
-
-import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews.AdapterSubjectView;
+import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewSubjects extends AppCompatActivity {
+import static com.alfoirazabal.studyquizmaker.AppConstants.*;
 
-    private RecyclerView recyclerviewSubjects;
-    private FloatingActionButton fabnAdd;
+public class ViewSubjects extends AppCompatActivity {
 
     private List<Subject> subjects;
     private AdapterSubjectView adapterSubject;
@@ -39,12 +37,12 @@ public class ViewSubjects extends AppCompatActivity {
 
         initialSetting();
 
-        recyclerviewSubjects = findViewById(R.id.recyclerview_subjects);
-        fabnAdd = findViewById(R.id.fabtn_add);
+        RecyclerView recyclerviewSubjects = findViewById(R.id.recyclerview_subjects);
+        FloatingActionButton fabnAdd = findViewById(R.id.fabtn_add);
 
         StaggeredGridLayoutManager layoutManager =
                 new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        this.recyclerviewSubjects.setLayoutManager(layoutManager);
+        recyclerviewSubjects.setLayoutManager(layoutManager);
 
         fabnAdd.setOnClickListener(v -> {
             Intent intentAddSubject = new Intent(ViewSubjects.this, AddSubject.class);
@@ -54,7 +52,7 @@ public class ViewSubjects extends AppCompatActivity {
         db = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
-                AppConstants.DATABASE_LOCATION
+                DATABASE_LOCATION
         ).build();
 
         subjects = new ArrayList<>();
@@ -76,6 +74,6 @@ public class ViewSubjects extends AppCompatActivity {
     private void initialSetting() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        new File(AppConstants.DATABASE_PATH).mkdirs();
+        new File(DATABASE_PATH).mkdirs();
     }
 }

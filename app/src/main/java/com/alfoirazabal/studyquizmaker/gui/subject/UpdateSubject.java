@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UpdateSubject extends AppCompatActivity {
 
@@ -87,8 +88,10 @@ public class UpdateSubject extends AppCompatActivity {
         });
 
         btnUpdate.setOnClickListener((view) -> {
-            subject.name = txtSubjectName.getText().toString();
-            subject.description = txtSubjectDescription.getText().toString();
+            subject.name = Objects.requireNonNull(txtSubjectName.getText()).toString();
+            subject.description = Objects.requireNonNull(
+                    txtSubjectDescription.getText()
+            ).toString();
             new Thread(() -> {
                 db.subjectDAO().update(subject);
                 finish();
