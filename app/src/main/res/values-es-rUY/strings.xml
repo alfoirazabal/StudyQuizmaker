@@ -3,4 +3,8 @@
     <string name="app_name">Estudio Trivia</string>
     <string name="subject">Asignatura</string>
     <string name="description">Descripción</string>
+    <string name="subject_name">Nombre de la Asignatura</string>
+    <string name="subject_description">Descripción de la Asignatura</string>
+    <string name="add">Agregar</string>
+    <string name="subject_name_exists_already">El nombre de la asignatura ya existe</string>
 </resources>

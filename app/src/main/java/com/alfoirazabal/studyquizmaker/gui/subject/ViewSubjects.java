@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.room.Room;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -46,7 +47,8 @@ public class ViewSubjects extends AppCompatActivity {
         this.recyclerviewSubjects.setLayoutManager(layoutManager);
 
         fabnAdd.setOnClickListener(v -> {
-            // TODO
+            Intent intentAddSubject = new Intent(ViewSubjects.this, AddSubject.class);
+            ViewSubjects.this.startActivity(intentAddSubject);
         });
 
         db = Room.databaseBuilder(
@@ -67,7 +69,7 @@ public class ViewSubjects extends AppCompatActivity {
         new Thread(() -> {
             subjects.clear();
             subjects.addAll(db.subjectDAO().getAll());
-            adapterSubject.notifyDataSetChanged();
+            runOnUiThread(() -> adapterSubject.notifyDataSetChanged());
         }).start();
     }
 
