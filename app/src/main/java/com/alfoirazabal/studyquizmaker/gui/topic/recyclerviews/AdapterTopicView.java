@@ -2,6 +2,7 @@ package com.alfoirazabal.studyquizmaker.gui.topic.recyclerviews;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,8 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
-import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.gui.topic.UpdateTopic;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         switch (menuItem.getItemId()) {
                             case R.id.item_edit:
-                                // TODO
+                                handleEdit();
                                 return true;
                             case R.id.item_delete:
                                 handleDelete();
@@ -60,6 +61,15 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                 }
             });
 
+        }
+
+        private void handleEdit() {
+            int topicPosition = getAdapterPosition();
+            Topic topic = topics.get(topicPosition);
+            Context context = itemView.getContext();
+            Intent intentEditTopic = new Intent(context, UpdateTopic.class);
+            intentEditTopic.putExtra("TOPICID", topic.id);
+            context.startActivity(intentEditTopic);
         }
 
         private void handleDelete() {
