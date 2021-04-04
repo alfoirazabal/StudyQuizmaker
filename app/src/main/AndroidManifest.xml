@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudyQuizmaker"
         android:requestLegacyExternalStorage="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".gui.subject.ViewSubjects">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

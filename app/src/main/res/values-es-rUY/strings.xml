@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Estudio Trivia</string>
+    <string name="subject">Asignatura</string>
+    <string name="description">Descripción</string>
+</resources>
