@@ -20,6 +20,7 @@
         <activity android:name=".gui.subject.AddSubject" />
         <activity android:name=".gui.subject.UpdateSubject" />
         <activity android:name=".gui.topic.ViewTopics" />
+        <activity android:name=".gui.topic.AddTopic" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 

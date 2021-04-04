@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.gui.topic;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.gui.topic.recyclerviews.AdapterTopicView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewTopics extends AppCompatActivity {
@@ -42,7 +44,9 @@ public class ViewTopics extends AppCompatActivity {
         fabtnAdd = findViewById(R.id.fabtn_add);
 
         fabtnAdd.setOnClickListener((view) -> {
-            // TODO
+            Intent intentAddTopic = new Intent(this, AddTopic.class);
+            intentAddTopic.putExtra("SUBJECTID", subject.id);
+            startActivity(intentAddTopic);
         });
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
@@ -56,15 +60,17 @@ public class ViewTopics extends AppCompatActivity {
                 AppConstants.DATABASE_LOCATION
         ).build();
 
+        topics = new ArrayList<>();
+        adapterTopics = new AdapterTopicView(topics);
+        recyclerviewTopics.setAdapter(adapterTopics);
+
         new Thread(() -> {
             Bundle bundle = getIntent().getExtras();
             String subjectId = bundle.getString("SUBJECTID");
             subject = db.subjectDAO().getById(subjectId);
-            topics = db.topicDAO().getFromSubject(subject.id);
-            adapterTopics = new AdapterTopicView(topics);
             runOnUiThread(() -> {
                 getSupportActionBar().setTitle(subject.name);
-                recyclerviewTopics.setAdapter(adapterTopics);
+                fabtnAdd.setEnabled(true);
             });
         }).start();
 
@@ -73,10 +79,12 @@ public class ViewTopics extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Bundle bundle = getIntent().getExtras();
+        String subjectId = bundle.getString("SUBJECTID");
         new Thread(() -> {
             topics.clear();
-            topics.addAll(db.topicDAO().getFromSubject(subject.id));
-            adapterTopics.notifyDataSetChanged();
-        });
+            topics.addAll(db.topicDAO().getFromSubject(subjectId));
+            runOnUiThread(() -> adapterTopics.notifyDataSetChanged());
+        }).start();
     }
 }
