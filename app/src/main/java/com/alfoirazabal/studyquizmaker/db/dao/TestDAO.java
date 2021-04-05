@@ -22,6 +22,9 @@ public interface TestDAO {
     @Query("SELECT * FROM test WHERE id = :testId")
     Test getById(String testId);
 
+    @Query("SELECT * FROM test WHERE topicId = :topicId")
+    List<Test> getFromTopic(String topicId);
+
     @Insert
     void insert(Test test);
 

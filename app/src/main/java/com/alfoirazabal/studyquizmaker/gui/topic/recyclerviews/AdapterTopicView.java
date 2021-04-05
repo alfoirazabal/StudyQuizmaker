@@ -18,6 +18,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.gui.test.ViewTests;
 import com.alfoirazabal.studyquizmaker.gui.topic.UpdateTopic;
 
 import java.util.List;
@@ -60,6 +61,8 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                 return false;
             });
 
+            view.setOnClickListener(v -> handleView());
+
         }
 
         private void handleEdit() {
@@ -96,6 +99,14 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();
+        }
+
+        private void handleView() {
+            int topicPosition = getAdapterPosition();
+            Topic currentTopic = topics.get(topicPosition);
+            Intent intentViewTests = new Intent(itemView.getContext(), ViewTests.class);
+            intentViewTests.putExtra("TOPICID", currentTopic.id);
+            itemView.getContext().startActivity(intentViewTests);
         }
 
         public TextView getTxtSubjectName() {
