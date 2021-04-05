@@ -86,7 +86,7 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                             AppDatabase db = Room.databaseBuilder(
                                     itemView.getContext(),
                                     AppDatabase.class,
-                                    AppConstants.DATABASE_LOCATION
+                                    AppConstants.getDBLocation(context)
                             ).build();
                             db.testDAO().delete(test);
                         }).start();
