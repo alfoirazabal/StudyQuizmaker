@@ -2,6 +2,7 @@ package com.alfoirazabal.studyquizmaker.gui.test.recyclerviews;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.gui.test.UpdateTest;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
                     int menuItemId = menuItem.getItemId();
                     if (menuItemId == R.id.item_edit) {
-                        // TODO
+                        handleEdit();
                         return true;
                     }
                     else if (menuItemId == R.id.item_delete) {
@@ -58,6 +60,14 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                 });
                 return false;
             });
+        }
+
+        private void handleEdit() {
+            int testPosition = getAdapterPosition();
+            Test test = tests.get(testPosition);
+            Intent intentUpdateTest = new Intent(itemView.getContext(), UpdateTest.class);
+            intentUpdateTest.putExtra("TESTID", test.id);
+            itemView.getContext().startActivity(intentUpdateTest);
         }
 
         private void handleDelete() {

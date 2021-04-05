@@ -24,6 +24,7 @@
         <activity android:name=".gui.topic.UpdateTopic" />
         <activity android:name=".gui.test.ViewTests" />
         <activity android:name=".gui.test.AddTest" />
+        <activity android:name=".gui.test.UpdateTest" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
