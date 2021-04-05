@@ -94,7 +94,7 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                             db.subjectDAO().delete(subject);
                         }).start();
                         subjects.remove(subject);
-                        notifyItemRangeRemoved(subjectPosition, subjects.size());
+                        notifyItemRemoved(subjectPosition);
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();

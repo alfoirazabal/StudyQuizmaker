@@ -95,7 +95,7 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                             db.topicDAO().delete(topic);
                         }).start();
                         topics.remove(topic);
-                        notifyItemRangeRemoved(topicPosition, topics.size());
+                        notifyItemRemoved(topicPosition);
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();

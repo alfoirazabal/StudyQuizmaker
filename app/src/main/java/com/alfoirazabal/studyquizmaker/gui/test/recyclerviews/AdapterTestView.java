@@ -91,7 +91,7 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                             db.testDAO().delete(test);
                         }).start();
                         tests.remove(test);
-                        notifyItemRangeRemoved(testPosition, tests.size());
+                        notifyItemRemoved(testPosition);
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();
