@@ -23,6 +23,7 @@
         <activity android:name=".gui.topic.AddTopic" />
         <activity android:name=".gui.topic.UpdateTopic" />
         <activity android:name=".gui.test.ViewTests" />
+        <activity android:name=".gui.test.AddTest" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 

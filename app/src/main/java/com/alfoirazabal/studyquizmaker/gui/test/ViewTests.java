@@ -1,6 +1,8 @@
 package com.alfoirazabal.studyquizmaker.gui.test;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,6 +68,15 @@ public class ViewTests extends AppCompatActivity {
                 fabtnAdd.setEnabled(true);
             });
         }).start();
+
+        fabtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAddTest = new Intent(getApplicationContext(), AddTest.class);
+                intentAddTest.putExtra("TOPICID", topicId);
+                startActivity(intentAddTest);;
+            }
+        });
     }
 
     @Override
