@@ -89,7 +89,7 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
                             AppDatabase db = Room.databaseBuilder(
                                     itemView.getContext(),
                                     AppDatabase.class,
-                                    AppConstants.DATABASE_LOCATION
+                                    AppConstants.getDBLocation(context)
                             ).build();
                             db.subjectDAO().delete(subject);
                         }).start();

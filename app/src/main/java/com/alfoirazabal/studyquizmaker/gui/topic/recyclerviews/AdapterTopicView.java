@@ -90,7 +90,7 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                             AppDatabase db = Room.databaseBuilder(
                                     itemView.getContext(),
                                     AppDatabase.class,
-                                    AppConstants.DATABASE_LOCATION
+                                    AppConstants.getDBLocation(context)
                             ).build();
                             db.topicDAO().delete(topic);
                         }).start();

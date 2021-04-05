@@ -50,7 +50,7 @@ public class AddTest extends AppCompatActivity {
         db = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
-                AppConstants.DATABASE_LOCATION
+                AppConstants.getDBLocation(getApplicationContext())
         ).build();
 
         new Thread(() -> {

@@ -56,7 +56,7 @@ public class ViewTopics extends AppCompatActivity {
         db = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
-                AppConstants.DATABASE_LOCATION
+                AppConstants.getDBLocation(getApplicationContext())
         ).build();
 
         topics = new ArrayList<>();
