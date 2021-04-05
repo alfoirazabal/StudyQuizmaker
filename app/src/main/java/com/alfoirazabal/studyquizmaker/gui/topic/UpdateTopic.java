@@ -54,7 +54,7 @@ public class UpdateTopic extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             String topicId = bundle.getString("TOPICID");
             topic = db.topicDAO().getById(topicId);
-            topicNames = db.topicDAO().getAllNames();
+            topicNames = db.topicDAO().getAllTopicNames(topic.subjectId);
             SearchInList searchInList = new SearchInList(topicNames);
             searchInList.deleteIgnoreCase(topic.name);
             runOnUiThread(() -> {
