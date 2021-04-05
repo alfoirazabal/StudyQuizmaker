@@ -16,8 +16,8 @@ public interface TopicDAO {
     @Query("SELECT * FROM topic")
     List<Topic> getAll();
 
-    @Query("SELECT name FROM topic")
-    List<String> getAllNames();
+    @Query("SELECT name FROM topic WHERE subjectId = :subjectId")
+    List<String> getAllTopicNames(String subjectId);
 
     @Query("SELECT * FROM topic WHERE id = :topicId")
     Topic getById(String topicId);

@@ -29,6 +29,8 @@ public class AddTopic extends AppCompatActivity {
 
     private List<String> topicNames;
 
+    private String subjectId;
+
     private AppDatabase db;
 
     @Override
@@ -49,7 +51,9 @@ public class AddTopic extends AppCompatActivity {
         ).build();
 
         new Thread(() -> {
-            topicNames = db.topicDAO().getAllNames();
+            Bundle bundle = getIntent().getExtras();
+            subjectId = bundle.getString("SUBJECTID");
+            topicNames = db.topicDAO().getAllTopicNames(subjectId);
             runOnUiThread(() -> {
                 txtilTopicName.setEnabled(true);
                 txtilTopicDescription.setEnabled(true);
@@ -77,8 +81,6 @@ public class AddTopic extends AppCompatActivity {
         });
 
         btnAdd.setOnClickListener(v -> new Thread(() -> {
-            Bundle bundle = getIntent().getExtras();
-            String subjectId = bundle.getString("SUBJECTID");
             Topic newTopic = new Topic();
             newTopic.subjectId = subjectId;
             newTopic.name = txtTopicName.getText().toString();

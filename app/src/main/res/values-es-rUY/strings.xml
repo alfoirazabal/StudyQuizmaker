@@ -22,4 +22,10 @@
     <string name="msg_err_topic_name_exists_already">Ya existe otro tema con ese nombre</string>
     <string name="msg_err_subject_name_exists_already">Ya existe otra asignatura con ese nombre</string>
     <string name="msg_delete_confirmation_topic">¿Seguro de que desea borrar el siguiente tema?</string>
+    <string name="tests">Tests</string>
+    <string name="test">Test</string>
+    <string name="test_name">Nombre del test</string>
+    <string name="test_description">Descripción del test</string>
+    <string name="msg_err_test_name_exists_already">Ya existe otro test con ese nombre</string>
+    <string name="msg_delete_confirmation_test">¿Seguro de que desea borrar el siguiente test?</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.topic;
+package com.alfoirazabal.studyquizmaker.gui.test;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,36 +12,37 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
-import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
+import java.util.Objects;
 
-public class UpdateTopic extends AppCompatActivity {
+public class UpdateTest extends AppCompatActivity {
 
-    private TextInputLayout txtilTopicName;
-    private TextInputLayout txtilTopicDescription;
-    private TextInputEditText txtTopicName;
-    private TextInputEditText txtTopicDescription;
+    private TextInputLayout txtilTestName;
+    private TextInputLayout txtilTestDescription;
+    private TextInputEditText txtTestName;
+    private TextInputEditText txtTestDescription;
     private Button btnUpdate;
 
-    private List<String> topicNames;
+    private List<String> testNames;
 
-    private Topic topic;
+    private Test currentTest;
 
     private AppDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_topic_update);
+        setContentView(R.layout.activity_test_update);
 
-        txtilTopicName = findViewById(R.id.txtil_topic_name);
-        txtilTopicDescription = findViewById(R.id.txtil_topic_description);
-        txtTopicName = findViewById(R.id.txt_topic_name);
-        txtTopicDescription = findViewById(R.id.txt_topic_description);
+        txtilTestName = findViewById(R.id.txtil_test_name);
+        txtilTestDescription = findViewById(R.id.txtil_test_description);
+        txtTestName = findViewById(R.id.txt_test_name);
+        txtTestDescription = findViewById(R.id.txt_test_description);
         btnUpdate = findViewById(R.id.btn_update);
 
         db = Room.databaseBuilder(
@@ -52,21 +53,21 @@ public class UpdateTopic extends AppCompatActivity {
 
         new Thread(() -> {
             Bundle bundle = getIntent().getExtras();
-            String topicId = bundle.getString("TOPICID");
-            topic = db.topicDAO().getById(topicId);
-            topicNames = db.topicDAO().getAllTopicNames(topic.subjectId);
-            SearchInList searchInList = new SearchInList(topicNames);
-            searchInList.deleteIgnoreCase(topic.name);
+            String currentTestId = bundle.getString("TESTID");
+            currentTest = db.testDAO().getById(currentTestId);
+            testNames = db.testDAO().getAllTestNames(currentTest.topicId);
+            SearchInList searchInList = new SearchInList(testNames);
+            searchInList.deleteIgnoreCase(currentTest.name);
             runOnUiThread(() -> {
-                txtTopicName.setText(topic.name);
-                txtTopicDescription.setText(topic.description);
-                txtilTopicName.setEnabled(true);
-                txtilTopicDescription.setEnabled(true);
+                txtTestName.setText(currentTest.name);
+                txtTestDescription.setText(currentTest.description);
+                txtilTestName.setEnabled(true);
+                txtilTestDescription.setEnabled(true);
                 btnUpdate.setEnabled(true);
             });
         }).start();
 
-        txtTopicName.addTextChangedListener(new TextWatcher() {
+        txtTestName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
@@ -74,23 +75,25 @@ public class UpdateTopic extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String currentName = s.toString();
-                SearchInList searchInList = new SearchInList(topicNames);
+                SearchInList searchInList = new SearchInList(testNames);
                 if (searchInList.containsStringIgnoreCase(currentName)) {
-                    txtilTopicName.setError(getString(R.string.msg_err_topic_name_exists_already));
+                    txtilTestName.setError(getString(R.string.msg_err_test_name_exists_already));
                     btnUpdate.setEnabled(false);
                 }
                 else {
-                    txtilTopicName.setError(null);
+                    txtilTestName.setError(null);
                     btnUpdate.setEnabled(true);
                 }
             }
         });
 
-        btnUpdate.setOnClickListener((view) -> {
-            topic.name = txtTopicName.getText().toString();
-            topic.description = txtTopicDescription.getText().toString();
+        btnUpdate.setOnClickListener(v -> {
+            currentTest.name = Objects.requireNonNull(txtTestName.getText()).toString();
+            currentTest.description = Objects.requireNonNull(
+                    txtTestDescription.getText()
+            ).toString();
             new Thread(() -> {
-                db.topicDAO().update(topic);
+                db.testDAO().update(currentTest);
                 finish();
             }).start();
         });

@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.topic.recyclerviews;
+package com.alfoirazabal.studyquizmaker.gui.test.recyclerviews;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,32 +17,32 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
-import com.alfoirazabal.studyquizmaker.gui.test.ViewTests;
-import com.alfoirazabal.studyquizmaker.gui.topic.UpdateTopic;
+import com.alfoirazabal.studyquizmaker.gui.test.UpdateTest;
 
 import java.util.List;
 
-public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.ViewHolder> {
+public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHolder> {
 
-    private final List<Topic> topics;
+    private final List<Test> tests;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView txtSubjectName;
-        private final TextView txtSubjectDescription;
+        private final TextView txtTestName;
+        private final TextView txtTestDescription;
 
         public ViewHolder(View view) {
             super(view);
 
-            txtSubjectName = view.findViewById(R.id.txt_topic_name);
-            txtSubjectDescription = view.findViewById(R.id.txt_topic_description);
+            txtTestName = view.findViewById(R.id.txt_test_name);
+            txtTestDescription = view.findViewById(R.id.txt_test_description);
 
             view.setOnLongClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(view.getContext(), txtSubjectName);
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), txtTestName);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     popupMenu.setForceShowIcon(true);
                 }
-                popupMenu.inflate(R.menu.menu_topic);
+                popupMenu.inflate(R.menu.menu_test);
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
                     int menuItemId = menuItem.getItemId();
@@ -60,30 +60,26 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                 });
                 return false;
             });
-
-            view.setOnClickListener(v -> handleView());
-
         }
 
         private void handleEdit() {
-            int topicPosition = getAdapterPosition();
-            Topic topic = topics.get(topicPosition);
-            Context context = itemView.getContext();
-            Intent intentEditTopic = new Intent(context, UpdateTopic.class);
-            intentEditTopic.putExtra("TOPICID", topic.id);
-            context.startActivity(intentEditTopic);
+            int testPosition = getAdapterPosition();
+            Test test = tests.get(testPosition);
+            Intent intentUpdateTest = new Intent(itemView.getContext(), UpdateTest.class);
+            intentUpdateTest.putExtra("TESTID", test.id);
+            itemView.getContext().startActivity(intentUpdateTest);
         }
 
         private void handleDelete() {
-            int topicPosition = getAdapterPosition();
-            Topic topic = topics.get(topicPosition);
+            int testPosition = getAdapterPosition();
+            Test test = tests.get(testPosition);
             Context context = itemView.getContext();
-            String topicDeletionDescription =
-                    context.getString(R.string.msg_delete_confirmation_topic) + "\n" +
-                            topic.toString(context);
+            String testDeletionDescription =
+                    context.getString(R.string.msg_delete_confirmation_test) + "\n" +
+                            test.toString(context);
             new AlertDialog.Builder(itemView.getContext())
                     .setTitle(context.getString(R.string.delete_confirmation))
-                    .setMessage(topicDeletionDescription)
+                    .setMessage(testDeletionDescription)
                     .setIcon(android.R.drawable.ic_delete)
                     .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> {
                         new Thread(() -> {
@@ -92,34 +88,26 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
                                     AppDatabase.class,
                                     AppConstants.DATABASE_LOCATION
                             ).build();
-                            db.topicDAO().delete(topic);
+                            db.testDAO().delete(test);
                         }).start();
-                        topics.remove(topic);
-                        notifyItemRangeRemoved(topicPosition, topics.size());
+                        tests.remove(test);
+                        notifyItemRangeRemoved(testPosition, tests.size());
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();
         }
 
-        private void handleView() {
-            int topicPosition = getAdapterPosition();
-            Topic currentTopic = topics.get(topicPosition);
-            Intent intentViewTests = new Intent(itemView.getContext(), ViewTests.class);
-            intentViewTests.putExtra("TOPICID", currentTopic.id);
-            itemView.getContext().startActivity(intentViewTests);
+        public TextView getTxtTestName() {
+            return txtTestName;
         }
 
-        public TextView getTxtSubjectName() {
-            return txtSubjectName;
-        }
-
-        public TextView getTxtSubjectDescription() {
-            return txtSubjectDescription;
+        public TextView getTxtTestDescription() {
+            return txtTestDescription;
         }
     }
 
-    public AdapterTopicView(List<Topic> topics) {
-        this.topics = topics;
+    public AdapterTestView(List<Test> tests) {
+        this.tests = tests;
 
         this.setHasStableIds(true);
     }
@@ -128,7 +116,7 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.recyclerview_adapter_topic,
+                R.layout.recyclerview_adapter_test,
                 parent,
                 false
         );
@@ -138,20 +126,20 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Topic currentTopic = topics.get(position);
-        holder.getTxtSubjectName().setText(currentTopic.name);
-        if (currentTopic.description.equals("")) {
-            holder.getTxtSubjectDescription().setVisibility(View.GONE);
+        Test currentTest = tests.get(position);
+        holder.getTxtTestName().setText(currentTest.name);
+        if (currentTest.description.equals("")) {
+            holder.getTxtTestDescription().setVisibility(View.GONE);
         }
         else {
-            holder.getTxtSubjectDescription().setVisibility(View.VISIBLE);
-            holder.getTxtSubjectDescription().setText(currentTopic.description);
+            holder.getTxtTestDescription().setVisibility(View.VISIBLE);
+            holder.getTxtTestDescription().setText(currentTest.description);
         }
     }
 
     @Override
     public int getItemCount() {
-        return topics.size();
+        return tests.size();
     }
 
     @Override
