@@ -20,6 +20,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.gui.test.UpdateTest;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.PanelTestView;
 
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                 });
                 return false;
             });
+
+            view.setOnClickListener(v -> handleView());
         }
 
         private void handleEdit() {
@@ -95,6 +98,14 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                     })
                     .setNegativeButton(context.getString(R.string.no), null)
                     .show();
+        }
+
+        private void handleView() {
+            int testPosition = getAdapterPosition();
+            Test test = tests.get(testPosition);
+            Intent intentTestPanel = new Intent(itemView.getContext(), PanelTestView.class);
+            intentTestPanel.putExtra("TESTID", test.id);
+            itemView.getContext().startActivity(intentTestPanel);
         }
 
         public TextView getTxtTestName() {

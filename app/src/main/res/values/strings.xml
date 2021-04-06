@@ -27,4 +27,9 @@
     <string name="test_description">Test description</string>
     <string name="msg_err_test_name_exists_already">There is another test with the same name</string>
     <string name="msg_delete_confirmation_test">Are you sure you want to delete the following test?</string>
+    <string name="manage_questions">Manage questions</string>
+    <string name="view_scores">View scores</string>
+    <string name="start">Start</string>
+    <string name="amount_of_questions">Amount of questions</string>
+    <string name="questions">Questions</string>
 </resources>

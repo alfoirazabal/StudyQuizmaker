@@ -28,4 +28,9 @@
     <string name="test_description">Descripción del test</string>
     <string name="msg_err_test_name_exists_already">Ya existe otro test con ese nombre</string>
     <string name="msg_delete_confirmation_test">¿Seguro de que desea borrar el siguiente test?</string>
+    <string name="manage_questions">Administrar preguntas</string>
+    <string name="view_scores">Ver puntajes</string>
+    <string name="start">Empezar</string>
+    <string name="amount_of_questions">Cantidad de preguntas</string>
+    <string name="questions">Preguntas</string>
 </resources>
