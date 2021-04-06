@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/questions_simple"
+        android:id="@+id/item_simple_questions" />
+
+    <item
+        android:title="@string/questions_multiple_choice"
+        android:id="@+id/item_multiple_choice" />
+
+    <item
+        android:title="@string/questions_true_or_false"
+        android:id="@+id/item_true_or_false" />
+
+</menu>

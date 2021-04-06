@@ -32,4 +32,7 @@
     <string name="start">Start</string>
     <string name="amount_of_questions">Amount of questions</string>
     <string name="questions">Questions</string>
+    <string name="questions_multiple_choice">Multiple choice</string>
+    <string name="questions_simple">Simple questions</string>
+    <string name="questions_true_or_false">True or false</string>
 </resources>
