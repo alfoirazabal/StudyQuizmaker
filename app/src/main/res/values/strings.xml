@@ -35,4 +35,5 @@
     <string name="questions_multiple_choice">Multiple choice</string>
     <string name="questions_simple">Simple questions</string>
     <string name="questions_true_or_false">True or false</string>
+    <string name="score_total">"Score: "</string>
 </resources>

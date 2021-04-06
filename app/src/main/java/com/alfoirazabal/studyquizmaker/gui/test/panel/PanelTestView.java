@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.PopupMenu;
@@ -15,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.ViewQuestionsSimple;
 
 public class PanelTestView extends AppCompatActivity {
 
@@ -89,7 +91,10 @@ public class PanelTestView extends AppCompatActivity {
                 boolean resolved = true;
                 int menuItemId = menuItem.getItemId();
                 if (menuItemId == R.id.item_simple_questions) {
-
+                    Intent intentViewSimpleQuestions =
+                            new Intent(getApplicationContext(), ViewQuestionsSimple.class);
+                    intentViewSimpleQuestions.putExtra("TESTID", testId);
+                    startActivity(intentViewSimpleQuestions);
                 }
                 else if (menuItemId == R.id.item_multiple_choice) {
 
