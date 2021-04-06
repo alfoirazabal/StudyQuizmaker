@@ -22,6 +22,9 @@ public interface QuestionMCDAO {
     @Query("SELECT * FROM questionMC WHERE testId = :testId")
     List<QuestionMC> getFromTest(String testId);
 
+    @Query("SELECT COUNT(*) FROM questionMC WHERE testId = :testId")
+    int getCountFromTest(String testId);
+
     @Insert
     void insert(QuestionMC questionMC);
 

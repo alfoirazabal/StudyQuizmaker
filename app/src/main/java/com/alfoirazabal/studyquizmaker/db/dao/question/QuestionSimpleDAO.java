@@ -22,6 +22,9 @@ public interface QuestionSimpleDAO {
     @Query("SELECT * FROM questionsimple WHERE testId = :testId")
     List<QuestionSimple> getFromTest(String testId);
 
+    @Query("SELECT COUNT(*) FROM questionsimple WHERE testId = :testId")
+    int getCountFromTest(String testId);
+
     @Insert
     void insert(QuestionSimple questionSimple);
 

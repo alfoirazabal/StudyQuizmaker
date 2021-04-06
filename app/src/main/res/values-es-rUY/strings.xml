@@ -33,4 +33,7 @@
     <string name="start">Empezar</string>
     <string name="amount_of_questions">Cantidad de preguntas</string>
     <string name="questions">Preguntas</string>
+    <string name="questions_multiple_choice">Múltiple opción</string>
+    <string name="questions_simple">Preguntas simples</string>
+    <string name="questions_true_or_false">Verdadero o falso</string>
 </resources>

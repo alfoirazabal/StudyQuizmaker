@@ -19,6 +19,9 @@ public class PanelTestView extends AppCompatActivity {
 
     private Button btnStart;
     private TextView txtAmountOfQuestions;
+    private TextView txtAmountOfSimpleQuestions;
+    private TextView txtAmountOfMultipleChoiceQuestions;
+    private TextView txtAmountOfTrueOrFalseQuestions;
     private TextView txtTopic;
     private TextView txtSubject;
     private TextView txtbtnViewScores;
@@ -37,6 +40,10 @@ public class PanelTestView extends AppCompatActivity {
 
         btnStart = findViewById(R.id.btn_start);
         txtAmountOfQuestions = findViewById(R.id.txt_amount_of_questions);
+        txtAmountOfSimpleQuestions = findViewById(R.id.txt_amount_of_simple_questions);
+        txtAmountOfMultipleChoiceQuestions =
+                findViewById(R.id.txt_amount_of_multiple_choice_questions);
+        txtAmountOfTrueOrFalseQuestions = findViewById(R.id.txt_amount_of_true_or_false_questions);
         txtTopic = findViewById(R.id.txt_topic);
         txtSubject = findViewById(R.id.txt_subject);
         txtbtnViewScores = findViewById(R.id.txtbtn_view_scores);
@@ -54,10 +61,19 @@ public class PanelTestView extends AppCompatActivity {
             Test currentTest = db.testDAO().getById(testId);
             Topic currentTopic = db.topicDAO().getById(currentTest.topicId);
             Subject currentSubject = db.subjectDAO().getById(currentTopic.subjectId);
+            int amountOfQuestionsMC = db.questionMCDAO().getCountFromTest(testId);
+            int amountOfQuestionsSimple = db.questionSimpleDAO().getCountFromTest(testId);
+            int amountOfQuestionsTF = db.questionTFDAO().getCountFromTest(testId);
+            int totalAmountOfQuestions = amountOfQuestionsMC + amountOfQuestionsSimple +
+                    amountOfQuestionsTF;
             runOnUiThread(() -> {
                 setTitle(currentTest.name);
                 txtTopic.setText(currentTopic.name);
                 txtSubject.setText(currentSubject.name);
+                txtAmountOfQuestions.setText(String.valueOf(totalAmountOfQuestions));
+                txtAmountOfSimpleQuestions.setText(String.valueOf(amountOfQuestionsSimple));
+                txtAmountOfMultipleChoiceQuestions.setText(String.valueOf(amountOfQuestionsMC));
+                txtAmountOfTrueOrFalseQuestions.setText(String.valueOf(amountOfQuestionsTF));
                 btnStart.setEnabled(true);
                 txtbtnViewScores.setEnabled(true);
                 txtbtnManageQuestions.setEnabled(true);

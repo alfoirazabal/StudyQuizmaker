@@ -22,6 +22,9 @@ public interface QuestionTFDAO {
     @Query("SELECT * FROM questionTF WHERE testId = :testId")
     List<QuestionTF> getFromTest(String testId);
 
+    @Query("SELECT COUNT(*) FROM questionTF WHERE testId = :testId")
+    int getCountFromTest(String testId);
+
     @Insert
     void insert(QuestionTF questionTF);
 
