@@ -2,6 +2,7 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -79,5 +80,28 @@ public class PanelTestView extends AppCompatActivity {
                 txtbtnManageQuestions.setEnabled(true);
             });
         }).start();
+
+        txtbtnManageQuestions.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
+            popupMenu.inflate(R.menu.menu_test_panel_manage_questions);
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                boolean resolved = true;
+                int menuItemId = menuItem.getItemId();
+                if (menuItemId == R.id.item_simple_questions) {
+
+                }
+                else if (menuItemId == R.id.item_multiple_choice) {
+
+                }
+                else if (menuItemId == R.id.item_true_or_false) {
+
+                }
+                else {
+                    resolved = false;
+                }
+                return resolved;
+            });
+        });
     }
 }
