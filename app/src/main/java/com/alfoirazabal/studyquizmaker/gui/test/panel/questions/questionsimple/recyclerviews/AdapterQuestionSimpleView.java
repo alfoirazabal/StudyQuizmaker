@@ -2,6 +2,7 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 import java.util.List;
 
@@ -63,7 +65,15 @@ public class AdapterQuestionSimpleView extends
         }
 
         private void handleEdit() {
-            // TODO
+            int questionSimplePosition = getAdapterPosition();
+            QuestionSimple questionSimpleToEdit = questionSimples.get(questionSimplePosition);
+            Intent intentEditQuestionSimple = new Intent(
+                    itemView.getContext(),
+                    UpdateQuestionSimple.class
+            );
+            intentEditQuestionSimple.putExtra("TESTID", questionSimpleToEdit.testId);
+            intentEditQuestionSimple.putExtra("QUESTIONSIMPLEID", questionSimpleToEdit.id);
+            itemView.getContext().startActivity(intentEditQuestionSimple);
         }
 
         private void handleDelete() {
