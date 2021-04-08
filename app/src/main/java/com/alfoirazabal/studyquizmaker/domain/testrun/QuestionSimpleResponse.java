@@ -44,6 +44,9 @@ public class QuestionSimpleResponse {
     @ColumnInfo(name = "questionSimpleId")
     public String questionSimpleId;
 
+    @ColumnInfo(name = "answered")
+    public String answered;
+
     @ColumnInfo(name = "score")
     public double score;
 

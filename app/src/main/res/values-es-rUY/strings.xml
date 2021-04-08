@@ -44,4 +44,12 @@
     <string name="score">Puntaje</string>
     <string name="msg_delete_confirmation_question">¿Seguro de que desea borrar la siguiente pregunta?</string>
     <string name="msg_available_in_future_version">Disponible en una versión futura.</string>
+    <string name="simple_question">Pregunta simple</string>
+    <string name="next_question">Pregunta siguiente</string>
+    <string name="finish">Terminar</string>
+    <string name="solved">Resueltas</string>
+    <string name="question">Pregunta</string>
+    <string name="view_answer">Ver respuesta</string>
+    <string name="hide_answer">Esconder respuesta</string>
+    <string name="answer_score">Puntaje de la respuesta</string>
 </resources>
