@@ -43,7 +43,7 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     popupMenu.setForceShowIcon(true);
                 }
-                popupMenu.inflate(R.menu.menu_test);
+                popupMenu.inflate(R.menu.menu_edit_delete);
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
                     int menuItemId = menuItem.getItemId();

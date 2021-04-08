@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,7 @@ public class PanelTestView extends AppCompatActivity {
     private Button btnStart;
     private TextView txtAmountOfQuestions;
     private TextView txtAmountOfSimpleQuestions;
-    private TextView txtAmountOfMultipleChoiceQuestions;
+    private TextView txtAmountOfMCQuestions;
     private TextView txtAmountOfTrueOrFalseQuestions;
     private TextView txtTopic;
     private TextView txtSubject;
@@ -44,7 +45,7 @@ public class PanelTestView extends AppCompatActivity {
         btnStart = findViewById(R.id.btn_start);
         txtAmountOfQuestions = findViewById(R.id.txt_amount_of_questions);
         txtAmountOfSimpleQuestions = findViewById(R.id.txt_amount_of_simple_questions);
-        txtAmountOfMultipleChoiceQuestions =
+        txtAmountOfMCQuestions =
                 findViewById(R.id.txt_amount_of_multiple_choice_questions);
         txtAmountOfTrueOrFalseQuestions = findViewById(R.id.txt_amount_of_true_or_false_questions);
         txtTopic = findViewById(R.id.txt_topic);
@@ -58,25 +59,17 @@ public class PanelTestView extends AppCompatActivity {
                 AppConstants.getDBLocation(getApplicationContext())
         ).build();
 
+        Bundle bundle = getIntent().getExtras();
+        testId = bundle.getString("TESTID");
+
         new Thread(() -> {
-            Bundle bundle = getIntent().getExtras();
-            testId = bundle.getString("TESTID");
             Test currentTest = db.testDAO().getById(testId);
             Topic currentTopic = db.topicDAO().getById(currentTest.topicId);
             Subject currentSubject = db.subjectDAO().getById(currentTopic.subjectId);
-            int amountOfQuestionsMC = db.questionMCDAO().getCountFromTest(testId);
-            int amountOfQuestionsSimple = db.questionSimpleDAO().getCountFromTest(testId);
-            int amountOfQuestionsTF = db.questionTFDAO().getCountFromTest(testId);
-            int totalAmountOfQuestions = amountOfQuestionsMC + amountOfQuestionsSimple +
-                    amountOfQuestionsTF;
             runOnUiThread(() -> {
                 setTitle(currentTest.name);
                 txtTopic.setText(currentTopic.name);
                 txtSubject.setText(currentSubject.name);
-                txtAmountOfQuestions.setText(String.valueOf(totalAmountOfQuestions));
-                txtAmountOfSimpleQuestions.setText(String.valueOf(amountOfQuestionsSimple));
-                txtAmountOfMultipleChoiceQuestions.setText(String.valueOf(amountOfQuestionsMC));
-                txtAmountOfTrueOrFalseQuestions.setText(String.valueOf(amountOfQuestionsTF));
                 btnStart.setEnabled(true);
                 txtbtnViewScores.setEnabled(true);
                 txtbtnManageQuestions.setEnabled(true);
@@ -97,10 +90,20 @@ public class PanelTestView extends AppCompatActivity {
                     startActivity(intentViewSimpleQuestions);
                 }
                 else if (menuItemId == R.id.item_multiple_choice) {
-
+                    // TODO
+                    Toast.makeText(
+                            getApplicationContext(),
+                            R.string.msg_available_in_future_version,
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
                 else if (menuItemId == R.id.item_true_or_false) {
-
+                    // TODO
+                    Toast.makeText(
+                            getApplicationContext(),
+                            R.string.msg_available_in_future_version,
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
                 else {
                     resolved = false;
@@ -108,5 +111,23 @@ public class PanelTestView extends AppCompatActivity {
                 return resolved;
             });
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Thread(() -> {
+            int amountOfQuestionsMC = db.questionMCDAO().getCountFromTest(testId);
+            int amountOfQuestionsSimple = db.questionSimpleDAO().getCountFromTest(testId);
+            int amountOfQuestionsTF = db.questionTFDAO().getCountFromTest(testId);
+            int totalAmountOfQuestions = amountOfQuestionsMC + amountOfQuestionsSimple +
+                    amountOfQuestionsTF;
+            runOnUiThread(() -> {
+                txtAmountOfMCQuestions.setText(String.valueOf(amountOfQuestionsMC));
+                txtAmountOfSimpleQuestions.setText(String.valueOf(amountOfQuestionsSimple));
+                txtAmountOfTrueOrFalseQuestions.setText(String.valueOf(amountOfQuestionsTF));
+                txtAmountOfQuestions.setText(String.valueOf(totalAmountOfQuestions));
+            });
+        }).start();
     }
 }

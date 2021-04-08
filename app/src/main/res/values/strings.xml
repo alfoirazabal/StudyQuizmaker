@@ -41,4 +41,6 @@
     <string name="msg_err_questionsimple_title_exists_already">There is another simple question with the same title</string>
     <string name="max_score">Maximum score of other questions</string>
     <string name="score">Score</string>
+    <string name="msg_delete_confirmation_question">Are you sure you want to delete the following question?</string>
+    <string name="msg_available_in_future_version">Will be available on a future version. Wait for release</string>
 </resources>

@@ -42,4 +42,6 @@
     <string name="msg_err_questionsimple_title_exists_already">Ya existe otra pregunta simple con ese título</string>
     <string name="max_score">Puntaje máximo de otras preguntas</string>
     <string name="score">Puntaje</string>
+    <string name="msg_delete_confirmation_question">¿Seguro de que desea borrar la siguiente pregunta?</string>
+    <string name="msg_available_in_future_version">Disponible en una versión futura.</string>
 </resources>
