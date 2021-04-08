@@ -22,14 +22,14 @@ public class AdapterQuestionSimpleView extends
 
         private final TextView txtTitle;
         private final TextView txtScore;
-        private final TextView txtDescription;
+        private final TextView txtAnswer;
 
         public ViewHolder(View view) {
             super(view);
 
             txtTitle = view.findViewById(R.id.txt_title);
             txtScore = view.findViewById(R.id.txt_score_total);
-            txtDescription = view.findViewById(R.id.txt_description);
+            txtAnswer = view.findViewById(R.id.txt_answer);
         }
 
         public TextView getTxtTitle() {
@@ -40,8 +40,8 @@ public class AdapterQuestionSimpleView extends
             return txtScore;
         }
 
-        public TextView getTxtDescription() {
-            return txtDescription;
+        public TextView getTxtAnswer() {
+            return txtAnswer;
         }
     }
 
@@ -65,7 +65,7 @@ public class AdapterQuestionSimpleView extends
     public void onBindViewHolder(@NonNull AdapterQuestionSimpleView.ViewHolder holder, int position) {
         QuestionSimple currentQuestionSimple = questionSimples.get(position);
         holder.getTxtTitle().setText(currentQuestionSimple.title);
-        holder.getTxtDescription().setText(currentQuestionSimple.description);
+        holder.getTxtAnswer().setText(currentQuestionSimple.answer);
         holder.getTxtScore().setText(String.valueOf(currentQuestionSimple.score));
     }
 

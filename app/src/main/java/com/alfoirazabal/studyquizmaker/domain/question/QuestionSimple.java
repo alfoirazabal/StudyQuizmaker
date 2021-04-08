@@ -37,8 +37,8 @@ public class QuestionSimple {
     @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name = "description")
-    public String description;
+    @ColumnInfo(name = "answer")
+    public String answer;
 
     @ColumnInfo(name = "score")
     public double score;

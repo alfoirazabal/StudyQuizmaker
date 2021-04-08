@@ -47,6 +47,9 @@ public class QuestionTF {
     @ColumnInfo(name = "answerFalse")
     public String answerFalse;
 
+    @ColumnInfo(name = "score")
+    public double score;
+
     public QuestionTF() {
         this.id = UUID.randomUUID().toString();
     }

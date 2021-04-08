@@ -25,6 +25,9 @@ public interface QuestionTFDAO {
     @Query("SELECT COUNT(*) FROM questionTF WHERE testId = :testId")
     int getCountFromTest(String testId);
 
+    @Query("SELECT MAX(score) FROM questionTF WHERE testId = :testId")
+    double getMaxScore(String testId);
+
     @Insert
     void insert(QuestionTF questionTF);
 

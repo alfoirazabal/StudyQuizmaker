@@ -22,6 +22,9 @@ public interface QuestionOptionMCDAO {
     @Query("SELECT * FROM questionOptionMC WHERE questionMCId = :questionMCId")
     List<QuestionOptionMC> getFromQuestionMC(String questionMCId);
 
+    @Query("SELECT MAX(qoMC.score) FROM QuestionOptionMC qoMC WHERE qoMC.questionMCId IN (SELECT id FROM QuestionMC WHERE testId = :testId)")
+    double getMaxScore(String testId);
+
     @Insert
     void insert(QuestionOptionMC questionOptionMC);
 

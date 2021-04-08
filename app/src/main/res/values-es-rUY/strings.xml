@@ -37,4 +37,9 @@
     <string name="questions_simple">Preguntas simples</string>
     <string name="questions_true_or_false">Verdadero o falso</string>
     <string name="score_total">"Puntaje: "</string>
+    <string name="answer">Respuesta</string>
+    <string name="title">Título</string>
+    <string name="msg_err_questionsimple_title_exists_already">Ya existe otra pregunta simple con ese título</string>
+    <string name="max_score">Puntaje máximo de otras preguntas</string>
+    <string name="score">Puntaje</string>
 </resources>

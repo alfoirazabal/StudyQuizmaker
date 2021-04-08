@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -55,6 +56,15 @@ public class ViewQuestionsSimple extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         this.recyclerviewSimpleQuestions.setLayoutManager(layoutManager);
         adapterQuestionSimpleView = new AdapterQuestionSimpleView(questionsSimple);
+        this.recyclerviewSimpleQuestions.setAdapter(adapterQuestionSimpleView);
+
+        fabtnAdd.setOnClickListener(v -> {
+            Intent intentAddQuestionSimple = new Intent(
+                    this, AddQuestionSimple.class
+            );
+            intentAddQuestionSimple.putExtra("TESTID", currentTestId);
+            startActivity(intentAddQuestionSimple);
+        });
 
         new Thread(() -> {
             Test currentTest = db.testDAO().getById(currentTestId);

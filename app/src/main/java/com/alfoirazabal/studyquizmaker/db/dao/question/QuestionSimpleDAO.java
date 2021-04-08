@@ -22,8 +22,14 @@ public interface QuestionSimpleDAO {
     @Query("SELECT * FROM questionsimple WHERE testId = :testId")
     List<QuestionSimple> getFromTest(String testId);
 
+    @Query("SELECT title FROM questionsimple WHERE testId = :testId")
+    List<String> getAllTitles(String testId);
+
     @Query("SELECT COUNT(*) FROM questionsimple WHERE testId = :testId")
     int getCountFromTest(String testId);
+
+    @Query("SELECT MAX(score) FROM QuestionSimple WHERE testId = :testId")
+    double getMaxScore(String testId);
 
     @Insert
     void insert(QuestionSimple questionSimple);
