@@ -25,6 +25,9 @@
         <activity android:name=".gui.test.AddTest" />
         <activity android:name=".gui.test.UpdateTest" />
         <activity android:name=".gui.test.panel.PanelTestView" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.ViewQuestionsSimple" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.AddQuestionSimple" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.UpdateQuestionSimple" />
     </application>
 
 </manifest>
