@@ -135,6 +135,7 @@ public class PanelTestView extends AppCompatActivity {
                         AnswerQuestionSimple.class
                 );
                 intentAnswerQuestion.putExtra("TESTRUN", testRun);
+                intentAnswerQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 PanelTestView.this.startActivity(intentAnswerQuestion);
             }).start();
         });
