@@ -51,6 +51,9 @@ public class QuestionSimpleResponse implements Serializable {
     @ColumnInfo(name = "score")
     public double score;
 
+    @ColumnInfo(name = "isAnswered")
+    public boolean isAnswered;
+
     public QuestionSimpleResponse() {
         this.id = UUID.randomUUID().toString();
         this.answered = "";

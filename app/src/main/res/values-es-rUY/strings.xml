@@ -54,4 +54,5 @@
     <string name="answer_score">Puntaje de la respuesta</string>
     <string name="previous_question">Pregunta anterior</string>
     <string name="exit">Salir</string>
+    <string name="msg_err_need_to_add_questions_first">Se necesita agregar preguntas antes de iniciar el test</string>
 </resources>

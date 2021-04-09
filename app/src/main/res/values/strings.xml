@@ -53,4 +53,5 @@
     <string name="answer_score">Answer score</string>
     <string name="previous_question">Previous question</string>
     <string name="exit">Exit</string>
+    <string name="msg_err_need_to_add_questions_first">You need to add questions before starting the test</string>
 </resources>

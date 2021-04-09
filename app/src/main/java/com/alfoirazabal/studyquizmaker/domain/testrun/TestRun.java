@@ -36,6 +36,15 @@ public class TestRun implements Serializable {
     @ColumnInfo(name = "testId")
     public String testId;
 
+    @ColumnInfo(name = "scoredPercentage")
+    public double scoredPercentage;
+
+    @ColumnInfo(name = "numberOfAnsweredQuestions")
+    public int numberOfAnsweredQuestions;
+
+    @ColumnInfo(name = "numberOfTotalQuestions")
+    public int numberOfTotalQuestions;
+
     @Ignore
     public QuestionSimpleResponse[] questionSimpleResponses;
 

@@ -1,6 +1,5 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -25,6 +24,7 @@ import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.A
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.ViewQuestionsSimple;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PanelTestView extends AppCompatActivity {
 
@@ -47,7 +47,7 @@ public class PanelTestView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_panel_view);
 
-        getSupportActionBar().setSubtitle(R.string.questions);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.questions);
 
         btnStart = findViewById(R.id.btn_start);
         txtAmountOfQuestions = findViewById(R.id.txt_amount_of_questions);
@@ -119,17 +119,25 @@ public class PanelTestView extends AppCompatActivity {
             });
         });
 
-        btnStart.setOnClickListener(v -> {
-            new Thread(() -> {
+        btnStart.setOnClickListener(v -> new Thread(() -> {
+            List<QuestionSimple> questionSimples = db.questionSimpleDAO().getFromTest(testId);
+            if (questionSimples.isEmpty()) {
+                runOnUiThread(() -> Toast.makeText(
+                        getApplicationContext(),
+                        R.string.msg_err_need_to_add_questions_first,
+                        Toast.LENGTH_LONG
+                ).show());
+            }
+            else {
                 TestRun testRun = new TestRun();
                 testRun.testId = testId;
-                List<QuestionSimple> questionSimples = db.questionSimpleDAO().getFromTest(testId);
                 testRun.questionSimpleResponses = new QuestionSimpleResponse[questionSimples.size()];
                 for (int i = 0 ; i < questionSimples.size() ; i++) {
                     testRun.questionSimpleResponses[i] = new QuestionSimpleResponse();
                     testRun.questionSimpleResponses[i].testRunId = testRun.id;
                     testRun.questionSimpleResponses[i].questionSimpleId = questionSimples.get(i).id;
                 }
+                testRun.numberOfTotalQuestions = testRun.questionSimpleResponses.length;
                 Intent intentAnswerQuestion = new Intent(
                         getApplicationContext(),
                         AnswerQuestionSimple.class
@@ -137,8 +145,8 @@ public class PanelTestView extends AppCompatActivity {
                 intentAnswerQuestion.putExtra("TESTRUN", testRun);
                 intentAnswerQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 PanelTestView.this.startActivity(intentAnswerQuestion);
-            }).start();
-        });
+            }
+        }).start());
     }
 
     @Override

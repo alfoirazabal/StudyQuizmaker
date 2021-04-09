@@ -3,8 +3,6 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.room.Room;
 
 import com.alfoirazabal.studyquizmaker.AppConstants;
@@ -23,21 +20,20 @@ import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Objects;
 
 public class AnswerQuestionSimple extends AppCompatActivity {
 
-    private static int ANSWER_SCORE_SEEKBAR_PARTITIONS = 10;
+    private static final int ANSWER_SCORE_SEEKBAR_PARTITIONS = 10;
 
     private TextView txtQuestionTitle;
-    private TextInputLayout txtilResponse;
     private TextInputEditText txtResponse;
     private SeekBar seekbarAnswerScore;
     private TextView txtAnswerScore;
     private LinearLayout layoutAnswer;
     private Button btnViewOrHideAnswer;
     private TextView txtAnswer;
-    private TextView txtNumberOfQuestionsSolved;
     private Button btnNext;
     private Button btnPrevious;
 
@@ -46,9 +42,6 @@ public class AnswerQuestionSimple extends AppCompatActivity {
     private double maxQuestionScore;
 
     private TestRun testRun;
-    
-    private int numberOfAnswers;
-    private int numberOfQuestions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,14 +49,14 @@ public class AnswerQuestionSimple extends AppCompatActivity {
         setContentView(R.layout.activity_testrun_simple_question);
 
         txtQuestionTitle = findViewById(R.id.txt_question_title);
-        txtilResponse = findViewById(R.id.txtil_response);
         txtResponse = findViewById(R.id.txt_response);
         seekbarAnswerScore = findViewById(R.id.seekbar_answer_score);
         txtAnswerScore = findViewById(R.id.txt_answer_score);
         layoutAnswer = findViewById(R.id.layout_answer);
         btnViewOrHideAnswer = findViewById(R.id.btn_view_or_hide_answer);
         txtAnswer = findViewById(R.id.txt_answer);
-        txtNumberOfQuestionsSolved = findViewById(R.id.txt_number_of_questions_solved);
+        TextView txtNumberOfQuestionsSolved = findViewById(R.id.txt_number_of_questions_solved);
+        TextView txtCurrentQuestionProgress = findViewById(R.id.txt_current_question_progress);
         btnNext = findViewById(R.id.btn_next);
         btnPrevious = findViewById(R.id.btn_previous);
 
@@ -71,37 +64,25 @@ public class AnswerQuestionSimple extends AppCompatActivity {
 
         this.testRun = (TestRun) getIntent().getSerializableExtra("TESTRUN");
 
-        numberOfQuestions = this.testRun.questionSimpleResponses.length;
-        numberOfAnswers = 0;
+        int numberOfQuestions = this.testRun.questionSimpleResponses.length;
+        int numberOfAnswers = 0;
         for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
             if (!this.testRun.questionSimpleResponses[i].answered.equals("")) {
                 numberOfAnswers++;
             }
         }
 
-        this.txtNumberOfQuestionsSolved.setText(numberOfAnswers + "/" + numberOfQuestions);
+        String questionsSolvedIndicator = numberOfAnswers + "/" + numberOfQuestions;
+        txtNumberOfQuestionsSolved.setText(questionsSolvedIndicator);
+        String currentQuestionProgressIndicator = (this.testRun.currentQuestionIndex + 1) + "/" +
+                this.testRun.questionSimpleResponses.length;
+        txtCurrentQuestionProgress.setText(currentQuestionProgressIndicator);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
                 AppConstants.getDBLocation(getApplicationContext())
         ).build();
-
-        QuestionSimpleResponse questionSimpleResponse =
-                this.testRun.questionSimpleResponses[this.testRun.currentQuestionIndex];
-        new Thread(() -> {
-            QuestionSimple questionSimple =
-                    db.questionSimpleDAO().getById(questionSimpleResponse.questionSimpleId);
-            runOnUiThread(() -> {
-                txtQuestionTitle.setText(questionSimple.title);
-                txtAnswer.setText(questionSimple.answer);
-                maxQuestionScore = questionSimple.score;
-                txtResponse.setText(questionSimpleResponse.answered);
-                double seekbarScoreProportion = ANSWER_SCORE_SEEKBAR_PARTITIONS / maxQuestionScore;
-                int scoreInSeekbar = (int)(questionSimpleResponse.score * seekbarScoreProportion);
-                seekbarAnswerScore.setProgress(scoreInSeekbar);
-            });
-        }).start();
 
         seekbarAnswerScore.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -119,7 +100,23 @@ public class AnswerQuestionSimple extends AppCompatActivity {
 
         btnViewOrHideAnswer.setOnClickListener(v -> switchAnswerView());
 
-        setPreviousAndNextButtonsAndActions();
+        QuestionSimpleResponse questionSimpleResponse =
+                this.testRun.questionSimpleResponses[this.testRun.currentQuestionIndex];
+        new Thread(() -> {
+            QuestionSimple questionSimple =
+                    db.questionSimpleDAO().getById(questionSimpleResponse.questionSimpleId);
+            runOnUiThread(() -> {
+                txtQuestionTitle.setText(questionSimple.title);
+                txtAnswer.setText(questionSimple.answer);
+                maxQuestionScore = questionSimple.score;
+                txtResponse.setText(questionSimpleResponse.answered);
+                double seekbarScoreProportion = ANSWER_SCORE_SEEKBAR_PARTITIONS / maxQuestionScore;
+                int scoreInSeekbar = (int)(questionSimpleResponse.score * seekbarScoreProportion);
+                seekbarAnswerScore.setProgress(scoreInSeekbar);
+
+                setPreviousAndNextButtonsAndActions();
+            });
+        }).start();
 
     }
 
@@ -155,9 +152,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
         ) {
             btnNext.setText(R.string.finish);
             btnNext.setBackgroundColor(Color.RED);
-            btnNext.setOnClickListener(v -> {
-                setCurrentQuestionDataAndFinish();
-            });
+            btnNext.setOnClickListener(v -> setCurrentQuestionDataAndFinish());
             btnPrevious.setOnClickListener(v -> {
                 setCurrentQuestionData();
                 this.testRun.currentQuestionIndex--;
@@ -181,6 +176,22 @@ public class AnswerQuestionSimple extends AppCompatActivity {
     private void setCurrentQuestionDataAndFinish() {
         setCurrentQuestionData();
         new Thread(() -> {
+            int numberOfAnsweredQuestions = 0;
+            double totalScore = 0;
+            double totalScored = 0;
+            for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
+                QuestionSimpleResponse currentQuestionSimpleResponse =
+                        this.testRun.questionSimpleResponses[i];
+                if (currentQuestionSimpleResponse.isAnswered) {
+                    numberOfAnsweredQuestions++;
+                }
+                totalScore += db.questionSimpleDAO().getById(
+                        currentQuestionSimpleResponse.questionSimpleId
+                ).score;
+                totalScored += currentQuestionSimpleResponse.score;
+            }
+            this.testRun.numberOfAnsweredQuestions = numberOfAnsweredQuestions;
+            this.testRun.scoredPercentage = Math.round((totalScored / totalScore) * 100);
             db.testRunDAO().insert(testRun);
             for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
                 db.questionSimpleResponseDAO().insert(this.testRun.questionSimpleResponses[i]);
@@ -192,9 +203,11 @@ public class AnswerQuestionSimple extends AppCompatActivity {
     private void setCurrentQuestionData() {
         QuestionSimpleResponse currentQuestionSimpleResponse =
                 this.testRun.questionSimpleResponses[this.testRun.currentQuestionIndex];
-        currentQuestionSimpleResponse.answered = txtResponse.getText().toString();
+        currentQuestionSimpleResponse.answered =
+                Objects.requireNonNull(txtResponse.getText()).toString();
         currentQuestionSimpleResponse.score =
                 Double.parseDouble(txtAnswerScore.getText().toString());
+        currentQuestionSimpleResponse.isAnswered = !this.txtAnswer.getText().toString().equals("");
     }
 
     private void startNewAnswerQuestionSimpleActivity() {
