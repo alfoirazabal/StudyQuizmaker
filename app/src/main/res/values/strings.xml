@@ -54,4 +54,7 @@
     <string name="previous_question">Previous question</string>
     <string name="exit">Exit</string>
     <string name="msg_err_need_to_add_questions_first">You need to add questions before starting the test</string>
+    <string name="test_results">Test results</string>
+    <string name="scored">Scored</string>
+    <string name="questions_answered">Questions answered</string>
 </resources>

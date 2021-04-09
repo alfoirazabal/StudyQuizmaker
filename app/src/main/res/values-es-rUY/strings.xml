@@ -55,4 +55,7 @@
     <string name="previous_question">Pregunta anterior</string>
     <string name="exit">Salir</string>
     <string name="msg_err_need_to_add_questions_first">Se necesita agregar preguntas antes de iniciar el test</string>
+    <string name="test_results">Resultados del test</string>
+    <string name="scored">Puntuación alcanzada</string>
+    <string name="questions_answered">Preguntas respondidas</string>
 </resources>

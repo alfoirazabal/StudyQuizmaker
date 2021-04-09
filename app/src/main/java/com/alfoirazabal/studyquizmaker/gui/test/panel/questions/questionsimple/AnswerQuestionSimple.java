@@ -18,6 +18,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.ViewRunResults;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -196,7 +197,11 @@ public class AnswerQuestionSimple extends AppCompatActivity {
             for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
                 db.questionSimpleResponseDAO().insert(this.testRun.questionSimpleResponses[i]);
             }
-            finish();
+            Intent intentViewResults =
+                    new Intent(AnswerQuestionSimple.this, ViewRunResults.class);
+            intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intentViewResults.putExtra("TESTRUNID", testRun.id);
+            this.startActivity(intentViewResults);
         }).start();
     }
 

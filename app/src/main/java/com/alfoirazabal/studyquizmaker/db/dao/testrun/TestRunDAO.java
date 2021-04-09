@@ -15,6 +15,9 @@ public interface TestRunDAO {
     @Query("SELECT * FROM testrun WHERE testId = :testId")
     List<TestRun> getRunsFromTest(String testId);
 
+    @Query("SELECT * FROM testrun WHERE id = :testRunId")
+    TestRun getById(String testRunId);
+
     @Insert
     void insert(TestRun testRun);
 
