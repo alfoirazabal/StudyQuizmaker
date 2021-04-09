@@ -52,4 +52,6 @@
     <string name="view_answer">Ver respuesta</string>
     <string name="hide_answer">Esconder respuesta</string>
     <string name="answer_score">Puntaje de la respuesta</string>
+    <string name="previous_question">Pregunta anterior</string>
+    <string name="exit">Salir</string>
 </resources>

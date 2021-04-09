@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity(
@@ -32,7 +33,7 @@ import java.util.UUID;
                 @Index(value = {"testRunId"})
         }
 )
-public class QuestionSimpleResponse {
+public class QuestionSimpleResponse implements Serializable {
 
     @PrimaryKey
     @NonNull
@@ -52,6 +53,8 @@ public class QuestionSimpleResponse {
 
     public QuestionSimpleResponse() {
         this.id = UUID.randomUUID().toString();
+        this.answered = "";
+        this.score = 0;
     }
 
 }

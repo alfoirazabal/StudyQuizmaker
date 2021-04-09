@@ -51,4 +51,6 @@
     <string name="view_answer">View answer</string>
     <string name="hide_answer">Hide answer</string>
     <string name="answer_score">Answer score</string>
+    <string name="previous_question">Previous question</string>
+    <string name="exit">Exit</string>
 </resources>

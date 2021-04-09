@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -17,7 +18,13 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AnswerQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.ViewQuestionsSimple;
+
+import java.util.List;
 
 public class PanelTestView extends AppCompatActivity {
 
@@ -110,6 +117,26 @@ public class PanelTestView extends AppCompatActivity {
                 }
                 return resolved;
             });
+        });
+
+        btnStart.setOnClickListener(v -> {
+            new Thread(() -> {
+                TestRun testRun = new TestRun();
+                testRun.testId = testId;
+                List<QuestionSimple> questionSimples = db.questionSimpleDAO().getFromTest(testId);
+                testRun.questionSimpleResponses = new QuestionSimpleResponse[questionSimples.size()];
+                for (int i = 0 ; i < questionSimples.size() ; i++) {
+                    testRun.questionSimpleResponses[i] = new QuestionSimpleResponse();
+                    testRun.questionSimpleResponses[i].testRunId = testRun.id;
+                    testRun.questionSimpleResponses[i].questionSimpleId = questionSimples.get(i).id;
+                }
+                Intent intentAnswerQuestion = new Intent(
+                        getApplicationContext(),
+                        AnswerQuestionSimple.class
+                );
+                intentAnswerQuestion.putExtra("TESTRUN", testRun);
+                PanelTestView.this.startActivity(intentAnswerQuestion);
+            }).start();
         });
     }
 
