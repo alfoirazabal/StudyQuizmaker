@@ -184,9 +184,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
                 startNewAnswerQuestionSimpleActivity(NextQuestionDirection.FORWARD);
             });
         }
-        else if (
-                isLastQuestion
-        ) {
+        if (isLastQuestion) {
             btnNext.setText(R.string.finish);
             btnNext.setBackgroundColor(Color.RED);
             btnNext.setOnClickListener(v -> setCurrentQuestionDataAndFinish());
@@ -196,7 +194,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
                 startNewAnswerQuestionSimpleActivity(NextQuestionDirection.BACKWARD);
             });
         }
-        else {
+        if (!isFirstQuestion && !isLastQuestion) {
             btnNext.setOnClickListener(v -> {
                 setCurrentQuestionData();
                 this.testRun.currentQuestionIndex++;
