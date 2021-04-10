@@ -43,4 +43,23 @@
     <string name="score">Score</string>
     <string name="msg_delete_confirmation_question">Are you sure you want to delete the following question?</string>
     <string name="msg_available_in_future_version">Will be available on a future version. Wait for release</string>
+    <string name="simple_question">Simple question</string>
+    <string name="next_question">Next question</string>
+    <string name="finish">Finish</string>
+    <string name="solved">Solved</string>
+    <string name="question">Question</string>
+    <string name="view_answer">View answer</string>
+    <string name="hide_answer">Hide answer</string>
+    <string name="answer_score">Answer score</string>
+    <string name="previous_question">Previous question</string>
+    <string name="exit">Exit</string>
+    <string name="msg_err_need_to_add_questions_first">You need to add questions before starting the test</string>
+    <string name="test_results">Test results</string>
+    <string name="scored">Scored</string>
+    <string name="questions_answered">Questions answered</string>
+    <string name="pick_a_question">Pick a question</string>
+    <string name="answered">Answered</string>
+    <string name="unanswered">Unanswered</string>
+    <string name="not_active">Not active</string>
+    <string name="pick">Pick</string>
 </resources>
