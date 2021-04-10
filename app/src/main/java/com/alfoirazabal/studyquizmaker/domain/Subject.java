@@ -13,7 +13,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import java.util.UUID;
 
 @Entity
-public class Subject {
+public class Subject implements Comparable<Subject> {
 
     @PrimaryKey
     @NonNull
@@ -33,5 +33,10 @@ public class Subject {
     public String toString(Context context) {
         Resources resources = context.getResources();
         return resources.getString(R.string.name) + ": " + this.name;
+    }
+
+    @Override
+    public int compareTo(Subject o) {
+        return this.name.toLowerCase().compareTo(o.name.toLowerCase());
     }
 }

@@ -66,6 +66,6 @@ public class TestRun implements Serializable, Comparable<TestRun> {
 
     @Override
     public int compareTo(TestRun o) {
-        return this.dateTimeStarted.compareTo(o.dateTimeStarted);
+        return o.dateTimeStarted.compareTo(this.dateTimeStarted);
     }
 }

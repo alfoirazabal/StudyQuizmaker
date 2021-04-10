@@ -15,6 +15,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews.AdapterTestRun;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewTestRuns extends AppCompatActivity {
@@ -65,6 +66,7 @@ public class ViewTestRuns extends AppCompatActivity {
         this.testRuns.clear();
         new Thread(() -> {
             this.testRuns.addAll(db.testRunDAO().getRunsFromTest(this.testId));
+            Collections.sort(this.testRuns);
             runOnUiThread(() -> adapterTestRun.notifyDataSetChanged());
         }).start();
     }

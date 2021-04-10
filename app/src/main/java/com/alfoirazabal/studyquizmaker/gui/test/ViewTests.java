@@ -19,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.gui.test.recyclerviews.AdapterTestView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewTests extends AppCompatActivity {
@@ -85,6 +86,7 @@ public class ViewTests extends AppCompatActivity {
         tests.clear();
         new Thread(() -> {
             tests.addAll(db.testDAO().getFromTopic(topicId));
+            Collections.sort(tests);
             runOnUiThread(() -> adapterTest.notifyDataSetChanged());
         }).start();
     }

@@ -28,7 +28,7 @@ import java.util.UUID;
                 @Index(value = {"subjectId"})
         }
 )
-public class Topic {
+public class Topic implements Comparable<Topic> {
 
     @PrimaryKey
     @NonNull
@@ -53,4 +53,8 @@ public class Topic {
         return resources.getString(R.string.name) + ": " + this.name;
     }
 
+    @Override
+    public int compareTo(Topic o) {
+        return this.name.toLowerCase().compareTo(o.name.toLowerCase());
+    }
 }

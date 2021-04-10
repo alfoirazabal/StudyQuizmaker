@@ -18,6 +18,7 @@ import com.alfoirazabal.studyquizmaker.gui.topic.recyclerviews.AdapterTopicView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewTopics extends AppCompatActivity {
@@ -83,6 +84,7 @@ public class ViewTopics extends AppCompatActivity {
         new Thread(() -> {
             topics.clear();
             topics.addAll(db.topicDAO().getFromSubject(subjectId));
+            Collections.sort(topics);
             runOnUiThread(() -> adapterTopics.notifyDataSetChanged());
         }).start();
     }
