@@ -13,6 +13,7 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(
@@ -29,7 +30,7 @@ import java.util.UUID;
                 @Index(value = {"testId"})
         }
 )
-public class TestRun implements Serializable {
+public class TestRun implements Serializable, Comparable<TestRun> {
 
     @PrimaryKey
     @NonNull
@@ -47,6 +48,12 @@ public class TestRun implements Serializable {
     @ColumnInfo(name = "numberOfTotalQuestions")
     public int numberOfTotalQuestions;
 
+    @ColumnInfo(name = "dateTimeStarted")
+    public Date dateTimeStarted;
+
+    @ColumnInfo(name = "dateTimeFinished")
+    public Date dateTimeFinished;
+
     @Ignore
     public QuestionSimpleResponse[] questionSimpleResponses;
 
@@ -56,5 +63,11 @@ public class TestRun implements Serializable {
     public TestRun() {
         this.id = UUID.randomUUID().toString();
         this.currentQuestionIndex = 0;
+        this.dateTimeStarted = new Date();
+    }
+
+    @Override
+    public int compareTo(TestRun o) {
+        return this.dateTimeStarted.compareTo(o.dateTimeStarted);
     }
 }

@@ -2,6 +2,7 @@ package com.alfoirazabal.studyquizmaker.db;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.alfoirazabal.studyquizmaker.db.dao.SubjectDAO;
 import com.alfoirazabal.studyquizmaker.db.dao.TestDAO;
@@ -36,6 +37,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
         },
         version = 1
 )
+@TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract SubjectDAO subjectDAO();
