@@ -30,7 +30,8 @@ import java.util.UUID;
                 )
         },
         indices = {
-                @Index(value = {"testRunId"})
+                @Index(value = {"testRunId"}),
+                @Index(value = {"questionSimpleId"})
         }
 )
 public class QuestionSimpleResponse implements Serializable {
