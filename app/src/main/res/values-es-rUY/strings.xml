@@ -65,4 +65,5 @@
     <string name="pick">Elegir</string>
     <string name="finish_test">Terminar test</string>
     <string name="msg_confirmation_finish_test">¿Seguro de que desea terminar el test?</string>
+    <string name="test_runs">Corridas de tests</string>
 </resources>

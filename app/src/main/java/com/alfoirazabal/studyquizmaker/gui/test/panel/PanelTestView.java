@@ -22,6 +22,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.AnswerQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.ViewQuestionsSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results.ViewTestRuns;
 
 import java.util.List;
 import java.util.Objects;
@@ -147,6 +148,14 @@ public class PanelTestView extends AppCompatActivity {
                 PanelTestView.this.startActivity(intentAnswerQuestion);
             }
         }).start());
+
+        txtbtnViewScores.setOnClickListener(v -> {
+            Intent intentViewTestRuns = new Intent(
+                    PanelTestView.this, ViewTestRuns.class
+            );
+            intentViewTestRuns.putExtra("TESTID", testId);
+            startActivity(intentViewTestRuns);
+        });
     }
 
     @Override

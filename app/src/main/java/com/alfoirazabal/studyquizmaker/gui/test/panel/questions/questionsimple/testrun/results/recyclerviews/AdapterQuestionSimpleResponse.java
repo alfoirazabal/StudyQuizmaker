@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.runresults.recyclerviews;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results.recyclerviews;
 
 import android.graphics.Color;
 import android.os.Handler;
