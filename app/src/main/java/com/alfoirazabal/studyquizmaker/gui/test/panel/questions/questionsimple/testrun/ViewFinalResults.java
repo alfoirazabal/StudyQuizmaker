@@ -15,7 +15,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 
 import java.util.Objects;
 
-public class ViewRunResults extends AppCompatActivity {
+public class ViewFinalResults extends AppCompatActivity {
 
     private TextView txtScored;
     private TextView txtQuestionsAnswered;
