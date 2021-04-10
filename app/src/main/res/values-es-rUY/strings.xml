@@ -63,4 +63,6 @@
     <string name="unanswered">No respondida</string>
     <string name="not_active">No activa</string>
     <string name="pick">Elegir</string>
+    <string name="finish_test">Terminar test</string>
+    <string name="msg_confirmation_finish_test">¿Seguro de que desea terminar el test?</string>
 </resources>

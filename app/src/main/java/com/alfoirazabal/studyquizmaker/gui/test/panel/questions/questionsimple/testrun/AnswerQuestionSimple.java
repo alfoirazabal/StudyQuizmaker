@@ -18,8 +18,8 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
-import com.alfoirazabal.studyquizmaker.domain.testrun.ViewRunResults;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
+import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
@@ -176,9 +176,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
                 this.testRun.currentQuestionIndex == this.testRun.questionSimpleResponses.length - 1;
 
         if (isFirstQuestion) {
-            btnPrevious.setText(R.string.exit);
-            btnPrevious.setBackgroundColor(Color.RED);
-            btnPrevious.setOnClickListener(v -> finish());
+            btnPrevious.setEnabled(false);
             btnNext.setOnClickListener(v -> {
                 setCurrentQuestionData();
                 this.testRun.currentQuestionIndex++;
@@ -213,27 +211,9 @@ public class AnswerQuestionSimple extends AppCompatActivity {
 
     private void setCurrentQuestionDataAndFinish() {
         setCurrentQuestionData();
+        TestRunProcessor testRunProcessor = new TestRunProcessor(this.testRun);
         new Thread(() -> {
-            int numberOfAnsweredQuestions = 0;
-            double totalScore = 0;
-            double totalScored = 0;
-            for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
-                QuestionSimpleResponse currentQuestionSimpleResponse =
-                        this.testRun.questionSimpleResponses[i];
-                if (currentQuestionSimpleResponse.isAnswered) {
-                    numberOfAnsweredQuestions++;
-                }
-                totalScore += db.questionSimpleDAO().getById(
-                        currentQuestionSimpleResponse.questionSimpleId
-                ).score;
-                totalScored += currentQuestionSimpleResponse.score;
-            }
-            this.testRun.numberOfAnsweredQuestions = numberOfAnsweredQuestions;
-            this.testRun.scoredPercentage = Math.round((totalScored / totalScore) * 100);
-            db.testRunDAO().insert(testRun);
-            for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
-                db.questionSimpleResponseDAO().insert(this.testRun.questionSimpleResponses[i]);
-            }
+            testRunProcessor.saveTestRunToDatabase(db);
             Intent intentViewResults =
                     new Intent(AnswerQuestionSimple.this, ViewRunResults.class);
             intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

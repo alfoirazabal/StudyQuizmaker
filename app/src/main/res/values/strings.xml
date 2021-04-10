@@ -62,4 +62,6 @@
     <string name="unanswered">Unanswered</string>
     <string name="not_active">Not active</string>
     <string name="pick">Pick</string>
+    <string name="finish_test">Finish test</string>
+    <string name="msg_confirmation_finish_test">Are you sure you want to end this test?</string>
 </resources>

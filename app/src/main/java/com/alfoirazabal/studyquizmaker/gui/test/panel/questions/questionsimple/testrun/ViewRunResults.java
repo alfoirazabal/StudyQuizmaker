@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.domain.testrun;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,6 +11,7 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 
 import java.util.Objects;
 
