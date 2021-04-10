@@ -66,4 +66,6 @@
     <string name="msg_confirmation_finish_test">Are you sure you want to end this test?</string>
     <string name="test_runs">Test runs</string>
     <string name="msg_delete_confirmation_testrun">Are you sure you want to delete the selected run?</string>
+    <string name="date_started_on">Started on</string>
+    <string name="duration">Duration</string>
 </resources>

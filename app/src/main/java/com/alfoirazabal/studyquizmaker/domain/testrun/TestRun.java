@@ -1,7 +1,5 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

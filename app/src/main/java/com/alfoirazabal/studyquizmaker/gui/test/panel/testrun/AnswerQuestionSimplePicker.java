@@ -16,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.recyclerviews.AdapterQuestionSimplePicker;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
 import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
 
 public class AnswerQuestionSimplePicker extends AppCompatActivity {
