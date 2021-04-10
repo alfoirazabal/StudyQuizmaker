@@ -58,4 +58,9 @@
     <string name="test_results">Resultados del test</string>
     <string name="scored">Puntuación alcanzada</string>
     <string name="questions_answered">Preguntas respondidas</string>
+    <string name="pick_a_question">Eliga una pregunta</string>
+    <string name="answered">Respondida</string>
+    <string name="unanswered">No respondida</string>
+    <string name="not_active">No activa</string>
+    <string name="pick">Elegir</string>
 </resources>

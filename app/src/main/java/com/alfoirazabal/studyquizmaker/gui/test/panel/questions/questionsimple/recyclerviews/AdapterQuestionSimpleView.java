@@ -118,6 +118,8 @@ public class AdapterQuestionSimpleView extends
 
     public AdapterQuestionSimpleView(List<QuestionSimple> questionSimples) {
         this.questionSimples = questionSimples;
+
+        this.setHasStableIds(true);
     }
 
     @NonNull

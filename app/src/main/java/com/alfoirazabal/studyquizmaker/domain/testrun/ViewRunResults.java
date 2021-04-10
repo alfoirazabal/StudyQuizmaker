@@ -41,10 +41,11 @@ public class ViewRunResults extends AppCompatActivity {
             ).build();
             TestRun testRun = db.testRunDAO().getById(testRunId);
             runOnUiThread(() -> {
-                txtScored.setText(testRun.scoredPercentage + "%");
-                txtQuestionsAnswered.setText(
-                        testRun.numberOfAnsweredQuestions + "/" + testRun.numberOfTotalQuestions
-                );
+                String scoredPrecentageIndicator = testRun.scoredPercentage + "%";
+                String answeredQuestionsIndicator =
+                        testRun.numberOfAnsweredQuestions + "/" + testRun.numberOfTotalQuestions;
+                txtScored.setText(scoredPrecentageIndicator);
+                txtQuestionsAnswered.setText(answeredQuestionsIndicator);
                 btnOk.setEnabled(true);
             });
         }).start();

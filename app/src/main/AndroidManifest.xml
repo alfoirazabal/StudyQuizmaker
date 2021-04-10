@@ -30,6 +30,7 @@
         <activity android:name=".gui.test.panel.questions.questionsimple.UpdateQuestionSimple" />
         <activity android:name=".gui.test.panel.questions.questionsimple.AnswerQuestionSimple" />
         <activity android:name=".domain.testrun.ViewRunResults" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.AnswerQuestionSimplePicker" />
     </application>
 
 </manifest>

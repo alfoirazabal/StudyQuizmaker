@@ -57,4 +57,9 @@
     <string name="test_results">Test results</string>
     <string name="scored">Scored</string>
     <string name="questions_answered">Questions answered</string>
+    <string name="pick_a_question">Pick a question</string>
+    <string name="answered">Answered</string>
+    <string name="unanswered">Unanswered</string>
+    <string name="not_active">Not active</string>
+    <string name="pick">Pick</string>
 </resources>
