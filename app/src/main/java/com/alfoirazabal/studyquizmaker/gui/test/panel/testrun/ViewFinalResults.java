@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun;
 
 import android.os.Bundle;
 import android.widget.Button;

@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results.recyclerviews.AdapterTestRun;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews.AdapterTestRun;
 
 import java.util.ArrayList;
 import java.util.List;

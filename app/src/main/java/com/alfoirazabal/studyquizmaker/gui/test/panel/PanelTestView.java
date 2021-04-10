@@ -20,9 +20,9 @@ import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.ViewQuestionsSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results.ViewTestRuns;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewTestRuns;
 
 import java.util.List;
 import java.util.Objects;

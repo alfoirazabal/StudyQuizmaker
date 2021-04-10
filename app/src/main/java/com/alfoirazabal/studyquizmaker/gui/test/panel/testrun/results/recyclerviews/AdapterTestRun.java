@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results.recyclerviews;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.results.ViewRunResults;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewRunResults;
 
 import java.util.List;
 
