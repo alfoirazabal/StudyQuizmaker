@@ -67,4 +67,6 @@
     <string name="msg_confirmation_finish_test">¿Seguro de que desea terminar el test?</string>
     <string name="test_runs">Corridas de tests</string>
     <string name="msg_delete_confirmation_testrun">¿Seguro de que desea borrar la corrida seleccionada?</string>
+    <string name="date_started_on">Empezado el</string>
+    <string name="duration">Duración</string>
 </resources>

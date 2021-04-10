@@ -19,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
 import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
 import com.google.android.material.textfield.TextInputEditText;
 

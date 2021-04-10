@@ -4,6 +4,8 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 
+import java.util.Date;
+
 public class TestRunProcessor {
 
     private TestRun testRun;
@@ -16,6 +18,7 @@ public class TestRunProcessor {
         int numberOfAnsweredQuestions = 0;
         double totalScore = 0;
         double totalScored = 0;
+        this.testRun.dateTimeFinished = new Date();
         for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
             QuestionSimpleResponse currentQuestionSimpleResponse =
                     this.testRun.questionSimpleResponses[i];

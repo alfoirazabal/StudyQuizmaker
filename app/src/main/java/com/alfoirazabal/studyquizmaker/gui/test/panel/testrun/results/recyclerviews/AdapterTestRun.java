@@ -19,7 +19,9 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewRunResults;
+import com.alfoirazabal.studyquizmaker.helpers.dates.DateTimeDifference;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class AdapterTestRun extends RecyclerView.Adapter<AdapterTestRun.ViewHolder> {
@@ -30,12 +32,16 @@ public class AdapterTestRun extends RecyclerView.Adapter<AdapterTestRun.ViewHold
 
         private final TextView txtScore;
         private final ProgressBar progressBarScore;
+        private final TextView txtStartedOn;
+        private final TextView txtDuration;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.txtScore = itemView.findViewById(R.id.txt_score);
             this.progressBarScore = itemView.findViewById(R.id.progressbar_score);
+            this.txtStartedOn = itemView.findViewById(R.id.txt_started_on);
+            this.txtDuration = itemView.findViewById(R.id.txt_duration);
             ImageView imgBtnDelete = itemView.findViewById(R.id.imgbtn_delete);
 
             this.progressBarScore.setMax(100);
@@ -84,6 +90,14 @@ public class AdapterTestRun extends RecyclerView.Adapter<AdapterTestRun.ViewHold
         public ProgressBar getProgressBarScore() {
             return progressBarScore;
         }
+
+        public TextView getTxtStartedOn() {
+            return txtStartedOn;
+        }
+
+        public TextView getTxtDuration() {
+            return txtDuration;
+        }
     }
 
     public AdapterTestRun(List<TestRun> testRuns) {
@@ -110,6 +124,13 @@ public class AdapterTestRun extends RecyclerView.Adapter<AdapterTestRun.ViewHold
         String scoredPercentageIndicator = currentTestRun.scoredPercentage + "%";
         holder.getTxtScore().setText(scoredPercentageIndicator);
         holder.getProgressBarScore().setProgress((int)currentTestRun.scoredPercentage);
+        DateFormat dateFormat =
+                android.text.format.DateFormat.getDateFormat(holder.itemView.getContext());
+        holder.getTxtStartedOn().setText(dateFormat.format(currentTestRun.dateTimeStarted));
+        DateTimeDifference dateTimeDifference = new DateTimeDifference(
+                currentTestRun.dateTimeStarted, currentTestRun.dateTimeFinished
+        );
+        holder.getTxtDuration().setText(dateTimeDifference.toString());
     }
 
     @Override

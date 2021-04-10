@@ -16,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews.AdapterSubjectV
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewSubjects extends AppCompatActivity {
@@ -62,6 +63,7 @@ public class ViewSubjects extends AppCompatActivity {
         new Thread(() -> {
             subjects.clear();
             subjects.addAll(db.subjectDAO().getAll());
+            Collections.sort(subjects);
             runOnUiThread(() -> adapterSubject.notifyDataSetChanged());
         }).start();
     }
