@@ -9,13 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudyQuizmaker">
-        <activity android:name=".MainActivity">
+        <activity android:name=".gui.subject.ViewSubjects">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".gui.subject.AddSubject" />
+        <activity android:name=".gui.subject.UpdateSubject" />
+        <activity android:name=".gui.topic.ViewTopics" />
+        <activity android:name=".gui.topic.AddTopic" />
+        <activity android:name=".gui.topic.UpdateTopic" />
+        <activity android:name=".gui.test.ViewTests" />
+        <activity android:name=".gui.test.AddTest" />
+        <activity android:name=".gui.test.UpdateTest" />
+        <activity android:name=".gui.test.panel.PanelTestView" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.ViewQuestionsSimple" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.AddQuestionSimple" />
+        <activity android:name=".gui.test.panel.questions.questionsimple.UpdateQuestionSimple" />
+        <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimple" />
+        <activity android:name=".gui.test.panel.testrun.results.ViewFinalResults" />
+        <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimplePicker" />
+        <activity android:name=".gui.test.panel.testrun.results.ViewRunResults" />
+        <activity android:name=".gui.test.panel.testrun.results.ViewTestRuns" />
     </application>
 
 </manifest>
