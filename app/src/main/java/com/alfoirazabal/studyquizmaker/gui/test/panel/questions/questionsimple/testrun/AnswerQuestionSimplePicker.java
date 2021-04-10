@@ -1,6 +1,5 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -76,7 +75,7 @@ public class AnswerQuestionSimplePicker extends AppCompatActivity {
             ).build();
             testRunProcessor.saveTestRunToDatabase(db);
             Intent intentViewResults =
-                    new Intent(AnswerQuestionSimplePicker.this, ViewRunResults.class);
+                    new Intent(AnswerQuestionSimplePicker.this, ViewFinalResults.class);
             intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intentViewResults.putExtra("TESTRUNID", currentTestRun.id);
             this.startActivity(intentViewResults);

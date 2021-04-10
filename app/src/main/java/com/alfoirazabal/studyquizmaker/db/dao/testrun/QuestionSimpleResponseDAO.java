@@ -13,7 +13,7 @@ import java.util.List;
 public interface QuestionSimpleResponseDAO {
 
     @Query("SELECT * FROM questionSimpleResponse WHERE testRunId = :testRunId")
-    List<QuestionSimpleResponse> getResponsesFromTestRun(String testRunId);
+    QuestionSimpleResponse[] getResponsesFromTestRun(String testRunId);
 
     @Insert
     void insert(QuestionSimpleResponse questionSimpleResponse);

@@ -215,7 +215,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
         new Thread(() -> {
             testRunProcessor.saveTestRunToDatabase(db);
             Intent intentViewResults =
-                    new Intent(AnswerQuestionSimple.this, ViewRunResults.class);
+                    new Intent(AnswerQuestionSimple.this, ViewFinalResults.class);
             intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intentViewResults.putExtra("TESTRUNID", testRun.id);
             this.startActivity(intentViewResults);
