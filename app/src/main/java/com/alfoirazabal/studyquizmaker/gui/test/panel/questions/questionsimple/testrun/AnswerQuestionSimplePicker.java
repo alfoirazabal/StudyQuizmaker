@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.recyclerviews.AdapterQuestionSimplePicker;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.recyclerviews.AdapterQuestionSimplePicker;
 
 public class AnswerQuestionSimplePicker extends AppCompatActivity {
 

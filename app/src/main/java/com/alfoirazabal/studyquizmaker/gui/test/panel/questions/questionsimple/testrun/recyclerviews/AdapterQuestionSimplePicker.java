@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.recyclerviews;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.recyclerviews;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +18,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun.AnswerQuestionSimple;
 
 public class AdapterQuestionSimplePicker extends
         RecyclerView.Adapter<AdapterQuestionSimplePicker.ViewHolder>{

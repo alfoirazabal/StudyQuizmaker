@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.testrun;
 
 import android.content.Intent;
 import android.graphics.Color;
