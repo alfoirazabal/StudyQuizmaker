@@ -25,10 +25,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6pt"
         android:layout_marginLeft="6pt"
-        android:layout_marginEnd="6pt"
-        android:layout_marginRight="6pt"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/txt_score"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtn_delete"
         app:layout_constraintStart_toEndOf="@+id/txt_score"
         app:layout_constraintTop_toTopOf="@+id/txt_score" />
+
+    <ImageView
+        android:id="@+id/imgbtn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>
