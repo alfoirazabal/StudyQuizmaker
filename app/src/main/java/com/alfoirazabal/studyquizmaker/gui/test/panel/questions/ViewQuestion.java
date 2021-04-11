@@ -2,6 +2,8 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel.questions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +16,6 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AddQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview.AdapterQuestionView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,11 +62,32 @@ public class ViewQuestion extends AppCompatActivity {
         recyclerviewSimpleQuestions.setAdapter(adapterQuestionView);
 
         fabtnAdd.setOnClickListener(v -> {
-            Intent intentAddQuestionSimple = new Intent(
-                    this, AddQuestionSimple.class
+            PopupMenu popupMenu = new PopupMenu(
+                    getApplicationContext(),
+                    fabtnAdd
             );
-            intentAddQuestionSimple.putExtra("TESTID", currentTestId);
-            startActivity(intentAddQuestionSimple);
+            popupMenu.inflate(R.menu.menu_question_add_question_type);
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.item_simple_question:
+                        Intent intentAddQuestionSimple = new Intent(
+                                this, AddQuestionSimple.class
+                        );
+                        intentAddQuestionSimple.putExtra("TESTID", currentTestId);
+                        startActivity(intentAddQuestionSimple);
+                        break;
+                    case R.id.item_multiple_choice:
+                    case R.id.item_true_or_false:
+                        Toast.makeText(
+                                getApplicationContext(),
+                                R.string.msg_available_in_future_version,
+                                Toast.LENGTH_LONG
+                        ).show();
+                        break;
+                }
+                return true;
+            });
         });
 
         new Thread(() -> {

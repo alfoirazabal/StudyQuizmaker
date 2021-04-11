@@ -86,39 +86,10 @@ public class PanelTestView extends AppCompatActivity {
         }).start();
 
         txtbtnManageQuestions.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
-            popupMenu.inflate(R.menu.menu_test_panel_manage_questions);
-            popupMenu.show();
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                boolean resolved = true;
-                int menuItemId = menuItem.getItemId();
-                if (menuItemId == R.id.item_simple_questions) {
-                    Intent intentViewSimpleQuestions =
-                            new Intent(getApplicationContext(), ViewQuestion.class);
-                    intentViewSimpleQuestions.putExtra("TESTID", testId);
-                    startActivity(intentViewSimpleQuestions);
-                }
-                else if (menuItemId == R.id.item_multiple_choice) {
-                    // TODO
-                    Toast.makeText(
-                            getApplicationContext(),
-                            R.string.msg_available_in_future_version,
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-                else if (menuItemId == R.id.item_true_or_false) {
-                    // TODO
-                    Toast.makeText(
-                            getApplicationContext(),
-                            R.string.msg_available_in_future_version,
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-                else {
-                    resolved = false;
-                }
-                return resolved;
-            });
+            Intent intentViewQuestions =
+                    new Intent(getApplicationContext(), ViewQuestion.class);
+            intentViewQuestions.putExtra("TESTID", testId);
+            startActivity(intentViewQuestions);
         });
 
         btnStart.setOnClickListener(v -> new Thread(() -> {
