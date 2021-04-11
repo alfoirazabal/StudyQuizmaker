@@ -20,8 +20,8 @@ import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.ViewQuestion;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.ViewQuestionsSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewTestRuns;
 import com.alfoirazabal.studyquizmaker.helpers.ArrayShuffler;
 
@@ -94,7 +94,7 @@ public class PanelTestView extends AppCompatActivity {
                 int menuItemId = menuItem.getItemId();
                 if (menuItemId == R.id.item_simple_questions) {
                     Intent intentViewSimpleQuestions =
-                            new Intent(getApplicationContext(), ViewQuestionsSimple.class);
+                            new Intent(getApplicationContext(), ViewQuestion.class);
                     intentViewSimpleQuestions.putExtra("TESTID", testId);
                     startActivity(intentViewSimpleQuestions);
                 }

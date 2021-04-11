@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,20 +13,22 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.recyclerviews.AdapterQuestionSimpleView;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AddQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview.AdapterQuestionView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class ViewQuestionsSimple extends AppCompatActivity {
+public class ViewQuestion extends AppCompatActivity {
 
-    private RecyclerView recyclerviewSimpleQuestions;
     private FloatingActionButton fabtnAdd;
 
-    private List<QuestionSimple> questionsSimple;
-    private AdapterQuestionSimpleView adapterQuestionSimpleView;
+    private List<Question> questions;
+    private AdapterQuestionView adapterQuestionView;
 
     private AppDatabase db;
 
@@ -37,10 +39,10 @@ public class ViewQuestionsSimple extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions_simple_view);
 
-        recyclerviewSimpleQuestions = findViewById(R.id.recyclerview_simple_questions);
+        RecyclerView recyclerviewSimpleQuestions = findViewById(R.id.recyclerview_simple_questions);
         fabtnAdd = findViewById(R.id.fabtn_add);
 
-        getSupportActionBar().setSubtitle(R.string.questions_simple);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.questions_simple);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -51,12 +53,12 @@ public class ViewQuestionsSimple extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         currentTestId = bundle.getString("TESTID");
 
-        questionsSimple = new ArrayList<>();
+        questions = new ArrayList<>();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        this.recyclerviewSimpleQuestions.setLayoutManager(layoutManager);
-        adapterQuestionSimpleView = new AdapterQuestionSimpleView(questionsSimple);
-        this.recyclerviewSimpleQuestions.setAdapter(adapterQuestionSimpleView);
+        recyclerviewSimpleQuestions.setLayoutManager(layoutManager);
+        adapterQuestionView = new AdapterQuestionView(questions);
+        recyclerviewSimpleQuestions.setAdapter(adapterQuestionView);
 
         fabtnAdd.setOnClickListener(v -> {
             Intent intentAddQuestionSimple = new Intent(
@@ -78,10 +80,12 @@ public class ViewQuestionsSimple extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        questionsSimple.clear();
+        questions.clear();
         new Thread(() -> {
-            questionsSimple.addAll(db.questionSimpleDAO().getFromTest(currentTestId));
-            runOnUiThread(() -> adapterQuestionSimpleView.notifyDataSetChanged());
+            questions.addAll(db.questionSimpleDAO().getFromTest(currentTestId));
+            questions.addAll(db.questionTFDAO().getFromTest(currentTestId));
+            questions.addAll(db.questionMCDAO().getFromTest(currentTestId));
+            runOnUiThread(() -> adapterQuestionView.notifyDataSetChanged());
         }).start();
     }
 }
