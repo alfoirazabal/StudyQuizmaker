@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.recyclerviews;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,28 +17,31 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
 
 import java.util.List;
 
-public class AdapterQuestionSimpleView extends
-        RecyclerView.Adapter<AdapterQuestionSimpleView.ViewHolder> {
+public class AdapterQuestionView extends
+        RecyclerView.Adapter<AdapterQuestionView.ViewHolder> {
 
-    private final List<QuestionSimple> questionSimples;
+    private final List<Question> questions;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView txtTitle;
+        private final TextView txtQuestionType;
         private final TextView txtScore;
         private final TextView txtAnswer;
+        private final TextView txtWrongAnswers;
 
         public ViewHolder(View view) {
             super(view);
 
             txtTitle = view.findViewById(R.id.txt_title);
+            txtQuestionType = view.findViewById(R.id.txt_question_type);
             txtScore = view.findViewById(R.id.txt_score_total);
             txtAnswer = view.findViewById(R.id.txt_answer);
+            txtWrongAnswers = view.findViewById(R.id.txt_wrong_answers);
 
             view.setOnClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
@@ -65,27 +68,27 @@ public class AdapterQuestionSimpleView extends
         }
 
         private void handleEdit() {
-            int questionSimplePosition = getAdapterPosition();
-            QuestionSimple questionSimpleToEdit = questionSimples.get(questionSimplePosition);
+            int questionToEditPosition = getAdapterPosition();
+            Question questionToEdit = questions.get(questionToEditPosition);
             Intent intentEditQuestionSimple = new Intent(
                     itemView.getContext(),
-                    UpdateQuestionSimple.class
+                    questionToEdit.getUpdateGUIClass()
             );
-            intentEditQuestionSimple.putExtra("TESTID", questionSimpleToEdit.testId);
-            intentEditQuestionSimple.putExtra("QUESTIONSIMPLEID", questionSimpleToEdit.id);
+            intentEditQuestionSimple.putExtra("TESTID", questionToEdit.getTestId());
+            intentEditQuestionSimple.putExtra("QUESTIONID", questionToEdit.getId());
             itemView.getContext().startActivity(intentEditQuestionSimple);
         }
 
         private void handleDelete() {
-            int questionSimplePosition = getAdapterPosition();
-            QuestionSimple questionSimpleToDelete = questionSimples.get(questionSimplePosition);
+            int questionPosition = getAdapterPosition();
+            Question questionToDelete = questions.get(questionPosition);
             Context context = itemView.getContext();
-            String testDeletionDescription =
+            String questionDeletionDescription =
                     context.getString(R.string.msg_delete_confirmation_question) + "\n" +
-                            questionSimpleToDelete.toString(context);
+                            questionToDelete.toString(context);
             new AlertDialog.Builder(itemView.getContext())
                     .setTitle(R.string.delete_confirmation)
-                    .setMessage(testDeletionDescription)
+                    .setMessage(questionDeletionDescription)
                     .setIcon(android.R.drawable.ic_delete)
                     .setPositiveButton(R.string.yes, (dialog, which) -> {
                         new Thread(() -> {
@@ -94,10 +97,10 @@ public class AdapterQuestionSimpleView extends
                                     AppDatabase.class,
                                     AppConstants.getDBLocation(context)
                             ).build();
-                            db.questionSimpleDAO().delete(questionSimpleToDelete);
+                            questionToDelete.deleteFromDB(db);
                         }).start();
-                        questionSimples.remove(questionSimpleToDelete);
-                        notifyItemRemoved(questionSimplePosition);
+                        questions.remove(questionToDelete);
+                        notifyDataSetChanged();
                     })
                     .setNegativeButton(R.string.no, null)
                     .show();
@@ -107,6 +110,8 @@ public class AdapterQuestionSimpleView extends
             return txtTitle;
         }
 
+        public TextView getTxtQuestionType() { return txtQuestionType; }
+
         public TextView getTxtScore() {
             return txtScore;
         }
@@ -114,37 +119,51 @@ public class AdapterQuestionSimpleView extends
         public TextView getTxtAnswer() {
             return txtAnswer;
         }
+
+        public TextView getTxtWrongAnswers() {
+            return txtWrongAnswers;
+        }
     }
 
-    public AdapterQuestionSimpleView(List<QuestionSimple> questionSimples) {
-        this.questionSimples = questionSimples;
+    public AdapterQuestionView(List<Question> questions) {
+        this.questions = questions;
 
         this.setHasStableIds(true);
     }
 
     @NonNull
     @Override
-    public AdapterQuestionSimpleView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterQuestionView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.recyclerview_adapter_question_simple,
+                R.layout.recyclerview_adapter_question,
                 parent,
                 false
         );
 
-        return new AdapterQuestionSimpleView.ViewHolder(view);
+        return new AdapterQuestionView.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterQuestionSimpleView.ViewHolder holder, int position) {
-        QuestionSimple currentQuestionSimple = questionSimples.get(position);
-        holder.getTxtTitle().setText(currentQuestionSimple.title);
-        holder.getTxtAnswer().setText(currentQuestionSimple.answer);
-        holder.getTxtScore().setText(String.valueOf(currentQuestionSimple.score));
+    public void onBindViewHolder(@NonNull AdapterQuestionView.ViewHolder holder, int position) {
+        Question currentQuestion = questions.get(position);
+        holder.getTxtTitle().setText(currentQuestion.getTitle());
+        holder.getTxtQuestionType().setText(currentQuestion.getQuestionTypeName(
+                holder.itemView.getContext()
+        ));
+        holder.getTxtAnswer().setText(currentQuestion.getAnswer());
+        try {
+            String wrongAnswers = currentQuestion.getWrongAnswers();
+            holder.getTxtWrongAnswers().setVisibility(View.VISIBLE);
+            holder.getTxtWrongAnswers().setText(wrongAnswers);
+        } catch (Question.NoWrongAnswers noWrongAnswers) {
+            holder.getTxtWrongAnswers().setVisibility(View.GONE);
+        }
+        holder.getTxtScore().setText(String.valueOf(currentQuestion.getScore()));
     }
 
     @Override
     public int getItemCount() {
-        return questionSimples.size();
+        return questions.size();
     }
 
     @Override

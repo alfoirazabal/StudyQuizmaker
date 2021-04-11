@@ -71,7 +71,7 @@ public class UpdateQuestionSimple extends AppCompatActivity {
         new Thread(() -> {
             Bundle bundle = getIntent().getExtras();
             currentTestId = bundle.getString("TESTID");
-            currentSimpleQuestionId = bundle.getString("QUESTIONSIMPLEID");
+            currentSimpleQuestionId = bundle.getString("QUESTIONID");
             currentQuestionSimple = db.questionSimpleDAO().getById(currentSimpleQuestionId);
             List<String> questionSimpleTitles = db.questionSimpleDAO().getAllTitles(currentTestId);
             searchInList = new SearchInList(questionSimpleTitles);

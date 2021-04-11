@@ -10,7 +10,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.R;
+import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 import java.util.UUID;
 
@@ -28,7 +30,7 @@ import java.util.UUID;
                 @Index(value = {"testId"})
         }
 )
-public class QuestionSimple {
+public class QuestionSimple implements Question {
 
     @PrimaryKey
     @NonNull
@@ -50,8 +52,53 @@ public class QuestionSimple {
         this.id = UUID.randomUUID().toString();
     }
 
+    @Override
     public String toString(Context context) {
         return context.getString(R.string.title) + ": " + this.title;
     }
 
+    @Override
+    public void deleteFromDB(AppDatabase db) {
+        db.questionSimpleDAO().delete(this);
+    }
+
+    @Override
+    public Class<?> getUpdateGUIClass() {
+        return UpdateQuestionSimple.class;
+    }
+
+    @Override
+    public String getTestId() {
+        return this.testId;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.title;
+    }
+
+    @Override
+    public double getScore() {
+        return this.score;
+    }
+
+    @Override
+    public String getAnswer() {
+        return this.answer;
+    }
+
+    @Override
+    public String getWrongAnswers() throws NoWrongAnswers {
+        throw new NoWrongAnswers();
+    }
+
+    @Override
+    public String getQuestionTypeName(Context context) {
+        return context.getString(R.string.simple_question);
+    }
 }

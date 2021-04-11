@@ -3,7 +3,7 @@
 
     <item
         android:title="@string/questions_simple"
-        android:id="@+id/item_simple_questions" />
+        android:id="@+id/item_simple_question" />
 
     <item
         android:title="@string/questions_multiple_choice"

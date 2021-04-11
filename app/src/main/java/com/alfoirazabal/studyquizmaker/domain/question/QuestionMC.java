@@ -6,12 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.R;
+import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(
@@ -28,7 +33,7 @@ import java.util.UUID;
                 @Index(value = {"testId"})
         }
 )
-public class QuestionMC {
+public class QuestionMC implements Question {
 
     @PrimaryKey
     @NonNull
@@ -43,12 +48,99 @@ public class QuestionMC {
     @ColumnInfo(name = "description")
     public String description;
 
+    @Ignore
+    public QuestionOptionMC[] questionOptionMCs;
+
+    @Ignore
+    public QuestionOptionMC rightOption;
+
     public QuestionMC() {
         this.id = UUID.randomUUID().toString();
     }
 
+    @Override
     public String toString(Context context) {
         return context.getString(R.string.title) + ": " + this.title;
     }
 
+    @Override
+    public void deleteFromDB(AppDatabase db) {
+        db.questionMCDAO().delete(this);
+    }
+
+    @Override
+    public Class<?> getUpdateGUIClass() {
+        throw new UnsupportedOperationException("No Update GUI for MC Question yet!");
+    }
+
+    @Override
+    public String getTestId() {
+        return this.testId;
+    }
+
+    @NonNull
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.title;
+    }
+
+    @Override
+    public double getScore() {
+        if (this.rightOption == null) {
+            setRightOption();
+        }
+        return this.rightOption.score;
+    }
+
+    @Override
+    public String getAnswer() {
+        if (this.rightOption == null) {
+            setRightOption();
+        }
+        return this.rightOption.answerText;
+    }
+
+    @Override
+    public String getWrongAnswers() {
+        if (this.rightOption == null) {
+            setRightOption();
+        }
+        List<QuestionOptionMC> wrongOptions = new ArrayList<>();
+        wrongOptions.addAll(Arrays.asList(questionOptionMCs));
+        wrongOptions.remove(this.rightOption);
+        String textWrongOptions = "";
+        for (int i = 0 ; i < wrongOptions.size() ; i++) {
+            textWrongOptions += wrongOptions.get(i).answerText;
+            if (i != wrongOptions.size() - 1) {
+                textWrongOptions += "\n";
+            }
+        }
+        return  textWrongOptions;
+    }
+
+    @Override
+    public String getQuestionTypeName(Context context) {
+        return context.getString(R.string.questions_multiple_choice);
+    }
+
+    private void setRightOption() {
+        if (questionOptionMCs == null) {
+            throw new Error("QuestionMO options not set");
+        }
+        if (questionOptionMCs.length == 0) {
+            throw new Error("There are no QuestionMO options to determine right option");
+        }
+        QuestionOptionMC maxScoredOption = questionOptionMCs[0];
+        for (int i = 1 ; i < questionOptionMCs.length ; i++) {
+            if (questionOptionMCs[i].score > maxScoredOption.score) {
+                maxScoredOption = questionOptionMCs[i];
+            }
+        }
+        this.rightOption = maxScoredOption;
+    }
 }

@@ -11,7 +11,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.R;
+import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 import java.util.UUID;
 
@@ -29,7 +31,7 @@ import java.util.UUID;
                 @Index(value = {"testId"})
         }
 )
-public class QuestionTF {
+public class QuestionTF implements Question {
 
     @PrimaryKey
     @NonNull
@@ -57,8 +59,53 @@ public class QuestionTF {
         this.id = UUID.randomUUID().toString();
     }
 
+    @Override
     public String toString(Context context) {
         return context.getString(R.string.title) + ": " + this.title;
     }
 
+    @Override
+    public void deleteFromDB(AppDatabase db) {
+        db.questionTFDAO().delete(this);
+    }
+
+    @Override
+    public Class<?> getUpdateGUIClass() {
+        throw new UnsupportedOperationException("No update GUI for TF Question yet!");
+    }
+
+    @Override
+    public String getTestId() {
+        return this.testId;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.title;
+    }
+
+    @Override
+    public double getScore() {
+        return this.score;
+    }
+
+    @Override
+    public String getAnswer() {
+        return this.answerTrue;
+    }
+
+    @Override
+    public String getWrongAnswers() {
+        return this.answerFalse;
+    }
+
+    @Override
+    public String getQuestionTypeName(Context context) {
+        return context.getString(R.string.questions_true_or_false);
+    }
 }
