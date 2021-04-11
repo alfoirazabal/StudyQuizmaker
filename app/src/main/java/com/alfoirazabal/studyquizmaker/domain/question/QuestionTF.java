@@ -70,7 +70,7 @@ public class QuestionTF implements Question {
     }
 
     @Override
-    public Class<UpdateQuestionSimple> getUpdateGUIClass() {
+    public Class<?> getUpdateGUIClass() {
         throw new UnsupportedOperationException("No update GUI for TF Question yet!");
     }
 

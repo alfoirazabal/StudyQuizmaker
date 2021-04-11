@@ -3,6 +3,7 @@ package com.alfoirazabal.studyquizmaker.domain.question;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -12,6 +13,7 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.UpdateGUIClass;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 import java.util.UUID;
@@ -63,7 +65,7 @@ public class QuestionSimple implements Question {
     }
 
     @Override
-    public Class<UpdateQuestionSimple> getUpdateGUIClass() {
+    public Class<?> getUpdateGUIClass() {
         return UpdateQuestionSimple.class;
     }
 

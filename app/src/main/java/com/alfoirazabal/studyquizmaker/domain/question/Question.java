@@ -3,6 +3,7 @@ package com.alfoirazabal.studyquizmaker.domain.question;
 import android.content.Context;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.UpdateGUIClass;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 public interface Question {
@@ -14,6 +15,6 @@ public interface Question {
     String getAnswer();
     String toString(Context context);
     void deleteFromDB(AppDatabase db);
-    Class<UpdateQuestionSimple> getUpdateGUIClass();
+    Class<?> getUpdateGUIClass();
 
 }

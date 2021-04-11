@@ -68,7 +68,7 @@ public class QuestionMC implements Question {
     }
 
     @Override
-    public Class<UpdateQuestionSimple> getUpdateGUIClass() {
+    public Class<?> getUpdateGUIClass() {
         throw new UnsupportedOperationException("No Update GUI for MC Question yet!");
     }
 
