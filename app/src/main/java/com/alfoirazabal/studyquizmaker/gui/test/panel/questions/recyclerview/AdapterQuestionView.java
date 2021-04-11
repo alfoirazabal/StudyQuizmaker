@@ -18,8 +18,6 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 import java.util.List;
 
@@ -31,15 +29,19 @@ public class AdapterQuestionView extends
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView txtTitle;
+        private final TextView txtQuestionType;
         private final TextView txtScore;
         private final TextView txtAnswer;
+        private final TextView txtWrongAnswers;
 
         public ViewHolder(View view) {
             super(view);
 
             txtTitle = view.findViewById(R.id.txt_title);
+            txtQuestionType = view.findViewById(R.id.txt_question_type);
             txtScore = view.findViewById(R.id.txt_score_total);
             txtAnswer = view.findViewById(R.id.txt_answer);
+            txtWrongAnswers = view.findViewById(R.id.txt_wrong_answers);
 
             view.setOnClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
@@ -108,12 +110,18 @@ public class AdapterQuestionView extends
             return txtTitle;
         }
 
+        public TextView getTxtQuestionType() { return txtQuestionType; }
+
         public TextView getTxtScore() {
             return txtScore;
         }
 
         public TextView getTxtAnswer() {
             return txtAnswer;
+        }
+
+        public TextView getTxtWrongAnswers() {
+            return txtWrongAnswers;
         }
     }
 
@@ -127,7 +135,7 @@ public class AdapterQuestionView extends
     @Override
     public AdapterQuestionView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.recyclerview_adapter_question_simple,
+                R.layout.recyclerview_adapter_question,
                 parent,
                 false
         );
@@ -139,7 +147,17 @@ public class AdapterQuestionView extends
     public void onBindViewHolder(@NonNull AdapterQuestionView.ViewHolder holder, int position) {
         Question currentQuestion = questions.get(position);
         holder.getTxtTitle().setText(currentQuestion.getTitle());
+        holder.getTxtQuestionType().setText(currentQuestion.getQuestionTypeName(
+                holder.itemView.getContext()
+        ));
         holder.getTxtAnswer().setText(currentQuestion.getAnswer());
+        try {
+            String wrongAnswers = currentQuestion.getWrongAnswers();
+            holder.getTxtWrongAnswers().setVisibility(View.VISIBLE);
+            holder.getTxtWrongAnswers().setText(wrongAnswers);
+        } catch (Question.NoWrongAnswers noWrongAnswers) {
+            holder.getTxtWrongAnswers().setVisibility(View.GONE);
+        }
         holder.getTxtScore().setText(String.valueOf(currentQuestion.getScore()));
     }
 

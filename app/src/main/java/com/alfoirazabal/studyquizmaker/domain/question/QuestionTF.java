@@ -98,4 +98,14 @@ public class QuestionTF implements Question {
     public String getAnswer() {
         return this.answerTrue;
     }
+
+    @Override
+    public String getWrongAnswers() {
+        return this.answerFalse;
+    }
+
+    @Override
+    public String getQuestionTypeName(Context context) {
+        return context.getString(R.string.questions_true_or_false);
+    }
 }

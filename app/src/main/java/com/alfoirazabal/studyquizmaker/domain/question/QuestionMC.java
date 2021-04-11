@@ -3,7 +3,6 @@ package com.alfoirazabal.studyquizmaker.domain.question;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -14,8 +13,10 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(
@@ -77,6 +78,7 @@ public class QuestionMC implements Question {
         return this.testId;
     }
 
+    @NonNull
     @Override
     public String getId() {
         return this.id;
@@ -101,6 +103,29 @@ public class QuestionMC implements Question {
             setRightOption();
         }
         return this.rightOption.answerText;
+    }
+
+    @Override
+    public String getWrongAnswers() {
+        if (this.rightOption == null) {
+            setRightOption();
+        }
+        List<QuestionOptionMC> wrongOptions = new ArrayList<>();
+        wrongOptions.addAll(Arrays.asList(questionOptionMCs));
+        wrongOptions.remove(this.rightOption);
+        String textWrongOptions = "";
+        for (int i = 0 ; i < wrongOptions.size() ; i++) {
+            textWrongOptions += wrongOptions.get(i).answerText;
+            if (i != wrongOptions.size() - 1) {
+                textWrongOptions += "\n";
+            }
+        }
+        return  textWrongOptions;
+    }
+
+    @Override
+    public String getQuestionTypeName(Context context) {
+        return context.getString(R.string.questions_multiple_choice);
     }
 
     private void setRightOption() {

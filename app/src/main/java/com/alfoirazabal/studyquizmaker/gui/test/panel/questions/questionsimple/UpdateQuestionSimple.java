@@ -15,7 +15,6 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.UpdateGUIClass;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.alfoirazabal.studyquizmaker.helpers.questions.MaxScoresProcessor;
 import com.google.android.material.textfield.TextInputEditText;
@@ -24,7 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.List;
 import java.util.Objects;
 
-public class UpdateQuestionSimple extends AppCompatActivity implements UpdateGUIClass {
+public class UpdateQuestionSimple extends AppCompatActivity {
     private static final int DISCRETE_SEEKBAR_PARTITIONS = 10;
 
     private TextInputLayout txtilTitle;
