@@ -38,7 +38,7 @@
     <string name="score_total">"Score: "</string>
     <string name="answer">Answer</string>
     <string name="title">Title</string>
-    <string name="msg_err_questionsimple_title_exists_already">There is another simple question with the same title</string>
+    <string name="msg_err_question_title_exists_already">There is another question with the same title</string>
     <string name="max_score">Maximum score of other questions</string>
     <string name="score">Score</string>
     <string name="msg_delete_confirmation_question">Are you sure you want to delete the following question?</string>
@@ -68,4 +68,6 @@
     <string name="msg_delete_confirmation_testrun">Are you sure you want to delete the selected run?</string>
     <string name="date_started_on">Started on</string>
     <string name="duration">Duration</string>
+    <string name="answer_false">False answer</string>
+    <string name="answer_true">True answer</string>
 </resources>

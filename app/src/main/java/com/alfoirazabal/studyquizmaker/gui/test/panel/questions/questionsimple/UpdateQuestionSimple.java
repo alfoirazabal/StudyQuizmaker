@@ -73,8 +73,10 @@ public class UpdateQuestionSimple extends AppCompatActivity {
             currentTestId = bundle.getString("TESTID");
             currentSimpleQuestionId = bundle.getString("QUESTIONID");
             currentQuestionSimple = db.questionSimpleDAO().getById(currentSimpleQuestionId);
-            List<String> questionSimpleTitles = db.questionSimpleDAO().getAllTitles(currentTestId);
-            searchInList = new SearchInList(questionSimpleTitles);
+            List<String> questionTitles = db.questionSimpleDAO().getAllTitles(currentTestId);
+            questionTitles.addAll(db.questionMCDAO().getAllTitles(currentTestId));
+            questionTitles.addAll(db.questionTFDAO().getAllTitles(currentTestId));
+            searchInList = new SearchInList(questionTitles);
             searchInList.deleteIgnoreCase(currentQuestionSimple.title);
             MaxScoresProcessor maxScoresProcessor = new MaxScoresProcessor(db, currentTestId);
             maxScore = maxScoresProcessor.getMaxScoreFromAllQuestions();
@@ -83,11 +85,11 @@ public class UpdateQuestionSimple extends AppCompatActivity {
                 txtilTitle.setEnabled(true);
                 txtilAnswer.setEnabled(true);
                 txtilScore.setEnabled(true);
-                btnUpdate.setEnabled(true);
                 txtTitle.setText(currentQuestionSimple.title);
                 txtAnswer.setText(currentQuestionSimple.answer);
                 txtScore.setText(String.valueOf(currentQuestionSimple.score));
                 seekbarScore.setMax(DISCRETE_SEEKBAR_PARTITIONS);
+                btnUpdate.setEnabled(true);
                 setValueOnScoreSeekbar(currentQuestionSimple.score);
             });
         }).start();
@@ -102,7 +104,7 @@ public class UpdateQuestionSimple extends AppCompatActivity {
                 String currentText = s.toString();
                 if (searchInList.containsStringIgnoreCase(currentText)) {
                     txtTitle.setError(
-                            getString(R.string.msg_err_questionsimple_title_exists_already)
+                            getString(R.string.msg_err_question_title_exists_already)
                     );
                     btnUpdate.setEnabled(false);
                 }

@@ -17,6 +17,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AddQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf.AddQuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview.AdapterQuestionView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -78,12 +79,18 @@ public class ViewQuestion extends AppCompatActivity {
                         startActivity(intentAddQuestionSimple);
                         break;
                     case R.id.item_multiple_choice:
-                    case R.id.item_true_or_false:
                         Toast.makeText(
                                 getApplicationContext(),
                                 R.string.msg_available_in_future_version,
                                 Toast.LENGTH_LONG
                         ).show();
+                        break;
+                    case R.id.item_true_or_false:
+                        Intent intentAddQuestionTF = new Intent(
+                                this, AddQuestionTF.class
+                        );
+                        intentAddQuestionTF.putExtra("TESTID", currentTestId);
+                        startActivity(intentAddQuestionTF);
                         break;
                 }
                 return true;

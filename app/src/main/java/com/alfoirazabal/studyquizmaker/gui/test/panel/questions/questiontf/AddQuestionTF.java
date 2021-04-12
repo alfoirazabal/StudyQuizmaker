@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,7 +14,7 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.alfoirazabal.studyquizmaker.helpers.questions.MaxScoresProcessor;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,17 +23,19 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.List;
 import java.util.Objects;
 
-public class AddQuestionSimple extends AppCompatActivity {
+public class AddQuestionTF extends AppCompatActivity {
 
     private static final double DEFAULT_MAX_SCORE_IF_NONE_FOUND = 1;
     private static final double DEFAULT_SCORE = 1;
     private static final int DISCRETE_SEEKBAR_PARTITIONS = 10;
 
     private TextInputLayout txtilTitle;
-    private TextInputLayout txtilAnswer;
-    private TextInputLayout txtilScore;
+    private TextInputLayout txtilAnswerTrue;
+    private TextInputLayout txtilAnswerFalse;
     private TextInputEditText txtTitle;
-    private TextInputEditText txtAnswer;
+    private TextInputEditText txtAnswerTrue;
+    private TextInputEditText txtAnswerFalse;
+    private TextInputLayout txtilScore;
     private TextInputEditText txtScore;
     private SeekBar seekbarScore;
     private TextView txtMaxScore;
@@ -41,22 +43,24 @@ public class AddQuestionSimple extends AppCompatActivity {
 
     private AppDatabase db;
 
-    private String currentTestId;
-
     private SearchInList searchInList;
 
     private double maxScore;
 
+    private String testId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_simple_add);
+        setContentView(R.layout.activity_question_tf_add);
 
         txtilTitle = findViewById(R.id.txtil_title);
-        txtilAnswer = findViewById(R.id.txtil_answer);
-        txtilScore = findViewById(R.id.txtil_score);
+        txtilAnswerTrue = findViewById(R.id.txtil_answer_true);
+        txtilAnswerFalse = findViewById(R.id.txtil_answer_false);
         txtTitle = findViewById(R.id.txt_title);
-        txtAnswer = findViewById(R.id.txt_answer);
+        txtAnswerTrue = findViewById(R.id.txt_answer_true);
+        txtAnswerFalse = findViewById(R.id.txt_answer_false);
+        txtilScore = findViewById(R.id.txtil_score);
         txtScore = findViewById(R.id.txt_score);
         seekbarScore = findViewById(R.id.seekbar_score);
         txtMaxScore = findViewById(R.id.txt_max_score);
@@ -70,19 +74,20 @@ public class AddQuestionSimple extends AppCompatActivity {
 
         new Thread(() -> {
             Bundle bundle = getIntent().getExtras();
-            currentTestId = bundle.getString("TESTID");
-            List<String> questionTitles = db.questionSimpleDAO().getAllTitles(currentTestId);
-            questionTitles.addAll(db.questionTFDAO().getAllTitles(currentTestId));
-            questionTitles.addAll(db.questionMCDAO().getAllTitles(currentTestId));
+            testId = bundle.getString("TESTID");
+            List<String> questionTitles = db.questionTFDAO().getAllTitles(testId);
+            questionTitles.addAll(db.questionMCDAO().getAllTitles(testId));
+            questionTitles.addAll(db.questionSimpleDAO().getAllTitles(testId));
             searchInList = new SearchInList(questionTitles);
-            MaxScoresProcessor maxScoresProcessor = new MaxScoresProcessor(db, currentTestId);
+            MaxScoresProcessor maxScoresProcessor = new MaxScoresProcessor(db, testId);
             maxScore = maxScoresProcessor.getMaxScoreFromAllQuestions();
             if (maxScore == 0) maxScore = DEFAULT_MAX_SCORE_IF_NONE_FOUND;
             runOnUiThread(() -> {
                 txtMaxScore.setText(String.valueOf(maxScore));
                 txtilTitle.setEnabled(true);
-                txtilAnswer.setEnabled(true);
                 txtilScore.setEnabled(true);
+                txtilAnswerTrue.setEnabled(true);
+                txtilAnswerFalse.setEnabled(true);
                 btnAdd.setEnabled(true);
                 seekbarScore.setMax(DISCRETE_SEEKBAR_PARTITIONS);
                 setValueOnScoreSeekbar(DEFAULT_SCORE);
@@ -143,14 +148,15 @@ public class AddQuestionSimple extends AppCompatActivity {
         });
 
         btnAdd.setOnClickListener(v -> {
-            QuestionSimple questionSimple = new QuestionSimple();
-            questionSimple.testId = currentTestId;
-            questionSimple.title = Objects.requireNonNull(txtTitle.getText()).toString();
-            questionSimple.answer = Objects.requireNonNull(txtAnswer.getText()).toString();
-            questionSimple.score =
+            QuestionTF questionTF = new QuestionTF();
+            questionTF.testId = testId;
+            questionTF.title = txtTitle.getText().toString();
+            questionTF.answerTrue = txtAnswerTrue.getText().toString();
+            questionTF.answerFalse = txtAnswerFalse.getText().toString();
+            questionTF.score =
                     Double.parseDouble(Objects.requireNonNull(txtScore.getText()).toString());
             new Thread(() -> {
-                db.questionSimpleDAO().insert(questionSimple);
+                db.questionTFDAO().insert(questionTF);
                 finish();
             }).start();
         });
