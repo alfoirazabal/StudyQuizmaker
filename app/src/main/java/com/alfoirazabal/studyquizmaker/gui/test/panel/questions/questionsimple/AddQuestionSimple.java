@@ -71,8 +71,10 @@ public class AddQuestionSimple extends AppCompatActivity {
         new Thread(() -> {
             Bundle bundle = getIntent().getExtras();
             currentTestId = bundle.getString("TESTID");
-            List<String> questionSimpleTitles = db.questionSimpleDAO().getAllTitles(currentTestId);
-            searchInList = new SearchInList(questionSimpleTitles);
+            List<String> questionTitles = db.questionSimpleDAO().getAllTitles(currentTestId);
+            questionTitles.addAll(db.questionTFDAO().getAllTitles(currentTestId));
+            questionTitles.addAll(db.questionMCDAO().getAllTitles(currentTestId));
+            searchInList = new SearchInList(questionTitles);
             MaxScoresProcessor maxScoresProcessor = new MaxScoresProcessor(db, currentTestId);
             maxScore = maxScoresProcessor.getMaxScoreFromAllQuestions();
             if (maxScore == 0) maxScore = DEFAULT_MAX_SCORE_IF_NONE_FOUND;
@@ -98,7 +100,7 @@ public class AddQuestionSimple extends AppCompatActivity {
                 String currentText = s.toString();
                 if (searchInList.containsStringIgnoreCase(currentText)) {
                     txtTitle.setError(
-                            getString(R.string.msg_err_questionsimple_title_exists_already)
+                            getString(R.string.msg_err_question_title_exists_already)
                     );
                     btnAdd.setEnabled(false);
                 }

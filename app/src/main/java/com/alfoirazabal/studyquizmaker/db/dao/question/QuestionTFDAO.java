@@ -28,6 +28,9 @@ public interface QuestionTFDAO {
     @Query("SELECT MAX(score) FROM questionTF WHERE testId = :testId")
     double getMaxScore(String testId);
 
+    @Query("SELECT title FROM questionTF WHERE testId = :testId")
+    List<String> getAllTitles(String testId);
+
     @Insert
     void insert(QuestionTF questionTF);
 

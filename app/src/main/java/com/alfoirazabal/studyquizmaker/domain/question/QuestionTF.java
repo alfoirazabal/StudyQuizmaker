@@ -43,9 +43,6 @@ public class QuestionTF implements Question {
     @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name = "description")
-    public String description;
-
     @ColumnInfo(name = "answerTrue")
     public String answerTrue;
 
