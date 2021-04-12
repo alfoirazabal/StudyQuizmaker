@@ -1,7 +1,6 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +9,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.alfoirazabal.studyquizmaker.AppConstants;
@@ -19,19 +17,12 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
-import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionSimplePicker;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AnswerQuestionSimple extends AppCompatActivity {
-
-    private enum NextQuestionDirection implements Serializable {
-        FORWARD,
-        BACKWARD
-    }
+public class AnswerQuestionSimple extends AnswerQuestionActivity {
 
     private static final int ANSWER_SCORE_SEEKBAR_PARTITIONS = 10;
 
@@ -42,36 +33,11 @@ public class AnswerQuestionSimple extends AppCompatActivity {
     private LinearLayout layoutAnswer;
     private Button btnViewOrHideAnswer;
     private TextView txtAnswer;
-    private Button btnNext;
-    private Button btnPrevious;
-
-    private AppDatabase db;
 
     private double maxQuestionScore;
 
-    private TestRun testRun;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        NextQuestionDirection nextQuestionDirection =
-                (NextQuestionDirection) getIntent().getSerializableExtra("QUESTIONDIRECTION");
-        if (nextQuestionDirection != null) {
-            switch (nextQuestionDirection) {
-                case FORWARD:
-                    this.overridePendingTransition(
-                            R.anim.slide_appear_right_to_left,
-                            R.anim.slide_dissapear_right_to_left
-                    );
-                    break;
-                case BACKWARD:
-                    this.overridePendingTransition(
-                            R.anim.slide_appear_left_to_right,
-                            R.anim.slide_dissapear_left_to_right
-                    );
-                    break;
-            }
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testrun_simple_question);
 
@@ -85,28 +51,28 @@ public class AnswerQuestionSimple extends AppCompatActivity {
         txtAnswer = findViewById(R.id.txt_answer);
         TextView txtNumberOfQuestionsSolved = findViewById(R.id.txt_number_of_questions_solved);
         TextView txtCurrentQuestionProgress = findViewById(R.id.txt_current_question_progress);
-        btnNext = findViewById(R.id.btn_next);
-        btnPrevious = findViewById(R.id.btn_previous);
+        super.btnNext = findViewById(R.id.btn_next);
+        super.btnPrevious = findViewById(R.id.btn_previous);
 
         seekbarAnswerScore.setMax(ANSWER_SCORE_SEEKBAR_PARTITIONS);
 
-        this.testRun = (TestRun) getIntent().getSerializableExtra("TESTRUN");
+        super.testRun = (TestRun) getIntent().getSerializableExtra("TESTRUN");
 
-        int numberOfQuestions = this.testRun.questionSimpleResponses.length;
+        int numberOfQuestions = super.testRun.questionSimpleResponses.length;
         int numberOfAnswers = 0;
-        for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
-            if (!this.testRun.questionSimpleResponses[i].answered.equals("")) {
+        for (int i = 0 ; i < super.testRun.questionSimpleResponses.length ; i++) {
+            if (!super.testRun.questionSimpleResponses[i].answered.equals("")) {
                 numberOfAnswers++;
             }
         }
 
         String questionsSolvedIndicator = numberOfAnswers + "/" + numberOfQuestions;
         txtNumberOfQuestionsSolved.setText(questionsSolvedIndicator);
-        String currentQuestionProgressIndicator = (this.testRun.currentQuestionIndex + 1) + "/" +
-                this.testRun.questionSimpleResponses.length;
+        String currentQuestionProgressIndicator = (super.testRun.currentQuestionIndex + 1) + "/" +
+                super.testRun.questionSimpleResponses.length;
         txtCurrentQuestionProgress.setText(currentQuestionProgressIndicator);
 
-        db = Room.databaseBuilder(
+        super.db = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
                 AppConstants.getDBLocation(getApplicationContext())
@@ -129,7 +95,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
         btnViewOrHideAnswer.setOnClickListener(v -> switchAnswerView());
 
         QuestionSimpleResponse questionSimpleResponse =
-                this.testRun.questionSimpleResponses[this.testRun.currentQuestionIndex];
+                super.testRun.questionSimpleResponses[super.testRun.currentQuestionIndex];
         new Thread(() -> {
             QuestionSimple questionSimple =
                     db.questionSimpleDAO().getById(questionSimpleResponse.questionSimpleId);
@@ -142,7 +108,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
                 int scoreInSeekbar = (int)(questionSimpleResponse.score * seekbarScoreProportion);
                 seekbarAnswerScore.setProgress(scoreInSeekbar);
 
-                setPreviousAndNextButtonsAndActions();
+                super.setPreviousAndNextButtonsAndActions();
             });
         }).start();
 
@@ -152,7 +118,7 @@ public class AnswerQuestionSimple extends AppCompatActivity {
                     AnswerQuestionSimple.this,
                     AnswerQuestionSimplePicker.class
             );
-            intentPickQuestion.putExtra("TESTRUN", testRun);
+            intentPickQuestion.putExtra("TESTRUN", super.testRun);
             intentPickQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intentPickQuestion);
         });
@@ -171,74 +137,16 @@ public class AnswerQuestionSimple extends AppCompatActivity {
         }
     }
 
-    private void setPreviousAndNextButtonsAndActions() {
-        boolean isFirstQuestion = this.testRun.currentQuestionIndex == 0;
-        boolean isLastQuestion =
-                this.testRun.currentQuestionIndex == this.testRun.questionSimpleResponses.length - 1;
 
-        if (isFirstQuestion) {
-            btnPrevious.setEnabled(false);
-            btnNext.setOnClickListener(v -> {
-                setCurrentQuestionData();
-                this.testRun.currentQuestionIndex++;
-                startNewAnswerQuestionSimpleActivity(NextQuestionDirection.FORWARD);
-            });
-        }
-        if (isLastQuestion) {
-            btnNext.setText(R.string.finish);
-            btnNext.setBackgroundColor(Color.RED);
-            btnNext.setOnClickListener(v -> setCurrentQuestionDataAndFinish());
-            btnPrevious.setOnClickListener(v -> {
-                setCurrentQuestionData();
-                this.testRun.currentQuestionIndex--;
-                startNewAnswerQuestionSimpleActivity(NextQuestionDirection.BACKWARD);
-            });
-        }
-        if (!isFirstQuestion && !isLastQuestion) {
-            btnNext.setOnClickListener(v -> {
-                setCurrentQuestionData();
-                this.testRun.currentQuestionIndex++;
-                startNewAnswerQuestionSimpleActivity(NextQuestionDirection.FORWARD);
-            });
-            btnPrevious.setOnClickListener(v -> {
-                setCurrentQuestionData();
-                this.testRun.currentQuestionIndex--;
-                startNewAnswerQuestionSimpleActivity(NextQuestionDirection.BACKWARD);
-            });
-        }
-    }
-
-    private void setCurrentQuestionDataAndFinish() {
-        setCurrentQuestionData();
-        TestRunProcessor testRunProcessor = new TestRunProcessor(this.testRun);
-        new Thread(() -> {
-            testRunProcessor.saveTestRunToDatabase(db);
-            Intent intentViewResults =
-                    new Intent(AnswerQuestionSimple.this, ViewFinalResults.class);
-            intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            intentViewResults.putExtra("TESTRUNID", testRun.id);
-            this.startActivity(intentViewResults);
-        }).start();
-    }
-
-    private void setCurrentQuestionData() {
+    @Override
+    protected void setCurrentQuestionData() {
         QuestionSimpleResponse currentQuestionSimpleResponse =
-                this.testRun.questionSimpleResponses[this.testRun.currentQuestionIndex];
+                super.testRun.questionSimpleResponses[super.testRun.currentQuestionIndex];
         currentQuestionSimpleResponse.answered =
                 Objects.requireNonNull(txtResponse.getText()).toString();
         currentQuestionSimpleResponse.score =
                 Double.parseDouble(txtAnswerScore.getText().toString());
         currentQuestionSimpleResponse.isAnswered = !this.txtResponse.getText().toString().equals("");
-    }
-
-    private void startNewAnswerQuestionSimpleActivity(NextQuestionDirection nextQuestionDirection) {
-        Intent intentNewQuestion = new Intent(
-                getApplicationContext(), AnswerQuestionSimple.class
-        );
-        intentNewQuestion.putExtra("TESTRUN", this.testRun);
-        intentNewQuestion.putExtra("QUESTIONDIRECTION", nextQuestionDirection);
-        intentNewQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        AnswerQuestionSimple.this.startActivity(intentNewQuestion);
     }
 
 }

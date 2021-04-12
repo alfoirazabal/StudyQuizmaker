@@ -28,7 +28,7 @@
         <activity android:name=".gui.test.panel.questions.ViewQuestion" />
         <activity android:name=".gui.test.panel.questions.questionsimple.AddQuestionSimple" />
         <activity android:name=".gui.test.panel.questions.questionsimple.UpdateQuestionSimple" />
-        <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimple" />
+        <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionSimple" />
         <activity android:name=".gui.test.panel.testrun.results.ViewFinalResults" />
         <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimplePicker" />
         <activity android:name=".gui.test.panel.testrun.results.ViewRunResults" />

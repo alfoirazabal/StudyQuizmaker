@@ -3,7 +3,6 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +20,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.ViewQuestion;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewTestRuns;
 import com.alfoirazabal.studyquizmaker.helpers.ArrayShuffler;
 

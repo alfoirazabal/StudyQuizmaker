@@ -18,7 +18,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
 
 public class AdapterQuestionSimplePicker extends
         RecyclerView.Adapter<AdapterQuestionSimplePicker.ViewHolder>{
