@@ -16,14 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
-import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
 
-public class AdapterQuestionSimplePicker extends
-        RecyclerView.Adapter<AdapterQuestionSimplePicker.ViewHolder>{
+public class AdapterQuestionPicker extends
+        RecyclerView.Adapter<AdapterQuestionPicker.ViewHolder>{
 
     private static final int PROGRESSBAR_PARTITIONS = 10;
 
@@ -50,7 +48,7 @@ public class AdapterQuestionSimplePicker extends
                 testRun.currentQuestionIndex = getAdapterPosition();
                 Intent intentAnswerQuestion = new Intent(
                         view.getContext(),
-                        AnswerQuestionSimple.class
+                        testRun.questionResponses[testRun.currentQuestionIndex].getAnswerQuestionClass()
                 );
                 intentAnswerQuestion.putExtra("TESTRUN", testRun);
                 intentAnswerQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -75,7 +73,7 @@ public class AdapterQuestionSimplePicker extends
         }
     }
 
-    public AdapterQuestionSimplePicker(
+    public AdapterQuestionPicker(
             QuestionResponse[] questionResponses,
             AppDatabase db,
             TestRun testRun
@@ -96,7 +94,7 @@ public class AdapterQuestionSimplePicker extends
                 false
         );
 
-        return new AdapterQuestionSimplePicker.ViewHolder(view);
+        return new AdapterQuestionPicker.ViewHolder(view);
     }
 
     @Override

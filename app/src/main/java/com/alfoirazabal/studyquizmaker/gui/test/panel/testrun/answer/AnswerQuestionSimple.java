@@ -17,7 +17,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionSimplePicker;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionPicker;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
@@ -116,7 +116,7 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
             setCurrentQuestionData();
             Intent intentPickQuestion = new Intent(
                     AnswerQuestionSimple.this,
-                    AnswerQuestionSimplePicker.class
+                    AnswerQuestionPicker.class
             );
             intentPickQuestion.putExtra("TESTRUN", super.testRun);
             intentPickQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

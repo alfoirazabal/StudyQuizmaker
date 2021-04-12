@@ -30,7 +30,7 @@
         <activity android:name=".gui.test.panel.questions.questionsimple.UpdateQuestionSimple" />
         <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionSimple" />
         <activity android:name=".gui.test.panel.testrun.results.ViewFinalResults" />
-        <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimplePicker" />
+        <activity android:name=".gui.test.panel.testrun.AnswerQuestionPicker" />
         <activity android:name=".gui.test.panel.testrun.results.ViewRunResults" />
         <activity android:name=".gui.test.panel.testrun.results.ViewTestRuns" />
         <activity android:name=".gui.test.panel.questions.questiontf.AddQuestionTF" />
