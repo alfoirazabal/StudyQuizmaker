@@ -13,6 +13,7 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,6 +72,11 @@ public class QuestionMC implements Question {
     @Override
     public Class<?> getUpdateGUIClass() {
         throw new UnsupportedOperationException("No Update GUI for MC Question yet!");
+    }
+
+    @Override
+    public QuestionResponse getQuestionResponseObject() {
+        throw new UnsupportedOperationException("No Response object for MC Question yet!");
     }
 
     @Override

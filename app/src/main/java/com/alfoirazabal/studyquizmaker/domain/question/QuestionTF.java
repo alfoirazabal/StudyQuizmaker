@@ -13,6 +13,8 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionTFResponse;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf.UpdateQuestionTF;
 
@@ -70,6 +72,11 @@ public class QuestionTF implements Question {
     @Override
     public Class<?> getUpdateGUIClass() {
         return UpdateQuestionTF.class;
+    }
+
+    @Override
+    public QuestionResponse getQuestionResponseObject() {
+        return new QuestionTFResponse();
     }
 
     @Override

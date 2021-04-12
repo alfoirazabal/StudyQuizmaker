@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
@@ -25,7 +27,7 @@ public class AdapterQuestionSimplePicker extends
 
     private static final int PROGRESSBAR_PARTITIONS = 10;
 
-    private final QuestionSimpleResponse[] questionSimpleResponses;
+    private final QuestionResponse[] questionResponses;
     private final AppDatabase db;
     private final TestRun testRun;
 
@@ -74,11 +76,11 @@ public class AdapterQuestionSimplePicker extends
     }
 
     public AdapterQuestionSimplePicker(
-            QuestionSimpleResponse[] questionSimpleResponses,
+            QuestionResponse[] questionResponses,
             AppDatabase db,
             TestRun testRun
     ) {
-        this.questionSimpleResponses = questionSimpleResponses;
+        this.questionResponses = questionResponses;
         this.db = db;
         this.testRun = testRun;
 
@@ -99,20 +101,19 @@ public class AdapterQuestionSimplePicker extends
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        QuestionSimpleResponse currentResponse = this.questionSimpleResponses[position];
+        QuestionResponse currentResponse = this.questionResponses[position];
         new Thread(() -> {
-            QuestionSimple currentSimpleQuestion =
-                    db.questionSimpleDAO().getById(currentResponse.questionSimpleId);
-            double maxQuestionScore = currentSimpleQuestion.score;
-            double scored = currentResponse.score;
+            Question currentQuestion = currentResponse.getQuestion(db);
+            double maxQuestionScore = currentQuestion.getScore();
+            double scored = currentResponse.getScore();
             new Handler(Looper.getMainLooper()).post(() -> {
-                holder.getTxtTitle().setText(currentSimpleQuestion.title);
+                holder.getTxtTitle().setText(currentQuestion.getTitle());
                 String scoreIndicator = scored + "/" + maxQuestionScore;
                 holder.getTxtScore().setText(scoreIndicator);
                 ProgressBar scoreProgressBar = holder.getProgressbarScore();
                 setProgressBar(scoreProgressBar, maxQuestionScore, scored);
                 TextView txtAnswered = holder.getTxtAnswered();
-                if (currentResponse.isAnswered) {
+                if (currentResponse.isAnswered()) {
                     txtAnswered.setText(R.string.answered);
                     txtAnswered.setTextColor(Color.BLACK);
                 }
@@ -137,7 +138,7 @@ public class AdapterQuestionSimplePicker extends
 
     @Override
     public int getItemCount() {
-        return this.questionSimpleResponses.length;
+        return this.questionResponses.length;
     }
 
     @Override

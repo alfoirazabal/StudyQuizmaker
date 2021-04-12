@@ -16,7 +16,9 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.ViewQuestion;
@@ -24,6 +26,7 @@ import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuest
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewTestRuns;
 import com.alfoirazabal.studyquizmaker.helpers.ArrayShuffler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -92,8 +95,11 @@ public class PanelTestView extends AppCompatActivity {
         });
 
         btnStart.setOnClickListener(v -> new Thread(() -> {
-            List<QuestionSimple> questionSimples = db.questionSimpleDAO().getFromTest(testId);
-            if (questionSimples.isEmpty()) {
+            List<Question> questions = new ArrayList<>();
+            questions.addAll(db.questionSimpleDAO().getFromTest(testId));
+            questions.addAll(db.questionMCDAO().getFromTest(testId));
+            questions.addAll(db.questionTFDAO().getFromTest(testId));
+            if (questions.isEmpty()) {
                 runOnUiThread(() -> Toast.makeText(
                         getApplicationContext(),
                         R.string.msg_err_need_to_add_questions_first,
@@ -103,18 +109,19 @@ public class PanelTestView extends AppCompatActivity {
             else {
                 TestRun testRun = new TestRun();
                 testRun.testId = testId;
-                testRun.questionSimpleResponses = new QuestionSimpleResponse[questionSimples.size()];
-                for (int i = 0 ; i < questionSimples.size() ; i++) {
-                    testRun.questionSimpleResponses[i] = new QuestionSimpleResponse();
-                    testRun.questionSimpleResponses[i].testRunId = testRun.id;
-                    testRun.questionSimpleResponses[i].questionSimpleId = questionSimples.get(i).id;
+                testRun.questionResponses = new QuestionResponse[questions.size()];
+                for (int i = 0 ; i < questions.size() ; i++) {
+                    Question currentQuestion = questions.get(i);
+                    testRun.questionResponses[i] = currentQuestion.getQuestionResponseObject();
+                    testRun.questionResponses[i].setTestRunId(testRun.id);
+                    testRun.questionResponses[i].setQuestionId(currentQuestion.getId());
                 }
-                ArrayShuffler<QuestionSimpleResponse> shufflerQuestionSimple = new ArrayShuffler<>();
-                shufflerQuestionSimple.shuffleFisherYates(testRun.questionSimpleResponses);
-                testRun.numberOfTotalQuestions = testRun.questionSimpleResponses.length;
+                ArrayShuffler<QuestionResponse> shuffleQuestionResponse = new ArrayShuffler<>();
+                shuffleQuestionResponse.shuffleFisherYates(testRun.questionResponses);
+                testRun.numberOfTotalQuestions = testRun.questionResponses.length;
                 Intent intentAnswerQuestion = new Intent(
                         getApplicationContext(),
-                        AnswerQuestionSimple.class
+                        testRun.questionResponses[0].getAnswerQuestionClass()
                 );
                 intentAnswerQuestion.putExtra("TESTRUN", testRun);
                 intentAnswerQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

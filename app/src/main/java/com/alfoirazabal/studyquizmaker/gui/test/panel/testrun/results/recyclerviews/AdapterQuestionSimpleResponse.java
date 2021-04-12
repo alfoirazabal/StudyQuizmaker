@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 
 public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQuestionSimpleResponse.ViewHolder> {
 
-    private final QuestionSimpleResponse[] questionSimpleResponses;
+    private final QuestionResponse[] questionResponses;
     private final AppDatabase db;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,10 +60,10 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
     }
 
     public AdapterQuestionSimpleResponse(
-            QuestionSimpleResponse[] questionSimpleResponses,
+            QuestionResponse[] questionResponses,
             AppDatabase db
     ) {
-        this.questionSimpleResponses = questionSimpleResponses;
+        this.questionResponses = questionResponses;
         this.db = db;
 
         this.setHasStableIds(true);
@@ -81,16 +83,15 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        QuestionSimpleResponse currentQuestionSimpleResponse = questionSimpleResponses[position];
+        QuestionResponse currentQuestionResponse = questionResponses[position];
+        String answered = currentQuestionResponse.getAnswered(db);
         new Thread(() -> {
-            QuestionSimple currentQuestionSimple = db.questionSimpleDAO().getById(
-                    currentQuestionSimpleResponse.questionSimpleId
-            );
+            Question currentQuestion = currentQuestionResponse.getQuestion(db);
             new Handler(Looper.getMainLooper()).post(() -> {
-                holder.getTxtTitle().setText(currentQuestionSimple.title);
-                holder.getTxtAnswer().setText(currentQuestionSimpleResponse.answered);
-                double totalScore = currentQuestionSimple.score;
-                double scored = currentQuestionSimpleResponse.score;
+                holder.getTxtTitle().setText(currentQuestion.getTitle());
+                holder.getTxtAnswer().setText(answered);
+                double totalScore = currentQuestion.getScore();
+                double scored = currentQuestionResponse.getScore();
                 double scoredPercentage = (scored / totalScore) * 100;
                 holder.getProgressbarScore().setProgress((int)scoredPercentage);
                 String scoredIndicatorText = scored + "/" + totalScore;
@@ -114,7 +115,7 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
 
     @Override
     public int getItemCount() {
-        return this.questionSimpleResponses.length;
+        return this.questionResponses.length;
     }
 
     @Override

@@ -58,10 +58,10 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
 
         super.testRun = (TestRun) getIntent().getSerializableExtra("TESTRUN");
 
-        int numberOfQuestions = super.testRun.questionSimpleResponses.length;
+        int numberOfQuestions = super.testRun.questionResponses.length;
         int numberOfAnswers = 0;
-        for (int i = 0 ; i < super.testRun.questionSimpleResponses.length ; i++) {
-            if (!super.testRun.questionSimpleResponses[i].answered.equals("")) {
+        for (int i = 0; i < super.testRun.questionResponses.length ; i++) {
+            if (!super.testRun.questionResponses[i].isAnswered()) {
                 numberOfAnswers++;
             }
         }
@@ -69,7 +69,7 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
         String questionsSolvedIndicator = numberOfAnswers + "/" + numberOfQuestions;
         txtNumberOfQuestionsSolved.setText(questionsSolvedIndicator);
         String currentQuestionProgressIndicator = (super.testRun.currentQuestionIndex + 1) + "/" +
-                super.testRun.questionSimpleResponses.length;
+                super.testRun.questionResponses.length;
         txtCurrentQuestionProgress.setText(currentQuestionProgressIndicator);
 
         super.db = Room.databaseBuilder(
@@ -95,7 +95,7 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
         btnViewOrHideAnswer.setOnClickListener(v -> switchAnswerView());
 
         QuestionSimpleResponse questionSimpleResponse =
-                super.testRun.questionSimpleResponses[super.testRun.currentQuestionIndex];
+                (QuestionSimpleResponse) super.testRun.questionResponses[super.testRun.currentQuestionIndex];
         new Thread(() -> {
             QuestionSimple questionSimple =
                     db.questionSimpleDAO().getById(questionSimpleResponse.questionSimpleId);
@@ -141,12 +141,11 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
     @Override
     protected void setCurrentQuestionData() {
         QuestionSimpleResponse currentQuestionSimpleResponse =
-                super.testRun.questionSimpleResponses[super.testRun.currentQuestionIndex];
+                (QuestionSimpleResponse) super.testRun.questionResponses[super.testRun.currentQuestionIndex];
         currentQuestionSimpleResponse.answered =
                 Objects.requireNonNull(txtResponse.getText()).toString();
         currentQuestionSimpleResponse.score =
                 Double.parseDouble(txtAnswerScore.getText().toString());
-        currentQuestionSimpleResponse.isAnswered = !this.txtResponse.getText().toString().equals("");
     }
 
 }

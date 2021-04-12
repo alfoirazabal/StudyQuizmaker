@@ -53,7 +53,7 @@ public class TestRun implements Serializable, Comparable<TestRun> {
     public Date dateTimeFinished;
 
     @Ignore
-    public QuestionSimpleResponse[] questionSimpleResponses;
+    public QuestionResponse[] questionResponses;
 
     @Ignore
     public int currentQuestionIndex;

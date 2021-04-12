@@ -43,7 +43,7 @@ public class AnswerQuestionSimplePicker extends AppCompatActivity {
         );
         this.recyclerviewQuestions.setLayoutManager(layoutManager);
         AdapterQuestionSimplePicker adapterQuestionSimplePicker = new AdapterQuestionSimplePicker(
-                currentTestRun.questionSimpleResponses,
+                currentTestRun.questionResponses,
                 Room.databaseBuilder(
                         getApplicationContext(),
                         AppDatabase.class,

@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 
 public interface Question {
 
@@ -17,6 +18,7 @@ public interface Question {
     String toString(Context context);
     void deleteFromDB(AppDatabase db);
     Class<?> getUpdateGUIClass();
+    QuestionResponse getQuestionResponseObject();
     String getQuestionTypeName(Context context);
 
     class NoWrongAnswers extends Exception {

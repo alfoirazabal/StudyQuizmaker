@@ -59,7 +59,7 @@ public abstract class AnswerQuestionActivity extends AppCompatActivity {
     protected void setPreviousAndNextButtonsAndActions() {
         boolean isFirstQuestion = this.testRun.currentQuestionIndex == 0;
         boolean isLastQuestion =
-                this.testRun.currentQuestionIndex == this.testRun.questionSimpleResponses.length - 1;
+                this.testRun.currentQuestionIndex == this.testRun.questionResponses.length - 1;
 
         if (isFirstQuestion) {
             btnPrevious.setEnabled(false);
@@ -108,7 +108,7 @@ public abstract class AnswerQuestionActivity extends AppCompatActivity {
 
     private void startNewAnswerQuestionSimpleActivity(NextQuestionDirection nextQuestionDirection) {
         Intent intentNewQuestion = new Intent(
-                getApplicationContext(), AnswerQuestionSimple.class
+                getApplicationContext(), this.testRun.questionResponses[this.testRun.currentQuestionIndex].getAnswerQuestionClass()
         );
         intentNewQuestion.putExtra("TESTRUN", this.testRun);
         intentNewQuestion.putExtra("QUESTIONDIRECTION", nextQuestionDirection);
