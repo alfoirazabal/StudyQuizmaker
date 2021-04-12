@@ -53,15 +53,22 @@ public class MaxScoresProcessor {
     }
 
     public double getMaxScoreFromAllQuestions() {
-        double maxScore =
-            this.maxScoreQuestionsMC +
-            this.maxScoreQuestionsTF +
-            this.maxScoreQuestionsSimple;
+        double[] maxScores = new double[]{
+            this.maxScoreQuestionsMC,
+            this.maxScoreQuestionsTF,
+            this.maxScoreQuestionsSimple
+        };
+        double absoluteMaxScore = 0;
+        for (int i = 0 ; i < maxScores.length ; i++) {
+            if (maxScores[i] > absoluteMaxScore) {
+                absoluteMaxScore = maxScores[i];
+            }
+        }
         if (roundToTwoDecimals) {
-            return roundToTwoDecimals(maxScore);
+            return roundToTwoDecimals(absoluteMaxScore);
         }
         else {
-            return maxScore;
+            return absoluteMaxScore;
         }
     }
 }

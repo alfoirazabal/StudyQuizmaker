@@ -14,6 +14,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf.UpdateQuestionTF;
 
 import java.util.UUID;
 
@@ -68,7 +69,7 @@ public class QuestionTF implements Question {
 
     @Override
     public Class<?> getUpdateGUIClass() {
-        throw new UnsupportedOperationException("No update GUI for TF Question yet!");
+        return UpdateQuestionTF.class;
     }
 
     @Override
