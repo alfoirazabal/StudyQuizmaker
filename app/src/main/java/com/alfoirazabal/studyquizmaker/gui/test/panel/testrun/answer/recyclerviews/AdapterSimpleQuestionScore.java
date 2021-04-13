@@ -116,7 +116,7 @@ public class AdapterSimpleQuestionScore extends RecyclerView.Adapter<AdapterSimp
             QuestionSimpleResponse questionSimpleResponse
     ) {
         double prop = maxScore / SEEKBAR_PARTITIONS;
-        questionSimpleResponse.score = seekbarProgress * prop;
+        questionSimpleResponse.score = (double)(Math.round((seekbarProgress * prop) * 100)) / 100;
     }
 
     private void progressToSeekbar(double maxScore, double score, SeekBar seekBar) {
