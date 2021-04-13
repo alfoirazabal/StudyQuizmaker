@@ -125,7 +125,7 @@ public abstract class AnswerQuestionActivity extends AppCompatActivity {
         int numberOfQuestions = this.testRun.questionResponses.length;
         int numberOfAnswers = 0;
         for (int i = 0; i < this.testRun.questionResponses.length ; i++) {
-            if (!this.testRun.questionResponses[i].isAnswered()) {
+            if (this.testRun.questionResponses[i].isAnswered()) {
                 numberOfAnswers++;
             }
         }

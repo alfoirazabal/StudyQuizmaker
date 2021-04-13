@@ -39,7 +39,7 @@ public class AnswerQuestionPicker extends AppCompatActivity {
         currentTestRun = (TestRun) bundle.getSerializable("TESTRUN");
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
-                3, StaggeredGridLayoutManager.VERTICAL
+                2, StaggeredGridLayoutManager.VERTICAL
         );
         this.recyclerviewQuestions.setLayoutManager(layoutManager);
         AdapterQuestionPicker adapterQuestionPicker = new AdapterQuestionPicker(
