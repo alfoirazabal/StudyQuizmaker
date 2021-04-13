@@ -15,11 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
-import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 
-public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQuestionSimpleResponse.ViewHolder> {
+public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestionResponse.ViewHolder> {
 
     private final QuestionResponse[] questionResponses;
     private final AppDatabase db;
@@ -59,7 +57,7 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
         }
     }
 
-    public AdapterQuestionSimpleResponse(
+    public AdapterQuestionResponse(
             QuestionResponse[] questionResponses,
             AppDatabase db
     ) {
@@ -71,14 +69,14 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
 
     @NonNull
     @Override
-    public AdapterQuestionSimpleResponse.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterQuestionResponse.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.recyclerview_adapter_question_simple_response,
                 parent,
                 false
         );
 
-        return new AdapterQuestionSimpleResponse.ViewHolder(view);
+        return new AdapterQuestionResponse.ViewHolder(view);
     }
 
     @Override
@@ -86,10 +84,18 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
         QuestionResponse currentQuestionResponse = questionResponses[position];
         new Thread(() -> {
             Question currentQuestion = currentQuestionResponse.getQuestion(db);
+            boolean isAnswered = currentQuestionResponse.isAnswered();
             String answered = currentQuestionResponse.getAnswered(db);
             new Handler(Looper.getMainLooper()).post(() -> {
                 holder.getTxtTitle().setText(currentQuestion.getTitle());
-                holder.getTxtAnswer().setText(answered);
+                if (isAnswered) {
+                    holder.getTxtAnswer().setText(answered);
+                    holder.getTxtAnswer().setTextColor(Color.BLACK);
+                }
+                else {
+                    holder.getTxtAnswer().setText(R.string.unanswered);
+                    holder.getTxtAnswer().setTextColor(Color.RED);
+                }
                 double totalScore = currentQuestion.getScore();
                 double scored = currentQuestionResponse.getScore();
                 double scoredPercentage = (scored / totalScore) * 100;

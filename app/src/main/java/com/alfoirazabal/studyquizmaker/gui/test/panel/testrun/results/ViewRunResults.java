@@ -17,7 +17,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionTFResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews.AdapterQuestionSimpleResponse;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews.AdapterQuestionResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +64,7 @@ public class ViewRunResults extends AppCompatActivity {
             questionResponses.addAll(Arrays.asList(questionTFResponses));
             testRun.questionResponses = questionResponses.toArray(new QuestionResponse[0]);
             runOnUiThread(() -> {
-                AdapterQuestionSimpleResponse adapter = new AdapterQuestionSimpleResponse(
+                AdapterQuestionResponse adapter = new AdapterQuestionResponse(
                         testRun.questionResponses,
                         db
                 );
