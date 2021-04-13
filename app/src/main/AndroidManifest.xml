@@ -35,6 +35,7 @@
         <activity android:name=".gui.test.panel.testrun.results.ViewTestRuns" />
         <activity android:name=".gui.test.panel.questions.questiontf.AddQuestionTF" />
         <activity android:name=".gui.test.panel.questions.questiontf.UpdateQuestionTF" />
+        <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionTF" />
     </application>
 
 </manifest>

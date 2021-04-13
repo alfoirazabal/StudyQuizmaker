@@ -11,6 +11,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionTF;
 
 import java.util.UUID;
 
@@ -62,6 +63,12 @@ public class QuestionTFResponse implements QuestionResponse {
 
     public QuestionTFResponse() {
         this.id = UUID.randomUUID().toString();
+        if (Math.random() > 0.5) {
+            this.askedTrueStatement = true;
+        }
+        else {
+            this.askedTrueStatement = false;
+        }
     }
 
     @Override
@@ -98,7 +105,7 @@ public class QuestionTFResponse implements QuestionResponse {
 
     @Override
     public Class<?> getAnswerQuestionClass() {
-        throw new Error("Not yet implemented GUI to answer this type of question");
+        return AnswerQuestionTF.class;
     }
 
     @Override
