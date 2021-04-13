@@ -84,9 +84,9 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         QuestionResponse currentQuestionResponse = questionResponses[position];
-        String answered = currentQuestionResponse.getAnswered(db);
         new Thread(() -> {
             Question currentQuestion = currentQuestionResponse.getQuestion(db);
+            String answered = currentQuestionResponse.getAnswered(db);
             new Handler(Looper.getMainLooper()).post(() -> {
                 holder.getTxtTitle().setText(currentQuestion.getTitle());
                 holder.getTxtAnswer().setText(answered);

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.AnswerQuestionPicker;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
 import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
 
@@ -133,6 +134,19 @@ public abstract class AnswerQuestionActivity extends AppCompatActivity {
         String currentQuestionProgressIndicator = (this.testRun.currentQuestionIndex + 1) + "/" +
                 this.testRun.questionResponses.length;
         txtCurrentQuestionProgress.setText(currentQuestionProgressIndicator);
+    }
+
+    protected void setPickQuestionButtonAndAction(Button btnPickQuestion) {
+        btnPickQuestion.setOnClickListener(v -> {
+            setCurrentQuestionData();
+            Intent intentPickQuestion = new Intent(
+                    this,
+                    AnswerQuestionPicker.class
+            );
+            intentPickQuestion.putExtra("TESTRUN", this.testRun);
+            intentPickQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intentPickQuestion);
+        });
     }
 
 }

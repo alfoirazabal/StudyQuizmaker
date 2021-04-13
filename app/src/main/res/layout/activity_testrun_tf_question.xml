@@ -39,12 +39,18 @@
                 android:gravity="center"
                 android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/txt_question_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <view
                 android:id="@+id/true_or_false_slider"
                 class="com.alfoirazabal.studyquizmaker.customviews.TrueOrFalseSlider"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_marginTop="4pt"
                 android:background="@android:color/transparent"
                 android:padding="5dp" />
 

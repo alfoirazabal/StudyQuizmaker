@@ -99,19 +99,9 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
                 seekbarAnswerScore.setProgress(scoreInSeekbar);
 
                 super.setPreviousAndNextButtonsAndActions();
+                super.setPickQuestionButtonAndAction(btnPickQuestion);
             });
         }).start();
-
-        btnPickQuestion.setOnClickListener(v -> {
-            setCurrentQuestionData();
-            Intent intentPickQuestion = new Intent(
-                    AnswerQuestionSimple.this,
-                    AnswerQuestionPicker.class
-            );
-            intentPickQuestion.putExtra("TESTRUN", super.testRun);
-            intentPickQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intentPickQuestion);
-        });
 
     }
 

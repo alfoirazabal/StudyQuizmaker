@@ -62,7 +62,7 @@ public class ViewRunResults extends AppCompatActivity {
             List<QuestionResponse> questionResponses = new ArrayList<>();
             questionResponses.addAll(Arrays.asList(questionSimpleResponses));
             questionResponses.addAll(Arrays.asList(questionTFResponses));
-            testRun.questionResponses = questionResponses.toArray(testRun.questionResponses);
+            testRun.questionResponses = questionResponses.toArray(new QuestionResponse[0]);
             runOnUiThread(() -> {
                 AdapterQuestionSimpleResponse adapter = new AdapterQuestionSimpleResponse(
                         testRun.questionResponses,
