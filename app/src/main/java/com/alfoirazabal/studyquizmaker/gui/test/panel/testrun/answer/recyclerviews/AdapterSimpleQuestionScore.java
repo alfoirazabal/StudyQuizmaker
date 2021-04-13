@@ -28,6 +28,7 @@ public class AdapterSimpleQuestionScore extends RecyclerView.Adapter<AdapterSimp
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView txtQuestion;
         private final TextView txtRightAnswer;
         private final TextView txtAnswered;
         private final SeekBar seekbarScore;
@@ -36,12 +37,17 @@ public class AdapterSimpleQuestionScore extends RecyclerView.Adapter<AdapterSimp
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            txtQuestion = itemView.findViewById(R.id.txt_question);
             txtRightAnswer = itemView.findViewById(R.id.txt_right_answer);
             txtAnswered = itemView.findViewById(R.id.txt_answered);
             seekbarScore = itemView.findViewById(R.id.seekbar_score);
             txtScore = itemView.findViewById(R.id.txt_score);
 
             seekbarScore.setMax(SEEKBAR_PARTITIONS);
+        }
+
+        public TextView getTxtQuestion() {
+            return txtQuestion;
         }
 
         public TextView getTxtRightAnswer() {
@@ -91,6 +97,7 @@ public class AdapterSimpleQuestionScore extends RecyclerView.Adapter<AdapterSimp
                     db.questionSimpleDAO().getById(questionSimpleResponse.questionSimpleId);
             double maxScore = currentQuestion.score;
             new Handler(Looper.getMainLooper()).post(() -> {
+                holder.getTxtQuestion().setText(currentQuestion.title);
                 holder.getTxtAnswered().setText(questionSimpleResponse.answered);
                 holder.getTxtRightAnswer().setText(currentQuestion.answer);
                 holder.getSeekbarScore().setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
