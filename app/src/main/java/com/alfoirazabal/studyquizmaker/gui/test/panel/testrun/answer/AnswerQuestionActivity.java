@@ -97,15 +97,24 @@ public abstract class AnswerQuestionActivity extends AppCompatActivity {
 
     private void setCurrentQuestionDataAndFinish() {
         setCurrentQuestionData();
-        TestRunProcessor testRunProcessor = new TestRunProcessor(this.testRun);
-        new Thread(() -> {
-            testRunProcessor.saveTestRunToDatabase(db);
-            Intent intentViewResults =
-                    new Intent(this, ViewFinalResults.class);
-            intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            intentViewResults.putExtra("TESTRUNID", testRun.id);
-            this.startActivity(intentViewResults);
-        }).start();
+        if (this.testRun.hasSimpleQuestions()) {
+            Intent intentScoreSimpleQuestions =
+                    new Intent(this, ScoreSimpleQuestions.class);
+            intentScoreSimpleQuestions.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intentScoreSimpleQuestions.putExtra("TESTRUN", this.testRun);
+            this.startActivity(intentScoreSimpleQuestions);
+        }
+        else {
+            TestRunProcessor testRunProcessor = new TestRunProcessor(this.testRun);
+            new Thread(() -> {
+                testRunProcessor.saveTestRunToDatabase(db);
+                Intent intentViewResults =
+                        new Intent(this, ViewFinalResults.class);
+                intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intentViewResults.putExtra("TESTRUNID", testRun.id);
+                this.startActivity(intentViewResults);
+            }).start();
+        }
     }
 
     private void startNewAnswerQuestionSimpleActivity(NextQuestionDirection nextQuestionDirection) {

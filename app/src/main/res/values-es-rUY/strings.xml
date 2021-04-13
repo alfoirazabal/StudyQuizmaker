@@ -74,4 +74,6 @@
     <string name="unsetted">Sin establecer</string>
     <string name="is_false">Falso</string>
     <string name="is_true">Verdadero</string>
+    <string name="right_answer">Respuesta correcta</string>
+    <string name="confirm_scores">Confirmar puntajes</string>
 </resources>
