@@ -104,7 +104,7 @@ public class QuestionTFResponse implements QuestionResponse {
     }
 
     @Override
-    public Class<?> getAnswerQuestionClass() {
+    public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionTF.class;
     }
 

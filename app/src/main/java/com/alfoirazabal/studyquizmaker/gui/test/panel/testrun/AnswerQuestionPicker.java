@@ -16,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.ScoreSimpleQuestions;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.recyclerviews.AdapterQuestionPicker;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
 import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
@@ -39,7 +40,7 @@ public class AnswerQuestionPicker extends AppCompatActivity {
         currentTestRun = (TestRun) bundle.getSerializable("TESTRUN");
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
-                3, StaggeredGridLayoutManager.VERTICAL
+                2, StaggeredGridLayoutManager.VERTICAL
         );
         this.recyclerviewQuestions.setLayoutManager(layoutManager);
         AdapterQuestionPicker adapterQuestionPicker = new AdapterQuestionPicker(
@@ -68,20 +69,29 @@ public class AnswerQuestionPicker extends AppCompatActivity {
     }
 
     private void finishTestRun() {
-        TestRunProcessor testRunProcessor = new TestRunProcessor(this.currentTestRun);
-        new Thread(() -> {
-            AppDatabase db = Room.databaseBuilder(
-                    getApplicationContext(),
-                    AppDatabase.class,
-                    AppConstants.getDBLocation(getApplicationContext())
-            ).build();
-            testRunProcessor.saveTestRunToDatabase(db);
-            Intent intentViewResults =
-                    new Intent(AnswerQuestionPicker.this, ViewFinalResults.class);
-            intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            intentViewResults.putExtra("TESTRUNID", currentTestRun.id);
-            this.startActivity(intentViewResults);
-        }).start();
+        if (this.currentTestRun.hasSimpleQuestions()) {
+            Intent intentScoreSimpleQuestions =
+                    new Intent(this, ScoreSimpleQuestions.class);
+            intentScoreSimpleQuestions.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intentScoreSimpleQuestions.putExtra("TESTRUN", this.currentTestRun);
+            this.startActivity(intentScoreSimpleQuestions);
+        }
+        else {
+            TestRunProcessor testRunProcessor = new TestRunProcessor(this.currentTestRun);
+            new Thread(() -> {
+                AppDatabase db = Room.databaseBuilder(
+                        getApplicationContext(),
+                        AppDatabase.class,
+                        AppConstants.getDBLocation(getApplicationContext())
+                ).build();
+                testRunProcessor.saveTestRunToDatabase(db);
+                Intent intentViewResults =
+                        new Intent(AnswerQuestionPicker.this, ViewFinalResults.class);
+                intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intentViewResults.putExtra("TESTRUNID", currentTestRun.id);
+                this.startActivity(intentViewResults);
+            }).start();
+        }
     }
 
     @Override

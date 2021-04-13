@@ -22,8 +22,6 @@ public class AnswerQuestionTF extends AnswerQuestionActivity {
     private TextView txtQuestionAnswer;
     private TrueOrFalseSlider trueOrFalseSlider;
     private TextView txtAnswerStatus;
-    private TextView txtNumberOfQuestionsSolved;
-    private TextView txtCurrentQuestionProgress;
 
     private QuestionTF currentQuestion;
 
@@ -37,8 +35,8 @@ public class AnswerQuestionTF extends AnswerQuestionActivity {
         txtQuestionAnswer = findViewById(R.id.txt_question_answer);
         trueOrFalseSlider = findViewById(R.id.true_or_false_slider);
         txtAnswerStatus = findViewById(R.id.txt_answer_status);
-        txtNumberOfQuestionsSolved = findViewById(R.id.txt_number_of_questions_solved);
-        txtCurrentQuestionProgress = findViewById(R.id.txt_current_question_progress);
+        TextView txtNumberOfQuestionsSolved = findViewById(R.id.txt_number_of_questions_solved);
+        TextView txtCurrentQuestionProgress = findViewById(R.id.txt_current_question_progress);
         super.btnNext = findViewById(R.id.btn_next);
         super.btnPrevious = findViewById(R.id.btn_previous);
 

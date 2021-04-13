@@ -88,7 +88,7 @@ public class QuestionSimpleResponse implements QuestionResponse {
     }
 
     @Override
-    public Class<?> getAnswerQuestionClass() {
+    public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionSimple.class;
     }
 

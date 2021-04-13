@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,12 +17,9 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
 
 public class AdapterQuestionPicker extends
         RecyclerView.Adapter<AdapterQuestionPicker.ViewHolder>{
-
-    private static final int PROGRESSBAR_PARTITIONS = 10;
 
     private final QuestionResponse[] questionResponses;
     private final AppDatabase db;
@@ -32,16 +28,14 @@ public class AdapterQuestionPicker extends
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView txtTitle;
-        private final TextView txtScore;
-        private final ProgressBar progressbarScore;
+        private final TextView txtQuestionScore;
         private final TextView txtAnswered;
 
         public ViewHolder(View view) {
             super(view);
 
             txtTitle = view.findViewById(R.id.txt_title);
-            txtScore = view.findViewById(R.id.txt_score);
-            progressbarScore = view.findViewById(R.id.progressbar_score);
+            txtQuestionScore = view.findViewById(R.id.txt_question_score);
             txtAnswered = view.findViewById(R.id.txt_answered);
 
             view.setOnClickListener(v -> {
@@ -61,11 +55,7 @@ public class AdapterQuestionPicker extends
         }
 
         public TextView getTxtScore() {
-            return txtScore;
-        }
-
-        public ProgressBar getProgressbarScore() {
-            return progressbarScore;
+            return txtQuestionScore;
         }
 
         public TextView getTxtAnswered() {
@@ -103,13 +93,9 @@ public class AdapterQuestionPicker extends
         new Thread(() -> {
             Question currentQuestion = currentResponse.getQuestion(db);
             double maxQuestionScore = currentQuestion.getScore();
-            double scored = currentResponse.getScore();
             new Handler(Looper.getMainLooper()).post(() -> {
                 holder.getTxtTitle().setText(currentQuestion.getTitle());
-                String scoreIndicator = scored + "/" + maxQuestionScore;
-                holder.getTxtScore().setText(scoreIndicator);
-                ProgressBar scoreProgressBar = holder.getProgressbarScore();
-                setProgressBar(scoreProgressBar, maxQuestionScore, scored);
+                holder.getTxtScore().setText(String.valueOf(maxQuestionScore));
                 TextView txtAnswered = holder.getTxtAnswered();
                 if (currentResponse.isAnswered()) {
                     txtAnswered.setText(R.string.answered);
@@ -121,17 +107,6 @@ public class AdapterQuestionPicker extends
                 }
             });
         }).start();
-    }
-
-    private void setProgressBar(
-            ProgressBar progressBar,
-            double maxQuestionScore,
-            double scored
-    ) {
-        double proportion = PROGRESSBAR_PARTITIONS / maxQuestionScore;
-        int scoreInProgressBar = (int)(scored * proportion);
-        progressBar.setMax(PROGRESSBAR_PARTITIONS);
-        progressBar.setProgress(scoreInProgressBar);
     }
 
     @Override

@@ -73,4 +73,6 @@
     <string name="unsetted">Unsetted</string>
     <string name="is_false">False</string>
     <string name="is_true">True</string>
+    <string name="right_answer">Right answer</string>
+    <string name="confirm_scores">Confirm scores</string>
 </resources>

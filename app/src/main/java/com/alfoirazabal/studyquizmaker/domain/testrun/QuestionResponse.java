@@ -13,7 +13,7 @@ public interface QuestionResponse extends Serializable {
     double getScore();
     Question getQuestion(AppDatabase db);
     String getAnswered(AppDatabase db);
-    Class<?> getAnswerQuestionClass();
+    Class<? extends AnswerQuestionActivity> getAnswerQuestionClass();
 
     void setTestRunId(String testRunId);
     void setQuestionId(String questionId);
