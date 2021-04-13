@@ -49,6 +49,9 @@ public class QuestionTFResponse implements QuestionResponse {
     @ColumnInfo(name = "questionTFId")
     public String questionTFId;
 
+    @ColumnInfo(name = "askOrder")
+    public int askOrder;
+
     @ColumnInfo(name = "isAnswered")
     public boolean isAnswered;
 
@@ -106,6 +109,16 @@ public class QuestionTFResponse implements QuestionResponse {
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionTF.class;
+    }
+
+    @Override
+    public int getAskOrder() {
+        return this.askOrder;
+    }
+
+    @Override
+    public void setAskOrder(int askOrder) {
+        this.askOrder = askOrder;
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponseComparators;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionTFResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
@@ -21,6 +22,7 @@ import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclervi
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewRunResults extends AppCompatActivity {
@@ -62,6 +64,7 @@ public class ViewRunResults extends AppCompatActivity {
             List<QuestionResponse> questionResponses = new ArrayList<>();
             questionResponses.addAll(Arrays.asList(questionSimpleResponses));
             questionResponses.addAll(Arrays.asList(questionTFResponses));
+            Collections.sort(questionResponses, new QuestionResponseComparators.CompareByAskOrder());
             testRun.questionResponses = questionResponses.toArray(new QuestionResponse[0]);
             runOnUiThread(() -> {
                 AdapterQuestionResponse adapter = new AdapterQuestionResponse(

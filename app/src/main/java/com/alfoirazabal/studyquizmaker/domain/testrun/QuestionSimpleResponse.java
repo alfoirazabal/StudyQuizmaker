@@ -50,6 +50,9 @@ public class QuestionSimpleResponse implements QuestionResponse {
     @ColumnInfo(name = "questionSimpleId")
     public String questionSimpleId;
 
+    @ColumnInfo(name = "askOrder")
+    public int askOrder;
+
     @ColumnInfo(name = "answered")
     public String answered;
 
@@ -90,6 +93,16 @@ public class QuestionSimpleResponse implements QuestionResponse {
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionSimple.class;
+    }
+
+    @Override
+    public int getAskOrder() {
+        return this.askOrder;
+    }
+
+    @Override
+    public void setAskOrder(int askOrder) {
+        this.askOrder = askOrder;
     }
 
     @Override
