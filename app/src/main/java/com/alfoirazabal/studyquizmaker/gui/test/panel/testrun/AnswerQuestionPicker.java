@@ -15,11 +15,12 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.recyclerviews.AdapterQuestionSimplePicker;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.recyclerviews.AdapterQuestionPicker;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
 import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
 
-public class AnswerQuestionSimplePicker extends AppCompatActivity {
+public class AnswerQuestionPicker extends AppCompatActivity {
 
     private TestRun currentTestRun;
 
@@ -29,7 +30,7 @@ public class AnswerQuestionSimplePicker extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testrun_simplequestion_picker);
+        setContentView(R.layout.activity_testrun_question_picker);
 
         recyclerviewQuestions = findViewById(R.id.recyclerview_questions);
         btnFinish = findViewById(R.id.btn_finish);
@@ -41,8 +42,8 @@ public class AnswerQuestionSimplePicker extends AppCompatActivity {
                 3, StaggeredGridLayoutManager.VERTICAL
         );
         this.recyclerviewQuestions.setLayoutManager(layoutManager);
-        AdapterQuestionSimplePicker adapterQuestionSimplePicker = new AdapterQuestionSimplePicker(
-                currentTestRun.questionSimpleResponses,
+        AdapterQuestionPicker adapterQuestionPicker = new AdapterQuestionPicker(
+                currentTestRun.questionResponses,
                 Room.databaseBuilder(
                         getApplicationContext(),
                         AppDatabase.class,
@@ -50,7 +51,7 @@ public class AnswerQuestionSimplePicker extends AppCompatActivity {
                 ).build(),
                 currentTestRun
         );
-        this.recyclerviewQuestions.setAdapter(adapterQuestionSimplePicker);
+        this.recyclerviewQuestions.setAdapter(adapterQuestionPicker);
 
         this.btnFinish.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
@@ -76,7 +77,7 @@ public class AnswerQuestionSimplePicker extends AppCompatActivity {
             ).build();
             testRunProcessor.saveTestRunToDatabase(db);
             Intent intentViewResults =
-                    new Intent(AnswerQuestionSimplePicker.this, ViewFinalResults.class);
+                    new Intent(AnswerQuestionPicker.this, ViewFinalResults.class);
             intentViewResults.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intentViewResults.putExtra("TESTRUNID", currentTestRun.id);
             this.startActivity(intentViewResults);

@@ -9,11 +9,10 @@ import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionTF;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 @Entity(
@@ -26,19 +25,19 @@ import java.util.UUID;
                         onUpdate = ForeignKey.CASCADE
                 ),
                 @ForeignKey(
-                        entity = QuestionSimple.class,
+                        entity = QuestionTF.class,
                         parentColumns = "id",
-                        childColumns = "questionSimpleId",
+                        childColumns = "questionTFId",
                         onDelete = ForeignKey.CASCADE,
                         onUpdate = ForeignKey.CASCADE
                 )
         },
         indices = {
                 @Index(value = {"testRunId"}),
-                @Index(value = {"questionSimpleId"})
+                @Index(value = {"questionTFId"})
         }
 )
-public class QuestionSimpleResponse implements QuestionResponse {
+public class QuestionTFResponse implements QuestionResponse {
 
     @PrimaryKey
     @NonNull
@@ -47,29 +46,39 @@ public class QuestionSimpleResponse implements QuestionResponse {
     @ColumnInfo(name = "testRunId")
     public String testRunId;
 
-    @ColumnInfo(name = "questionSimpleId")
-    public String questionSimpleId;
+    @ColumnInfo(name = "questionTFId")
+    public String questionTFId;
 
-    @ColumnInfo(name = "answered")
-    public String answered;
+    @ColumnInfo(name = "isAnswered")
+    public boolean isAnswered;
+
+    @ColumnInfo(name = "askedTrueStatement")
+    public boolean askedTrueStatement;
+
+    @ColumnInfo(name = "answeredCorrectly")
+    public boolean answeredCorrectly;
 
     @ColumnInfo(name = "score")
     public double score;
 
-    public QuestionSimpleResponse() {
+    public QuestionTFResponse() {
         this.id = UUID.randomUUID().toString();
-        this.answered = "";
-        this.score = 0;
+        if (Math.random() > 0.5) {
+            this.askedTrueStatement = true;
+        }
+        else {
+            this.askedTrueStatement = false;
+        }
     }
 
     @Override
     public String getQuestionId() {
-        return this.questionSimpleId;
+        return this.id;
     }
 
     @Override
     public boolean isAnswered() {
-        return !this.answered.equals("");
+        return this.isAnswered;
     }
 
     @Override
@@ -79,17 +88,24 @@ public class QuestionSimpleResponse implements QuestionResponse {
 
     @Override
     public Question getQuestion(AppDatabase db) {
-        return db.questionSimpleDAO().getById(this.questionSimpleId);
+        return db.questionTFDAO().getById(this.questionTFId);
     }
 
     @Override
     public String getAnswered(AppDatabase db) {
-        return this.answered;
+        String answered;
+        if (this.answeredCorrectly) {
+            answered = db.questionTFDAO().getById(this.questionTFId).answerTrue;
+        }
+        else {
+            answered = db.questionTFDAO().getById(this.questionTFId).answerFalse;
+        }
+        return answered;
     }
 
     @Override
     public Class<?> getAnswerQuestionClass() {
-        return AnswerQuestionSimple.class;
+        return AnswerQuestionTF.class;
     }
 
     @Override
@@ -99,11 +115,11 @@ public class QuestionSimpleResponse implements QuestionResponse {
 
     @Override
     public void setQuestionId(String questionId) {
-        this.questionSimpleId = questionId;
+        this.questionTFId = questionId;
     }
 
     @Override
     public void insertToDb(AppDatabase db) {
-        db.questionSimpleResponseDAO().insert(this);
+        db.questionTFResponseDAO().insert(this);
     }
 }

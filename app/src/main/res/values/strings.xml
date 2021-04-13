@@ -70,4 +70,7 @@
     <string name="duration">Duration</string>
     <string name="answer_false">False answer</string>
     <string name="answer_true">True answer</string>
+    <string name="unsetted">Unsetted</string>
+    <string name="is_false">False</string>
+    <string name="is_true">True</string>
 </resources>

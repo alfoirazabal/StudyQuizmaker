@@ -12,6 +12,8 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
 import java.util.UUID;
@@ -65,6 +67,11 @@ public class QuestionSimple implements Question {
     @Override
     public Class<?> getUpdateGUIClass() {
         return UpdateQuestionSimple.class;
+    }
+
+    @Override
+    public QuestionResponse getQuestionResponseObject() {
+        return new QuestionSimpleResponse();
     }
 
     @Override
