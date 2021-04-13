@@ -19,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.recyclervie
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewFinalResults;
 import com.alfoirazabal.studyquizmaker.helpers.testrun.TestRunProcessor;
 
+import java.util.Date;
 import java.util.List;
 
 public class ScoreSimpleQuestions extends AppCompatActivity {
@@ -43,6 +44,9 @@ public class ScoreSimpleQuestions extends AppCompatActivity {
 
         testRun = (TestRun) getIntent().getSerializableExtra("TESTRUN");
 
+        TestRunProcessor testRunProcessor = new TestRunProcessor(this.testRun);
+        testRunProcessor.setFinishedDateTime(new Date());
+
         questionSimpleResponses = testRun.getQuestionSimpleResponses();
 
         db = Room.databaseBuilder(
@@ -58,7 +62,6 @@ public class ScoreSimpleQuestions extends AppCompatActivity {
         recyclerviewScores.setAdapter(adapterSimpleQuestionScore);
 
         btnConfirmScores.setOnClickListener(v -> {
-            TestRunProcessor testRunProcessor = new TestRunProcessor(this.testRun);
             new Thread(() -> {
                 testRunProcessor.saveTestRunToDatabase(db);
                 Intent intentViewResults =

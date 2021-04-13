@@ -1,8 +1,10 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
         private final TextView txtTitle;
         private final TextView txtAnswer;
         private final TextView txtScored;
+        private final TextView answeredQuestionLabel;
         private final ProgressBar progressbarScore;
 
         public ViewHolder(@NonNull View itemView) {
@@ -35,6 +38,7 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
             txtTitle = itemView.findViewById(R.id.txt_title);
             txtAnswer = itemView.findViewById(R.id.txt_answer);
             txtScored = itemView.findViewById(R.id.txt_scored);
+            answeredQuestionLabel = itemView.findViewById(R.id.txt_answered_question_label);
             progressbarScore = itemView.findViewById(R.id.progressbar_score);
 
             this.progressbarScore.setMax(100);
@@ -51,6 +55,8 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
         public TextView getTxtScored() {
             return txtScored;
         }
+
+        public TextView getAnsweredQuestionLabel() { return answeredQuestionLabel; }
 
         public ProgressBar getProgressbarScore() {
             return progressbarScore;
@@ -71,7 +77,7 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
     @Override
     public AdapterQuestionResponse.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.recyclerview_adapter_question_simple_response,
+                R.layout.recyclerview_adapter_question_response,
                 parent,
                 false
         );
@@ -88,13 +94,21 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
             String answered = currentQuestionResponse.getAnswered(db);
             new Handler(Looper.getMainLooper()).post(() -> {
                 holder.getTxtTitle().setText(currentQuestion.getTitle());
+                TextView answeredQuestionLabel = holder.getAnsweredQuestionLabel();
+                TextView txtAnswer = holder.getTxtAnswer();
                 if (isAnswered) {
-                    holder.getTxtAnswer().setText(answered);
-                    holder.getTxtAnswer().setTextColor(Color.BLACK);
+                    answeredQuestionLabel.setVisibility(View.VISIBLE);
+                    txtAnswer.setText(answered);
+                    txtAnswer.setGravity(Gravity.LEFT);
+                    txtAnswer.setTextColor(Color.BLACK);
+                    txtAnswer.setTypeface(null, Typeface.NORMAL);
                 }
                 else {
-                    holder.getTxtAnswer().setText(R.string.unanswered);
-                    holder.getTxtAnswer().setTextColor(Color.RED);
+                    answeredQuestionLabel.setVisibility(View.GONE);
+                    txtAnswer.setText(R.string.unanswered);
+                    txtAnswer.setGravity(Gravity.CENTER_HORIZONTAL);
+                    txtAnswer.setTextColor(Color.RED);
+                    txtAnswer.setTypeface(null, Typeface.ITALIC);
                 }
                 double totalScore = currentQuestion.getScore();
                 double scored = currentQuestionResponse.getScore();
@@ -112,10 +126,12 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
             textView.setTextColor(Color.RED);
         }
         else if (scoreReached > 0 && scoreReached < scoreTotal) {
-            textView.setTextColor(Color.YELLOW);
+            int colorOrange = Color.rgb(252, 173, 0);
+            textView.setTextColor(colorOrange);
         }
         else {
-            textView.setTextColor(Color.GREEN);
+            int colorGreen = Color.rgb(0, 200, 0);
+            textView.setTextColor(colorGreen);
         }
     }
 

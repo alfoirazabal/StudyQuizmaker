@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -116,7 +117,10 @@ public class ViewQuestion extends AppCompatActivity {
             questions.addAll(db.questionSimpleDAO().getFromTest(currentTestId));
             questions.addAll(db.questionTFDAO().getFromTest(currentTestId));
             questions.addAll(db.questionMCDAO().getFromTest(currentTestId));
-            Collections.sort(questions, new QuestionComparators.CompareByDateCreated());
+            Comparator<Question> questionsComparator =
+                    new QuestionComparators.CompareByDateCreated();
+            questionsComparator = Collections.reverseOrder(questionsComparator);
+            Collections.sort(questions, questionsComparator);
             runOnUiThread(() -> adapterQuestionView.notifyDataSetChanged());
         }).start();
     }

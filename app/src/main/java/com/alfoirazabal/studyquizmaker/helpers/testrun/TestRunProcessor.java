@@ -10,16 +10,22 @@ import java.util.Date;
 public class TestRunProcessor {
 
     private TestRun testRun;
+    private Date finishedDateTime;
 
     public TestRunProcessor(TestRun testRun) {
         this.testRun = testRun;
+        this.finishedDateTime = new Date();
+    }
+
+    public void setFinishedDateTime(Date finishedDateTime) {
+        this.finishedDateTime = finishedDateTime;
     }
 
     public void saveTestRunToDatabase(AppDatabase db) {
         int numberOfAnsweredQuestions = 0;
         double totalScore = 0;
         double totalScored = 0;
-        this.testRun.dateTimeFinished = new Date();
+        this.testRun.dateTimeFinished = this.finishedDateTime;
         for (int i = 0; i < this.testRun.questionResponses.length ; i++) {
             QuestionResponse currentQuestionResponse =
                     this.testRun.questionResponses[i];
