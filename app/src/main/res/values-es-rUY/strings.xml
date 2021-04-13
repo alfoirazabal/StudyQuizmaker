@@ -39,7 +39,7 @@
     <string name="score_total">"Puntaje: "</string>
     <string name="answer">Respuesta</string>
     <string name="title">Título</string>
-    <string name="msg_err_questionsimple_title_exists_already">Ya existe otra pregunta simple con ese título</string>
+    <string name="msg_err_question_title_exists_already">Ya existe otra pregunta con ese título</string>
     <string name="max_score">Puntaje máximo de otras preguntas</string>
     <string name="score">Puntaje</string>
     <string name="msg_delete_confirmation_question">¿Seguro de que desea borrar la siguiente pregunta?</string>
@@ -69,4 +69,11 @@
     <string name="msg_delete_confirmation_testrun">¿Seguro de que desea borrar la corrida seleccionada?</string>
     <string name="date_started_on">Empezado el</string>
     <string name="duration">Duración</string>
+    <string name="answer_false">Respuesta falsa</string>
+    <string name="answer_true">Respuesta verdadera</string>
+    <string name="unsetted">Sin establecer</string>
+    <string name="is_false">Falso</string>
+    <string name="is_true">Verdadero</string>
+    <string name="right_answer">Respuesta correcta</string>
+    <string name="confirm_scores">Confirmar puntajes</string>
 </resources>

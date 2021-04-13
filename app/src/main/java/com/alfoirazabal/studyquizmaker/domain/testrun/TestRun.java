@@ -9,9 +9,13 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(
@@ -53,7 +57,7 @@ public class TestRun implements Serializable, Comparable<TestRun> {
     public Date dateTimeFinished;
 
     @Ignore
-    public QuestionSimpleResponse[] questionSimpleResponses;
+    public QuestionResponse[] questionResponses;
 
     @Ignore
     public int currentQuestionIndex;
@@ -68,4 +72,24 @@ public class TestRun implements Serializable, Comparable<TestRun> {
     public int compareTo(TestRun o) {
         return o.dateTimeStarted.compareTo(this.dateTimeStarted);
     }
+
+    public boolean hasSimpleQuestions() {
+        boolean hasSimpleQuestionsResponses = false;
+        for (int i = 0 ; !hasSimpleQuestionsResponses && i < this.questionResponses.length ; i++) {
+            hasSimpleQuestionsResponses =
+                    (this.questionResponses[i] instanceof QuestionSimpleResponse);
+        }
+        return hasSimpleQuestionsResponses;
+    }
+
+    public List<QuestionSimpleResponse> getQuestionSimpleResponses() {
+        List<QuestionSimpleResponse> questionSimpleResponses = new ArrayList<>();
+        for (QuestionResponse questionResponse : this.questionResponses) {
+            if (questionResponse instanceof QuestionSimpleResponse) {
+                questionSimpleResponses.add((QuestionSimpleResponse) questionResponse);
+            }
+        }
+        return questionSimpleResponses;
+    }
+
 }

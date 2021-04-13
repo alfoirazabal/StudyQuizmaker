@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/simple_question"
+        android:text="@string/questions_true_or_false"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_pick_question"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,15 +32,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4pt"
-                android:gravity="center"
-                android:text="@string/question"
-                android:textSize="24sp" />
-
-            <TextView
                 android:id="@+id/txt_question_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,23 +39,28 @@
                 android:gravity="center"
                 android:textSize="18sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtil_response"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="4pt">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_response"
-                    android:layout_width="match_parent"
-                    android:layout_height="50pt"
-                    android:hint="@string/answer" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <TextView
-                android:id="@+id/txt_question_score"
+                android:id="@+id/txt_question_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <view
+                android:id="@+id/true_or_false_slider"
+                class="com.alfoirazabal.studyquizmaker.customviews.TrueOrFalseSlider"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="4pt"
+                android:background="@android:color/transparent"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/txt_answer_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2pt"
+                android:gravity="center"
+                android:text="@string/unsetted" />
 
         </LinearLayout>
     </ScrollView>

@@ -13,8 +13,15 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionTFResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews.AdapterQuestionSimpleResponse;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews.AdapterQuestionResponse;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ViewRunResults extends AppCompatActivity {
 
@@ -48,11 +55,17 @@ public class ViewRunResults extends AppCompatActivity {
         new Thread(() -> {
             String testRunId = getIntent().getExtras().getString("TESTRUNID");
             TestRun testRun = db.testRunDAO().getById(testRunId);
-            testRun.questionSimpleResponses =
+            QuestionSimpleResponse[] questionSimpleResponses =
                     db.questionSimpleResponseDAO().getResponsesFromTestRun(testRunId);
+            QuestionTFResponse[] questionTFResponses =
+                    db.questionTFResponseDAO().getResponsesFromTestRun(testRunId);
+            List<QuestionResponse> questionResponses = new ArrayList<>();
+            questionResponses.addAll(Arrays.asList(questionSimpleResponses));
+            questionResponses.addAll(Arrays.asList(questionTFResponses));
+            testRun.questionResponses = questionResponses.toArray(new QuestionResponse[0]);
             runOnUiThread(() -> {
-                AdapterQuestionSimpleResponse adapter = new AdapterQuestionSimpleResponse(
-                        testRun.questionSimpleResponses,
+                AdapterQuestionResponse adapter = new AdapterQuestionResponse(
+                        testRun.questionResponses,
                         db
                 );
                 recyclerviewAnswers.setAdapter(adapter);

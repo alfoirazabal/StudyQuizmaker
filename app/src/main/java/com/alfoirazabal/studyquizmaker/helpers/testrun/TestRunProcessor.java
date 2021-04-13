@@ -1,6 +1,7 @@
 package com.alfoirazabal.studyquizmaker.helpers.testrun;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 
@@ -19,22 +20,20 @@ public class TestRunProcessor {
         double totalScore = 0;
         double totalScored = 0;
         this.testRun.dateTimeFinished = new Date();
-        for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
-            QuestionSimpleResponse currentQuestionSimpleResponse =
-                    this.testRun.questionSimpleResponses[i];
-            if (currentQuestionSimpleResponse.isAnswered) {
+        for (int i = 0; i < this.testRun.questionResponses.length ; i++) {
+            QuestionResponse currentQuestionResponse =
+                    this.testRun.questionResponses[i];
+            if (currentQuestionResponse.isAnswered()) {
                 numberOfAnsweredQuestions++;
             }
-            totalScore += db.questionSimpleDAO().getById(
-                    currentQuestionSimpleResponse.questionSimpleId
-            ).score;
-            totalScored += currentQuestionSimpleResponse.score;
+            totalScore += currentQuestionResponse.getQuestion(db).getScore();
+            totalScored += currentQuestionResponse.getScore();
         }
         this.testRun.numberOfAnsweredQuestions = numberOfAnsweredQuestions;
         this.testRun.scoredPercentage = Math.round((totalScored / totalScore) * 100);
         db.testRunDAO().insert(testRun);
-        for (int i = 0 ; i < this.testRun.questionSimpleResponses.length ; i++) {
-            db.questionSimpleResponseDAO().insert(this.testRun.questionSimpleResponses[i]);
+        for (int i = 0; i < this.testRun.questionResponses.length ; i++) {
+            this.testRun.questionResponses[i].insertToDb(db);
         }
     }
 

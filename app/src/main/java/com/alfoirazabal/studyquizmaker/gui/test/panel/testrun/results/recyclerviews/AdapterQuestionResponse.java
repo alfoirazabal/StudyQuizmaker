@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
-import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
+import com.alfoirazabal.studyquizmaker.domain.question.Question;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 
-public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQuestionSimpleResponse.ViewHolder> {
+public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestionResponse.ViewHolder> {
 
-    private final QuestionSimpleResponse[] questionSimpleResponses;
+    private final QuestionResponse[] questionResponses;
     private final AppDatabase db;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,11 +57,11 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
         }
     }
 
-    public AdapterQuestionSimpleResponse(
-            QuestionSimpleResponse[] questionSimpleResponses,
+    public AdapterQuestionResponse(
+            QuestionResponse[] questionResponses,
             AppDatabase db
     ) {
-        this.questionSimpleResponses = questionSimpleResponses;
+        this.questionResponses = questionResponses;
         this.db = db;
 
         this.setHasStableIds(true);
@@ -69,28 +69,35 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
 
     @NonNull
     @Override
-    public AdapterQuestionSimpleResponse.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterQuestionResponse.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.recyclerview_adapter_question_simple_response,
                 parent,
                 false
         );
 
-        return new AdapterQuestionSimpleResponse.ViewHolder(view);
+        return new AdapterQuestionResponse.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        QuestionSimpleResponse currentQuestionSimpleResponse = questionSimpleResponses[position];
+        QuestionResponse currentQuestionResponse = questionResponses[position];
         new Thread(() -> {
-            QuestionSimple currentQuestionSimple = db.questionSimpleDAO().getById(
-                    currentQuestionSimpleResponse.questionSimpleId
-            );
+            Question currentQuestion = currentQuestionResponse.getQuestion(db);
+            boolean isAnswered = currentQuestionResponse.isAnswered();
+            String answered = currentQuestionResponse.getAnswered(db);
             new Handler(Looper.getMainLooper()).post(() -> {
-                holder.getTxtTitle().setText(currentQuestionSimple.title);
-                holder.getTxtAnswer().setText(currentQuestionSimpleResponse.answered);
-                double totalScore = currentQuestionSimple.score;
-                double scored = currentQuestionSimpleResponse.score;
+                holder.getTxtTitle().setText(currentQuestion.getTitle());
+                if (isAnswered) {
+                    holder.getTxtAnswer().setText(answered);
+                    holder.getTxtAnswer().setTextColor(Color.BLACK);
+                }
+                else {
+                    holder.getTxtAnswer().setText(R.string.unanswered);
+                    holder.getTxtAnswer().setTextColor(Color.RED);
+                }
+                double totalScore = currentQuestion.getScore();
+                double scored = currentQuestionResponse.getScore();
                 double scoredPercentage = (scored / totalScore) * 100;
                 holder.getProgressbarScore().setProgress((int)scoredPercentage);
                 String scoredIndicatorText = scored + "/" + totalScore;
@@ -114,7 +121,7 @@ public class AdapterQuestionSimpleResponse extends RecyclerView.Adapter<AdapterQ
 
     @Override
     public int getItemCount() {
-        return this.questionSimpleResponses.length;
+        return this.questionResponses.length;
     }
 
     @Override

@@ -7,8 +7,6 @@ import androidx.room.Query;
 
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 
-import java.util.List;
-
 @Dao
 public interface QuestionSimpleResponseDAO {
 

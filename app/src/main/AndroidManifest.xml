@@ -25,14 +25,18 @@
         <activity android:name=".gui.test.AddTest" />
         <activity android:name=".gui.test.UpdateTest" />
         <activity android:name=".gui.test.panel.PanelTestView" />
-        <activity android:name=".gui.test.panel.questions.questionsimple.ViewQuestionsSimple" />
+        <activity android:name=".gui.test.panel.questions.ViewQuestion" />
         <activity android:name=".gui.test.panel.questions.questionsimple.AddQuestionSimple" />
         <activity android:name=".gui.test.panel.questions.questionsimple.UpdateQuestionSimple" />
-        <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimple" />
+        <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionSimple" />
         <activity android:name=".gui.test.panel.testrun.results.ViewFinalResults" />
-        <activity android:name=".gui.test.panel.testrun.AnswerQuestionSimplePicker" />
+        <activity android:name=".gui.test.panel.testrun.AnswerQuestionPicker" />
         <activity android:name=".gui.test.panel.testrun.results.ViewRunResults" />
         <activity android:name=".gui.test.panel.testrun.results.ViewTestRuns" />
+        <activity android:name=".gui.test.panel.questions.questiontf.AddQuestionTF" />
+        <activity android:name=".gui.test.panel.questions.questiontf.UpdateQuestionTF" />
+        <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionTF" />
+        <activity android:name=".gui.test.panel.testrun.answer.ScoreSimpleQuestions" />
     </application>
 
 </manifest>
