@@ -16,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.UpdateQuestionSimple;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(
@@ -29,7 +30,9 @@ import java.util.UUID;
                 )
         },
         indices = {
-                @Index(value = {"testId"})
+                @Index(value = {"testId"}),
+                @Index(value = {"testId", "dateCreated"}),
+                @Index(value = {"testId", "dateModified"})
         }
 )
 public class QuestionSimple implements Question {
@@ -50,8 +53,16 @@ public class QuestionSimple implements Question {
     @ColumnInfo(name = "score")
     public double score;
 
+    @ColumnInfo(name = "dateCreated")
+    public Date dateCreated;
+
+    @ColumnInfo(name = "dateModified")
+    public Date dateModified;
+
     public QuestionSimple() {
         this.id = UUID.randomUUID().toString();
+        this.dateCreated = new Date();
+        this.dateModified = this.dateCreated;
     }
 
     @Override
@@ -108,4 +119,20 @@ public class QuestionSimple implements Question {
     public String getQuestionTypeName(Context context) {
         return context.getString(R.string.simple_question);
     }
+
+    @Override
+    public Date getDateCreated() {
+        return this.dateCreated;
+    }
+
+    @Override
+    public Date getDateModified() {
+        return this.dateModified;
+    }
+
+    @Override
+    public void updateModifiedDate() {
+        this.dateModified = new Date();
+    }
+
 }

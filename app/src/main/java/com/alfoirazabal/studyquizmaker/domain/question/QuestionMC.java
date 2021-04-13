@@ -17,6 +17,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,9 @@ import java.util.UUID;
                 )
         },
         indices = {
-                @Index(value = {"testId"})
+                @Index(value = {"testId"}),
+                @Index(value = {"testId", "dateCreated"}),
+                @Index(value = {"testId", "dateModified"})
         }
 )
 public class QuestionMC implements Question {
@@ -49,6 +52,12 @@ public class QuestionMC implements Question {
     @ColumnInfo(name = "description")
     public String description;
 
+    @ColumnInfo(name = "dateCreated")
+    public Date dateCreated;
+
+    @ColumnInfo(name = "dateModified")
+    public Date dateModified;
+
     @Ignore
     public QuestionOptionMC[] questionOptionMCs;
 
@@ -57,6 +66,8 @@ public class QuestionMC implements Question {
 
     public QuestionMC() {
         this.id = UUID.randomUUID().toString();
+        this.dateCreated = new Date();
+        this.dateModified = this.dateCreated;
     }
 
     @Override
@@ -148,5 +159,20 @@ public class QuestionMC implements Question {
             }
         }
         this.rightOption = maxScoredOption;
+    }
+
+    @Override
+    public Date getDateCreated() {
+        return this.dateCreated;
+    }
+
+    @Override
+    public Date getDateModified() {
+        return this.dateModified;
+    }
+
+    @Override
+    public void updateModifiedDate() {
+        this.dateModified = new Date();
     }
 }

@@ -17,6 +17,7 @@ import com.alfoirazabal.studyquizmaker.domain.Subject;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionComparators;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
@@ -27,6 +28,7 @@ import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.ViewTestRu
 import com.alfoirazabal.studyquizmaker.helpers.ArrayShuffler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 

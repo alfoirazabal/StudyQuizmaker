@@ -16,12 +16,14 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionComparators;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AddQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf.AddQuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview.AdapterQuestionView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -114,6 +116,7 @@ public class ViewQuestion extends AppCompatActivity {
             questions.addAll(db.questionSimpleDAO().getFromTest(currentTestId));
             questions.addAll(db.questionTFDAO().getFromTest(currentTestId));
             questions.addAll(db.questionMCDAO().getFromTest(currentTestId));
+            Collections.sort(questions, new QuestionComparators.CompareByDateCreated());
             runOnUiThread(() -> adapterQuestionView.notifyDataSetChanged());
         }).start();
     }
