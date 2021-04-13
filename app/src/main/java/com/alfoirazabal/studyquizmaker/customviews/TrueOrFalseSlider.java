@@ -9,16 +9,23 @@ import com.alfoirazabal.studyquizmaker.R;
 
 public class TrueOrFalseSlider extends androidx.appcompat.widget.AppCompatSeekBar {
 
+    public interface SliderStatusChangedListener {
+        public void statusChanged();
+    }
+
     public enum SLIDER_STATUS {
         FALSE,
         UNSET,
         TRUE
     };
 
+    private SliderStatusChangedListener sliderStatusChangedListener;
+
     private SLIDER_STATUS sliderStatus;
 
     public TrueOrFalseSlider(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        this.sliderStatusChangedListener = null;
         super.setMax(2);
         this.setStatus(SLIDER_STATUS.UNSET);
 
@@ -36,6 +43,7 @@ public class TrueOrFalseSlider extends androidx.appcompat.widget.AppCompatSeekBa
                         setStatus(SLIDER_STATUS.TRUE);
                         break;
                 }
+                sliderStatusChangedListener.statusChanged();
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) { }
@@ -67,6 +75,10 @@ public class TrueOrFalseSlider extends androidx.appcompat.widget.AppCompatSeekBa
 
     public SLIDER_STATUS getSliderStatus() {
         return this.sliderStatus;
+    }
+
+    public void setSliderStatusChangedListener(SliderStatusChangedListener statusChangedListener) {
+        this.sliderStatusChangedListener = statusChangedListener;
     }
 
 }

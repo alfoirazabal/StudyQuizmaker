@@ -58,19 +58,9 @@ public class AnswerQuestionSimple extends AnswerQuestionActivity {
 
         super.testRun = (TestRun) getIntent().getSerializableExtra("TESTRUN");
 
-        int numberOfQuestions = super.testRun.questionResponses.length;
-        int numberOfAnswers = 0;
-        for (int i = 0; i < super.testRun.questionResponses.length ; i++) {
-            if (!super.testRun.questionResponses[i].isAnswered()) {
-                numberOfAnswers++;
-            }
-        }
-
-        String questionsSolvedIndicator = numberOfAnswers + "/" + numberOfQuestions;
-        txtNumberOfQuestionsSolved.setText(questionsSolvedIndicator);
-        String currentQuestionProgressIndicator = (super.testRun.currentQuestionIndex + 1) + "/" +
-                super.testRun.questionResponses.length;
-        txtCurrentQuestionProgress.setText(currentQuestionProgressIndicator);
+        super.styleQuestionProgressIndicators(
+                txtNumberOfQuestionsSolved, txtCurrentQuestionProgress
+        );
 
         super.db = Room.databaseBuilder(
                 getApplicationContext(),

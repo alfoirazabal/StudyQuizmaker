@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -114,6 +115,24 @@ public abstract class AnswerQuestionActivity extends AppCompatActivity {
         intentNewQuestion.putExtra("QUESTIONDIRECTION", nextQuestionDirection);
         intentNewQuestion.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(intentNewQuestion);
+    }
+
+    protected void styleQuestionProgressIndicators(
+            TextView txtNumberOfQuestionsSolved,
+            TextView txtCurrentQuestionProgress
+    ) {
+        int numberOfQuestions = this.testRun.questionResponses.length;
+        int numberOfAnswers = 0;
+        for (int i = 0; i < this.testRun.questionResponses.length ; i++) {
+            if (!this.testRun.questionResponses[i].isAnswered()) {
+                numberOfAnswers++;
+            }
+        }
+        String questionsSolvedIndicator = numberOfAnswers + "/" + numberOfQuestions;
+        txtNumberOfQuestionsSolved.setText(questionsSolvedIndicator);
+        String currentQuestionProgressIndicator = (this.testRun.currentQuestionIndex + 1) + "/" +
+                this.testRun.questionResponses.length;
+        txtCurrentQuestionProgress.setText(currentQuestionProgressIndicator);
     }
 
 }

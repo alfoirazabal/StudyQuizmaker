@@ -71,4 +71,7 @@
     <string name="duration">Duración</string>
     <string name="answer_false">Respuesta falsa</string>
     <string name="answer_true">Respuesta verdadera</string>
+    <string name="unsetted">Sin establecer</string>
+    <string name="is_false">Falso</string>
+    <string name="is_true">Verdadero</string>
 </resources>
