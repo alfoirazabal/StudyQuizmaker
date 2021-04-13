@@ -47,7 +47,7 @@ public class ViewRunResults extends AppCompatActivity {
         ).build();
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
-                3,
+                2,
                 StaggeredGridLayoutManager.VERTICAL
         );
         recyclerviewAnswers.setLayoutManager(layoutManager);

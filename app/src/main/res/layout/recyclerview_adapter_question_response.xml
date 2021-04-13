@@ -24,11 +24,10 @@
         android:layout_marginTop="5dp"
         android:text="@string/answer"
         android:textSize="12sp"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txt_title"
-        app:layout_constraintTop_toBottomOf="@+id/progressbar_score" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_answered_question_label" />
 
     <TextView
         android:id="@+id/textView6"
@@ -65,5 +64,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/txt_answered_question_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/answered_question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressbar_score" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
