@@ -159,6 +159,7 @@ public class UpdateQuestionTF extends AppCompatActivity {
                     Objects.requireNonNull(txtAnswerFalse.getText()).toString();
             currentQuestionTF.score =
                     Double.parseDouble(Objects.requireNonNull(txtScore.getText()).toString());
+            currentQuestionTF.updateModifiedDate();
             new Thread(() -> {
                 db.questionTFDAO().update(currentQuestionTF);
                 finish();

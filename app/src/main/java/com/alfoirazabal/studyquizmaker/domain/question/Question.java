@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 
+import java.util.Date;
+
 public interface Question {
 
     String getTestId();
@@ -20,6 +22,9 @@ public interface Question {
     Class<?> getUpdateGUIClass();
     QuestionResponse getQuestionResponseObject();
     String getQuestionTypeName(Context context);
+    Date getDateCreated();
+    Date getDateModified();
+    void updateModifiedDate();
 
     class NoWrongAnswers extends Exception {
         @Nullable

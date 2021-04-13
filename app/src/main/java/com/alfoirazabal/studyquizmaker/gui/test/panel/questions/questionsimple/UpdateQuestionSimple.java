@@ -149,6 +149,7 @@ public class UpdateQuestionSimple extends AppCompatActivity {
         btnUpdate.setOnClickListener(v -> {
             currentQuestionSimple.title = Objects.requireNonNull(txtTitle.getText()).toString();
             currentQuestionSimple.answer = Objects.requireNonNull(txtAnswer.getText()).toString();
+            currentQuestionSimple.updateModifiedDate();
             currentQuestionSimple.score =
                     Double.parseDouble(Objects.requireNonNull(txtScore.getText()).toString());
             new Thread(() -> {
