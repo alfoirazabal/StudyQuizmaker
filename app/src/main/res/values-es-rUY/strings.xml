@@ -76,4 +76,5 @@
     <string name="is_true">Verdadero</string>
     <string name="right_answer">Respuesta correcta</string>
     <string name="confirm_scores">Confirmar puntajes</string>
+    <string name="answered_question">Respondido</string>
 </resources>

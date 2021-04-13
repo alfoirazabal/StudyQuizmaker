@@ -14,6 +14,8 @@ public interface QuestionResponse extends Serializable {
     Question getQuestion(AppDatabase db);
     String getAnswered(AppDatabase db);
     Class<? extends AnswerQuestionActivity> getAnswerQuestionClass();
+    int getAskOrder();
+    void setAskOrder(int askOrder);
 
     void setTestRunId(String testRunId);
     void setQuestionId(String questionId);

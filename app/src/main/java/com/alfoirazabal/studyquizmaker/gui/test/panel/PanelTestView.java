@@ -120,6 +120,9 @@ public class PanelTestView extends AppCompatActivity {
                 }
                 ArrayShuffler<QuestionResponse> shuffleQuestionResponse = new ArrayShuffler<>();
                 shuffleQuestionResponse.shuffleFisherYates(testRun.questionResponses);
+                for (int i = 0 ; i < testRun.questionResponses.length ; i++) {
+                    testRun.questionResponses[i].setAskOrder(i);
+                }
                 testRun.numberOfTotalQuestions = testRun.questionResponses.length;
                 Intent intentAnswerQuestion = new Intent(
                         getApplicationContext(),
