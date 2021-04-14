@@ -76,4 +76,6 @@
     <string name="right_answer">Right answer</string>
     <string name="confirm_scores">Confirm scores</string>
     <string name="answered_question">Answered</string>
+    <string name="add_answer_option">Add answer option</string>
+    <string name="add_option">Add option</string>
 </resources>

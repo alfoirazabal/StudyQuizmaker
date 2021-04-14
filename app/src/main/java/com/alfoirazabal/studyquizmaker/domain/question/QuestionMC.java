@@ -49,9 +49,6 @@ public class QuestionMC implements Question {
     @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name = "description")
-    public String description;
-
     @ColumnInfo(name = "dateCreated")
     public Date dateCreated;
 

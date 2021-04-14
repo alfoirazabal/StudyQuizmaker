@@ -23,7 +23,7 @@ import java.util.UUID;
                 @Index(value = {"questionMCId"})
         }
 )
-public class QuestionOptionMC {
+public class QuestionOptionMC implements Comparable<QuestionOptionMC> {
 
     @PrimaryKey
     @NonNull
@@ -42,4 +42,8 @@ public class QuestionOptionMC {
         this.id = UUID.randomUUID().toString();
     }
 
+    @Override
+    public int compareTo(QuestionOptionMC o) {
+        return Double.compare(o.score, this.score);
+    }
 }
