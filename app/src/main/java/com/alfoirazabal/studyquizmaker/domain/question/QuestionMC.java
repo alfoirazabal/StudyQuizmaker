@@ -3,6 +3,7 @@ package com.alfoirazabal.studyquizmaker.domain.question;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -14,6 +15,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmc.UpdateQuestionMC;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,7 +80,7 @@ public class QuestionMC implements Question {
     }
 
     @Override
-    public Class<?> getUpdateGUIClass() {
+    public Class<? extends AppCompatActivity> getUpdateGUIClass() {
         throw new UnsupportedOperationException("No Update GUI for MC Question yet!");
     }
 

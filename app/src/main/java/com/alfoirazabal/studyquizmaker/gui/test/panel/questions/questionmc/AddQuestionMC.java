@@ -1,8 +1,10 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmc;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +52,7 @@ public class AddQuestionMC extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testrun_question_mc_add);
+        setContentView(R.layout.activity_question_mc_add);
 
         txtilTitle = findViewById(R.id.txtil_title);
         txtTitle = findViewById(R.id.txt_title);
@@ -109,6 +111,7 @@ public class AddQuestionMC extends AppCompatActivity {
         });
 
         btnAddOption.setOnClickListener(v -> {
+            hideSoftInputKeyboard();
             QuestionOptionMC questionOptionMC = new QuestionOptionMC();
             questionOptionMC.score = Double.parseDouble(txtScore.getText().toString());
             questionOptionMC.answerText = txtAnswer.getText().toString();
@@ -131,5 +134,16 @@ public class AddQuestionMC extends AppCompatActivity {
             }).start();
         });
 
+    }
+
+    private void hideSoftInputKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                InputMethodManager imm =
+                        (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 }
