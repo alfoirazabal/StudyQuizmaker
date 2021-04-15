@@ -15,7 +15,6 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmc.UpdateQuestionMC;
 
 import java.util.ArrayList;
 import java.util.Arrays;
