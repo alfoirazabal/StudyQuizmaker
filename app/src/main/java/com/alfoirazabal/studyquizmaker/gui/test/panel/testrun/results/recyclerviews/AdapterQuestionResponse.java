@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.recyclerviews;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionMCResponse;
 
 public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestionResponse.ViewHolder> {
 
@@ -42,6 +44,15 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
             progressbarScore = itemView.findViewById(R.id.progressbar_score);
 
             this.progressbarScore.setMax(100);
+
+            itemView.setOnClickListener(v -> {
+                QuestionResponse questionResponse = questionResponses[getAdapterPosition()];
+                Intent intentViewQuestion = new Intent(
+                        itemView.getContext(), questionResponse.getViewQuestionResponseClass()
+                );
+                intentViewQuestion.putExtra("QUESTIONRESPONSE", questionResponse);
+                itemView.getContext().startActivity(intentViewQuestion);;
+            });
         }
 
         public TextView getTxtTitle() {
@@ -91,14 +102,18 @@ public class AdapterQuestionResponse extends RecyclerView.Adapter<AdapterQuestio
         new Thread(() -> {
             Question currentQuestion = currentQuestionResponse.getQuestion(db);
             boolean isAnswered = currentQuestionResponse.isAnswered();
-            String answered = currentQuestionResponse.getAnswered(db);
+            String answered = "";
+            if (isAnswered) {
+                answered = currentQuestionResponse.getAnswered(db);
+            }
+            String finalAnswered = answered;
             new Handler(Looper.getMainLooper()).post(() -> {
                 holder.getTxtTitle().setText(currentQuestion.getTitle());
                 TextView answeredQuestionLabel = holder.getAnsweredQuestionLabel();
                 TextView txtAnswer = holder.getTxtAnswer();
                 if (isAnswered) {
                     answeredQuestionLabel.setVisibility(View.VISIBLE);
-                    txtAnswer.setText(answered);
+                    txtAnswer.setText(finalAnswered);
                     txtAnswer.setGravity(Gravity.LEFT);
                     txtAnswer.setTextColor(Color.BLACK);
                     txtAnswer.setTypeface(null, Typeface.NORMAL);

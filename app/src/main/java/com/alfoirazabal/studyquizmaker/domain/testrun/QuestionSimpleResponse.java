@@ -1,6 +1,7 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -93,6 +94,11 @@ public class QuestionSimpleResponse implements QuestionResponse {
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionSimple.class;
+    }
+
+    @Override
+    public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
+        throw new UnsupportedOperationException("No view question response class implemented yet!");
     }
 
     @Override
