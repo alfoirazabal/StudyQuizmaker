@@ -53,11 +53,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_mc_options"
+            <Button
+                android:id="@+id/btn_clear_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/clear_all_checks" />
+
+            <RadioGroup
+                android:id="@+id/rbtngroup_mc_question_options"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="4pt" />
+                android:layout_height="match_parent" />
 
         </LinearLayout>
     </ScrollView>

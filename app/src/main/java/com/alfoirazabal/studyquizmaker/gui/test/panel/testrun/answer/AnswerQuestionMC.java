@@ -2,6 +2,9 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -14,30 +17,28 @@ import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
-import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.recyclerviews.AdapterMCQuestionResponse;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.guiextensions.MCRadioButton;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class AnswerQuestionMC extends AnswerQuestionActivity {
 
     private TextView txtQuestionTitle;
     private TextView txtQuestionScore;
-    private RecyclerView recyclerviewMCOptions;
     private TextView txtNumberOfQuestionsSolved;
     private TextView txtCurrentQuestionProgress;
     private Button btnPickQuestion;
+    private Button btnClearCheck;
 
     private QuestionMC currentQuestionMC;
 
     private List<QuestionOptionMC> questionOptionMCs;
-    private AdapterMCQuestionResponse adapterMCQuestionResponse;
+
+    private RadioGroup rbtngroupMCQuestionOptions;
 
     private QuestionMCResponse currentQuestionMCResponse;
 
@@ -48,10 +49,12 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
 
         txtQuestionTitle = findViewById(R.id.txt_question_title);
         txtQuestionScore = findViewById(R.id.txt_question_score);
-        recyclerviewMCOptions = findViewById(R.id.recyclerview_mc_options);
         txtNumberOfQuestionsSolved = findViewById(R.id.txt_number_of_questions_solved);
         txtCurrentQuestionProgress = findViewById(R.id.txt_current_question_progress);
         btnPickQuestion = findViewById(R.id.btn_pick_question);
+        rbtngroupMCQuestionOptions = findViewById(R.id.rbtngroup_mc_question_options);
+        rbtngroupMCQuestionOptions.setOrientation(RadioGroup.VERTICAL);
+        btnClearCheck = findViewById(R.id.btn_clear_check);
 
         super.btnNext = findViewById(R.id.btn_next);
         super.btnPrevious = findViewById(R.id.btn_previous);
@@ -63,8 +66,6 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
         );
 
         questionOptionMCs = new ArrayList<>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerviewMCOptions.setLayoutManager(layoutManager);
 
         super.db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -78,17 +79,11 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
             currentQuestionMC =
                     db.questionMCDAO().getById(currentQuestionMCResponse.questionMCId);
             questionOptionMCs = db.questionOptionMCDAO().getFromQuestionMC(currentQuestionMC.id);
-            adapterMCQuestionResponse =
-                    new AdapterMCQuestionResponse(questionOptionMCs);
-            recyclerviewMCOptions.setAdapter(adapterMCQuestionResponse);
+            setRadioButtons(questionOptionMCs);
             currentQuestionMC.questionOptionMCs = questionOptionMCs.toArray(new QuestionOptionMC[0]);
             double maxQuestionScore = currentQuestionMC.getScore();
-            QuestionOptionMC finalSelectedQuestionOption = findSelectedQuestionOption();
             runOnUiThread(() -> {
-                adapterMCQuestionResponse.notifyDataSetChanged();
-                if (finalSelectedQuestionOption != null) {
-                    adapterMCQuestionResponse.setSelectedQuestionOption(finalSelectedQuestionOption);
-                }
+                setSelectedQuestionOption(currentQuestionMCResponse.questionMCOptionSelected);
                 txtQuestionTitle.setText(currentQuestionMC.title);
                 txtQuestionScore.setText(String.valueOf(maxQuestionScore));
                 super.setPreviousAndNextButtonsAndActions();
@@ -97,34 +92,64 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
             });
         }).start();
 
+        btnClearCheck.setOnClickListener(v -> {
+            rbtngroupMCQuestionOptions.clearCheck();
+        });
+
+    }
+
+    private void setSelectedQuestionOption(String questionMCOptionSelectedId) {
+        if (questionMCOptionSelectedId == null) {
+            return;
+        }
+        int rbtnChildrenCount = rbtngroupMCQuestionOptions.getChildCount();
+        boolean optionSelected = false;
+        for (int i = 0 ; !optionSelected && i < rbtnChildrenCount ; i++) {
+            MCRadioButton mcRadioButton = (MCRadioButton) rbtngroupMCQuestionOptions.getChildAt(i);
+            if (mcRadioButton.getQuestionOptionMC().id.equals(questionMCOptionSelectedId)) {
+                mcRadioButton.setChecked(true);
+                optionSelected = true;
+            }
+        }
+    }
+
+    private void setRadioButtons(List<QuestionOptionMC> questionOptionMCs) {
+        Iterator<QuestionOptionMC> itQuestionOptionMCs = questionOptionMCs.iterator();
+        while (itQuestionOptionMCs.hasNext()) {
+            QuestionOptionMC questionOptionMC = itQuestionOptionMCs.next();
+            MCRadioButton mcRadioButton = new MCRadioButton(this);
+            runOnUiThread(() -> {
+                rbtngroupMCQuestionOptions.addView(mcRadioButton);
+                mcRadioButton.setQuestionOptionMC(questionOptionMC);
+            });
+        }
     }
 
     private QuestionOptionMC findSelectedQuestionOption() {
-        Iterator<QuestionOptionMC> itQuestionOptionMC = questionOptionMCs.iterator();
+        int checkedRadioButtonId = rbtngroupMCQuestionOptions.getCheckedRadioButtonId();
+        MCRadioButton mcRadioButton = findViewById(checkedRadioButtonId);
         QuestionOptionMC selectedQuestionOption = null;
-        while (selectedQuestionOption == null && itQuestionOptionMC.hasNext()) {
-            QuestionOptionMC currentQuestionOptionMC = itQuestionOptionMC.next();
-            if (currentQuestionOptionMC.id.equals(currentQuestionMCResponse.questionMCOptionSelected)) {
-                selectedQuestionOption = currentQuestionOptionMC;
-            }
+        if (mcRadioButton == null) {
+            selectedQuestionOption = null;
+        }
+        else {
+            selectedQuestionOption = mcRadioButton.getQuestionOptionMC();
         }
         return selectedQuestionOption;
     }
 
     @Override
     protected void setCurrentQuestionData() {
-        QuestionMCResponse currentQuestionMCResponse =
+        QuestionOptionMC selectedOptionMC = findSelectedQuestionOption();
+        currentQuestionMCResponse =
                 (QuestionMCResponse) super.testRun.questionResponses[super.testRun.currentQuestionIndex];
-        currentQuestionMCResponse.testRunId = super.testRun.id;
-        currentQuestionMCResponse.questionMCId = currentQuestionMC.id;
-        QuestionOptionMC selectedOption = adapterMCQuestionResponse.getSelectedQuestionOption();
-        if (selectedOption != null) {
-            currentQuestionMCResponse.questionMCOptionSelected = selectedOption.id;
-            currentQuestionMCResponse.score = selectedOption.score;
-        }
-        else {
+        if (selectedOptionMC == null) {
             currentQuestionMCResponse.questionMCOptionSelected = null;
             currentQuestionMCResponse.score = 0;
+        }
+        else {
+            currentQuestionMCResponse.questionMCOptionSelected = selectedOptionMC.id;
+            currentQuestionMCResponse.score = selectedOptionMC.score;
         }
     }
 

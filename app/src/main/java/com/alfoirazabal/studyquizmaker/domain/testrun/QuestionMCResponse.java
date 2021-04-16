@@ -10,6 +10,8 @@ import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMC;
@@ -80,7 +82,10 @@ public class QuestionMCResponse implements QuestionResponse {
 
     @Override
     public Question getQuestion(AppDatabase db) {
-        return db.questionMCDAO().getById(this.questionMCId);
+        QuestionMC question = db.questionMCDAO().getById(this.questionMCId);
+        question.questionOptionMCs = db.questionOptionMCDAO().getFromQuestionMC(this.questionMCId)
+                .toArray(new QuestionOptionMC[0]);
+        return question;
     }
 
     @Override

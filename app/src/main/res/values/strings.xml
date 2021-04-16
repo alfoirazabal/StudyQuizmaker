@@ -78,4 +78,5 @@
     <string name="answered_question">Answered</string>
     <string name="add_answer_option">Add answer option</string>
     <string name="add_option">Add option</string>
+    <string name="clear_all_checks">Clear all</string>
 </resources>
