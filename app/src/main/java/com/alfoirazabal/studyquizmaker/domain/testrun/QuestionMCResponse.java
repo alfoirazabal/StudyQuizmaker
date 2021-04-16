@@ -28,7 +28,7 @@ import java.util.UUID;
                         onUpdate = ForeignKey.CASCADE
                 ),
                 @ForeignKey(
-                        entity = QuestionSimple.class,
+                        entity = QuestionMC.class,
                         parentColumns = "id",
                         childColumns = "questionMCId",
                         onDelete = ForeignKey.CASCADE,
@@ -120,6 +120,6 @@ public class QuestionMCResponse implements QuestionResponse {
 
     @Override
     public void insertToDb(AppDatabase db) {
-        db.questionMCResponseDAO().getResponsesFromTestRun(this.testRunId);
+        db.questionMCResponseDAO().insert(this);
     }
 }
