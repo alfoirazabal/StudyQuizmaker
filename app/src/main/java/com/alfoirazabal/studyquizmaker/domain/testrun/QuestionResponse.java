@@ -18,7 +18,7 @@ public interface QuestionResponse extends Serializable {
     void setAskOrder(int askOrder);
 
     void setTestRunId(String testRunId);
-    void setQuestionId(String questionId);
+    void setQuestion(Question question);
 
     void insertToDb(AppDatabase db);
 

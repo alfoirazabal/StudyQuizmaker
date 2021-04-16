@@ -7,6 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity(
@@ -23,7 +24,7 @@ import java.util.UUID;
                 @Index(value = {"questionMCId"})
         }
 )
-public class QuestionOptionMC {
+public class QuestionOptionMC implements Serializable, Comparable<QuestionOptionMC> {
 
     @PrimaryKey
     @NonNull
@@ -42,4 +43,8 @@ public class QuestionOptionMC {
         this.id = UUID.randomUUID().toString();
     }
 
+    @Override
+    public int compareTo(QuestionOptionMC o) {
+        return Double.compare(o.score, this.score);
+    }
 }

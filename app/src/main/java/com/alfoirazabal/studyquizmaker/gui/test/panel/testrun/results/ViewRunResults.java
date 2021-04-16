@@ -13,6 +13,7 @@ import androidx.room.Room;
 import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponseComparators;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
@@ -61,9 +62,12 @@ public class ViewRunResults extends AppCompatActivity {
                     db.questionSimpleResponseDAO().getResponsesFromTestRun(testRunId);
             QuestionTFResponse[] questionTFResponses =
                     db.questionTFResponseDAO().getResponsesFromTestRun(testRunId);
+            QuestionMCResponse[] questionMCResponses =
+                    db.questionMCResponseDAO().getResponsesFromTestRun(testRunId);
             List<QuestionResponse> questionResponses = new ArrayList<>();
             questionResponses.addAll(Arrays.asList(questionSimpleResponses));
             questionResponses.addAll(Arrays.asList(questionTFResponses));
+            questionResponses.addAll(Arrays.asList(questionMCResponses));
             Collections.sort(questionResponses, new QuestionResponseComparators.CompareByAskOrder());
             testRun.questionResponses = questionResponses.toArray(new QuestionResponse[0]);
             runOnUiThread(() -> {

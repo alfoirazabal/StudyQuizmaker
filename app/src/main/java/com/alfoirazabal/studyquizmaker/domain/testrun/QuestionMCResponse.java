@@ -1,17 +1,21 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionTF;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMC;
 
 import java.util.UUID;
 
@@ -25,19 +29,19 @@ import java.util.UUID;
                         onUpdate = ForeignKey.CASCADE
                 ),
                 @ForeignKey(
-                        entity = QuestionTF.class,
+                        entity = QuestionMC.class,
                         parentColumns = "id",
-                        childColumns = "questionTFId",
+                        childColumns = "questionMCId",
                         onDelete = ForeignKey.CASCADE,
                         onUpdate = ForeignKey.CASCADE
                 )
         },
         indices = {
                 @Index(value = {"testRunId"}),
-                @Index(value = {"questionTFId"})
+                @Index(value = {"questionMCId"})
         }
 )
-public class QuestionTFResponse implements QuestionResponse {
+public class QuestionMCResponse implements QuestionResponse {
 
     @PrimaryKey
     @NonNull
@@ -46,42 +50,33 @@ public class QuestionTFResponse implements QuestionResponse {
     @ColumnInfo(name = "testRunId")
     public String testRunId;
 
-    @ColumnInfo(name = "questionTFId")
-    public String questionTFId;
+    @ColumnInfo(name = "questionMCId")
+    public String questionMCId;
 
     @ColumnInfo(name = "askOrder")
     public int askOrder;
 
-    @ColumnInfo(name = "isAnswered")
-    public boolean isAnswered;
-
-    @ColumnInfo(name = "askedTrueStatement")
-    public boolean askedTrueStatement;
-
-    @ColumnInfo(name = "answeredCorrectly")
-    public boolean answeredCorrectly;
+    @ColumnInfo(name = "questionMCOptionSelected")
+    public String questionMCOptionSelected;
 
     @ColumnInfo(name = "score")
     public double score;
 
-    public QuestionTFResponse() {
+    @Ignore
+    public QuestionOptionMC[] questionOptionMCs;
+
+    public QuestionMCResponse() {
         this.id = UUID.randomUUID().toString();
-        if (Math.random() > 0.5) {
-            this.askedTrueStatement = true;
-        }
-        else {
-            this.askedTrueStatement = false;
-        }
     }
 
     @Override
     public String getQuestionId() {
-        return this.id;
+        return this.questionMCId;
     }
 
     @Override
     public boolean isAnswered() {
-        return this.isAnswered;
+        return this.questionMCOptionSelected != null;
     }
 
     @Override
@@ -91,24 +86,20 @@ public class QuestionTFResponse implements QuestionResponse {
 
     @Override
     public Question getQuestion(AppDatabase db) {
-        return db.questionTFDAO().getById(this.questionTFId);
+        QuestionMC question = db.questionMCDAO().getById(this.questionMCId);
+        question.questionOptionMCs = db.questionOptionMCDAO().getFromQuestionMC(this.questionMCId)
+                .toArray(new QuestionOptionMC[0]);
+        return question;
     }
 
     @Override
     public String getAnswered(AppDatabase db) {
-        String answered;
-        if (this.answeredCorrectly) {
-            answered = db.questionTFDAO().getById(this.questionTFId).answerTrue;
-        }
-        else {
-            answered = db.questionTFDAO().getById(this.questionTFId).answerFalse;
-        }
-        return answered;
+        return db.questionOptionMCDAO().getById(this.questionMCOptionSelected).answerText;
     }
 
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
-        return AnswerQuestionTF.class;
+        return AnswerQuestionMC.class;
     }
 
     @Override
@@ -128,11 +119,13 @@ public class QuestionTFResponse implements QuestionResponse {
 
     @Override
     public void setQuestion(Question question) {
-        this.questionTFId = question.getId();
+        this.questionMCId = question.getId();
+        QuestionMC questionMC = (QuestionMC) question;
+        this.questionOptionMCs = questionMC.questionOptionMCs;
     }
 
     @Override
     public void insertToDb(AppDatabase db) {
-        db.questionTFResponseDAO().insert(this);
+        db.questionMCResponseDAO().insert(this);
     }
 }

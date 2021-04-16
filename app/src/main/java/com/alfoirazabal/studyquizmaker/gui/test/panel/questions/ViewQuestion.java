@@ -17,6 +17,9 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionComparators;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmc.AddQuestionMC;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AddQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf.AddQuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview.AdapterQuestionView;
@@ -73,29 +76,26 @@ public class ViewQuestion extends AppCompatActivity {
             popupMenu.inflate(R.menu.menu_question_add_question_type);
             popupMenu.show();
             popupMenu.setOnMenuItemClickListener(menuItem -> {
+                Intent intentAddQuestion = null;
                 switch (menuItem.getItemId()) {
                     case R.id.item_simple_question:
-                        Intent intentAddQuestionSimple = new Intent(
+                        intentAddQuestion = new Intent(
                                 this, AddQuestionSimple.class
                         );
-                        intentAddQuestionSimple.putExtra("TESTID", currentTestId);
-                        startActivity(intentAddQuestionSimple);
                         break;
                     case R.id.item_multiple_choice:
-                        Toast.makeText(
-                                getApplicationContext(),
-                                R.string.msg_available_in_future_version,
-                                Toast.LENGTH_LONG
-                        ).show();
+                        intentAddQuestion = new Intent(
+                                this, AddQuestionMC.class
+                        );
                         break;
                     case R.id.item_true_or_false:
-                        Intent intentAddQuestionTF = new Intent(
+                        intentAddQuestion = new Intent(
                                 this, AddQuestionTF.class
                         );
-                        intentAddQuestionTF.putExtra("TESTID", currentTestId);
-                        startActivity(intentAddQuestionTF);
                         break;
                 }
+                intentAddQuestion.putExtra("TESTID", currentTestId);
+                startActivity(intentAddQuestion);
                 return true;
             });
         });
@@ -116,7 +116,13 @@ public class ViewQuestion extends AppCompatActivity {
         new Thread(() -> {
             questions.addAll(db.questionSimpleDAO().getFromTest(currentTestId));
             questions.addAll(db.questionTFDAO().getFromTest(currentTestId));
-            questions.addAll(db.questionMCDAO().getFromTest(currentTestId));
+            List<QuestionMC> questionsMC = db.questionMCDAO().getFromTest(currentTestId);
+            for (QuestionMC questionMC : questionsMC) {
+                QuestionOptionMC[] questionOptionMCS = db.questionOptionMCDAO().
+                        getFromQuestionMC(questionMC.id).toArray(new QuestionOptionMC[0]);
+                questionMC.questionOptionMCs = questionOptionMCS;
+            }
+            questions.addAll(questionsMC);
             Comparator<Question> questionsComparator =
                     new QuestionComparators.CompareByDateCreated();
             questionsComparator = Collections.reverseOrder(questionsComparator);

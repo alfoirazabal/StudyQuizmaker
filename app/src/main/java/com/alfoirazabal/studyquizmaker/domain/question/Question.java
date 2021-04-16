@@ -3,6 +3,7 @@ package com.alfoirazabal.studyquizmaker.domain.question;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
@@ -19,7 +20,7 @@ public interface Question {
     String getAnswer();
     String toString(Context context);
     void deleteFromDB(AppDatabase db);
-    Class<?> getUpdateGUIClass();
+    Class<? extends AppCompatActivity> getUpdateGUIClass();
     QuestionResponse getQuestionResponseObject();
     String getQuestionTypeName(Context context);
     Date getDateCreated();
