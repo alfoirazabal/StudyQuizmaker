@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -61,6 +62,9 @@ public class QuestionMCResponse implements QuestionResponse {
     @ColumnInfo(name = "score")
     public double score;
 
+    @Ignore
+    public QuestionOptionMC[] questionOptionMCs;
+
     public QuestionMCResponse() {
         this.id = UUID.randomUUID().toString();
     }
@@ -114,8 +118,10 @@ public class QuestionMCResponse implements QuestionResponse {
     }
 
     @Override
-    public void setQuestionId(String questionId) {
-        this.questionMCId = questionId;
+    public void setQuestion(Question question) {
+        this.questionMCId = question.getId();
+        QuestionMC questionMC = (QuestionMC) question;
+        this.questionOptionMCs = questionMC.questionOptionMCs;
     }
 
     @Override

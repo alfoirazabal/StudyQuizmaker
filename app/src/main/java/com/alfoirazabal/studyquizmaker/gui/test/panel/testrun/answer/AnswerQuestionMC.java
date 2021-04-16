@@ -22,6 +22,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.guiextensions.MCRadioButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,8 +36,6 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
     private Button btnClearCheck;
 
     private QuestionMC currentQuestionMC;
-
-    private List<QuestionOptionMC> questionOptionMCs;
 
     private RadioGroup rbtngroupMCQuestionOptions;
 
@@ -65,8 +64,6 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
                 txtNumberOfQuestionsSolved, txtCurrentQuestionProgress
         );
 
-        questionOptionMCs = new ArrayList<>();
-
         super.db = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
@@ -76,11 +73,10 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
         currentQuestionMCResponse =
                 (QuestionMCResponse) super.testRun.questionResponses[super.testRun.currentQuestionIndex];
         new Thread(() -> {
+            setRadioButtons(currentQuestionMCResponse.questionOptionMCs);
             currentQuestionMC =
                     db.questionMCDAO().getById(currentQuestionMCResponse.questionMCId);
-            questionOptionMCs = db.questionOptionMCDAO().getFromQuestionMC(currentQuestionMC.id);
-            setRadioButtons(questionOptionMCs);
-            currentQuestionMC.questionOptionMCs = questionOptionMCs.toArray(new QuestionOptionMC[0]);
+            currentQuestionMC.questionOptionMCs = currentQuestionMCResponse.questionOptionMCs;
             double maxQuestionScore = currentQuestionMC.getScore();
             runOnUiThread(() -> {
                 setSelectedQuestionOption(currentQuestionMCResponse.questionMCOptionSelected);
@@ -113,14 +109,14 @@ public class AnswerQuestionMC extends AnswerQuestionActivity {
         }
     }
 
-    private void setRadioButtons(List<QuestionOptionMC> questionOptionMCs) {
-        Iterator<QuestionOptionMC> itQuestionOptionMCs = questionOptionMCs.iterator();
-        while (itQuestionOptionMCs.hasNext()) {
-            QuestionOptionMC questionOptionMC = itQuestionOptionMCs.next();
+    private void setRadioButtons(QuestionOptionMC[] questionOptionMCs) {
+        for (int i = 0 ; i < questionOptionMCs.length ; i++) {
             MCRadioButton mcRadioButton = new MCRadioButton(this);
+            int finalI = i;
             runOnUiThread(() -> {
+                mcRadioButton.setQuestionOptionMC(questionOptionMCs[finalI]);
                 rbtngroupMCQuestionOptions.addView(mcRadioButton);
-                mcRadioButton.setQuestionOptionMC(questionOptionMC);
+
             });
         }
     }

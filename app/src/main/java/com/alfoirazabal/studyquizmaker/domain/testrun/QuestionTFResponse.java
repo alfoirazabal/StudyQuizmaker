@@ -127,8 +127,8 @@ public class QuestionTFResponse implements QuestionResponse {
     }
 
     @Override
-    public void setQuestionId(String questionId) {
-        this.questionTFId = questionId;
+    public void setQuestion(Question question) {
+        this.questionTFId = question.getId();
     }
 
     @Override

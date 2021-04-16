@@ -111,8 +111,8 @@ public class QuestionSimpleResponse implements QuestionResponse {
     }
 
     @Override
-    public void setQuestionId(String questionId) {
-        this.questionSimpleId = questionId;
+    public void setQuestion(Question question) {
+        this.questionSimpleId = question.getId();
     }
 
     @Override

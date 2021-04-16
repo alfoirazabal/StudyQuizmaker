@@ -7,6 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity(
@@ -23,7 +24,7 @@ import java.util.UUID;
                 @Index(value = {"questionMCId"})
         }
 )
-public class QuestionOptionMC implements Comparable<QuestionOptionMC> {
+public class QuestionOptionMC implements Serializable, Comparable<QuestionOptionMC> {
 
     @PrimaryKey
     @NonNull
