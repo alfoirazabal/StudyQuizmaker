@@ -12,6 +12,7 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMC;
 
 import java.util.UUID;
 
@@ -89,7 +90,7 @@ public class QuestionMCResponse implements QuestionResponse {
 
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
-        throw new UnsupportedOperationException("No GUI for answering MC questions yet!");
+        return AnswerQuestionMC.class;
     }
 
     @Override

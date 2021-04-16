@@ -38,6 +38,7 @@
         <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionTF" />
         <activity android:name=".gui.test.panel.testrun.answer.ScoreSimpleQuestions" />
         <activity android:name=".gui.test.panel.questions.questionmc.AddQuestionMC" />
+        <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionMC" />
     </application>
 
 </manifest>
