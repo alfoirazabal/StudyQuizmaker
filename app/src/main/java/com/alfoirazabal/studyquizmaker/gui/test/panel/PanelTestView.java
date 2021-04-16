@@ -18,7 +18,10 @@ import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionComparators;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
@@ -99,7 +102,9 @@ public class PanelTestView extends AppCompatActivity {
         btnStart.setOnClickListener(v -> new Thread(() -> {
             List<Question> questions = new ArrayList<>();
             questions.addAll(db.questionSimpleDAO().getFromTest(testId));
-            questions.addAll(db.questionMCDAO().getFromTest(testId));
+            List<QuestionMC> questionMCs = db.questionMCDAO().getFromTest(testId);
+            setQuestionMCAnswers(questionMCs);
+            questions.addAll(questionMCs);
             questions.addAll(db.questionTFDAO().getFromTest(testId));
             if (questions.isEmpty()) {
                 runOnUiThread(() -> Toast.makeText(
@@ -116,7 +121,7 @@ public class PanelTestView extends AppCompatActivity {
                     Question currentQuestion = questions.get(i);
                     testRun.questionResponses[i] = currentQuestion.getQuestionResponseObject();
                     testRun.questionResponses[i].setTestRunId(testRun.id);
-                    testRun.questionResponses[i].setQuestionId(currentQuestion.getId());
+                    testRun.questionResponses[i].setQuestion(currentQuestion);
                 }
                 ArrayShuffler<QuestionResponse> shuffleQuestionResponse = new ArrayShuffler<>();
                 shuffleQuestionResponse.shuffleFisherYates(testRun.questionResponses);
@@ -141,6 +146,15 @@ public class PanelTestView extends AppCompatActivity {
             intentViewTestRuns.putExtra("TESTID", testId);
             startActivity(intentViewTestRuns);
         });
+    }
+
+    private void setQuestionMCAnswers(List<QuestionMC> questionMCs) {
+        for (QuestionMC questionMC : questionMCs) {
+            List<QuestionOptionMC> questionOptions =
+                    db.questionOptionMCDAO().getFromQuestionMC(questionMC.id);
+            Collections.shuffle(questionOptions);
+            questionMC.questionOptionMCs = questionOptions.toArray(new QuestionOptionMC[0]);
+        }
     }
 
     @Override

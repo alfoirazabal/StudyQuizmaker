@@ -3,6 +3,7 @@ package com.alfoirazabal.studyquizmaker.domain.question;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -13,7 +14,9 @@ import androidx.room.PrimaryKey;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMC;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,9 +52,6 @@ public class QuestionMC implements Question {
     @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name = "description")
-    public String description;
-
     @ColumnInfo(name = "dateCreated")
     public Date dateCreated;
 
@@ -81,13 +81,13 @@ public class QuestionMC implements Question {
     }
 
     @Override
-    public Class<?> getUpdateGUIClass() {
+    public Class<? extends AppCompatActivity> getUpdateGUIClass() {
         throw new UnsupportedOperationException("No Update GUI for MC Question yet!");
     }
 
     @Override
     public QuestionResponse getQuestionResponseObject() {
-        throw new UnsupportedOperationException("No Response object for MC Question yet!");
+        return new QuestionMCResponse();
     }
 
     @Override

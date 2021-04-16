@@ -10,8 +10,8 @@ android {
         applicationId "com.alfoirazabal.studyquizmaker"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 8
-        versionName "0.72"
+        versionCode 9
+        versionName "0.9"
 
         vectorDrawables {
             useSupportLibrary = true
