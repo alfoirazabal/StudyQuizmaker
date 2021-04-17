@@ -1,6 +1,7 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -12,6 +13,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionTF;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionTFResponse;
 
 import java.util.UUID;
 
@@ -109,6 +111,11 @@ public class QuestionTFResponse implements QuestionResponse {
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionTF.class;
+    }
+
+    @Override
+    public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
+        return ViewQuestionTFResponse.class;
     }
 
     @Override

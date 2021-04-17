@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.gui.helpers.IconColorPicker;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,7 +45,12 @@ public class AddTopic extends AppCompatActivity {
         txtilTopicDescription = findViewById(R.id.txtil_topic_description);
         txtTopicName = findViewById(R.id.txt_topic_name);
         txtTopicDescription = findViewById(R.id.txt_topic_description);
+        ImageView imgTopicIcon = findViewById(R.id.img_topic_icon);
+        Spinner spinnerIconColor = findViewById(R.id.spinner_icon_color);
         btnAdd = findViewById(R.id.btn_add);
+
+        IconColorPicker iconColorPicker = new IconColorPicker(this);
+        iconColorPicker.setIconColorPicker(spinnerIconColor, imgTopicIcon);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -85,6 +93,7 @@ public class AddTopic extends AppCompatActivity {
             newTopic.subjectId = subjectId;
             newTopic.name = txtTopicName.getText().toString();
             newTopic.description = txtTopicDescription.getText().toString();
+            newTopic.color = iconColorPicker.getSelectedColor().color;
             db.topicDAO().insert(newTopic);
             finish();
         }).start());

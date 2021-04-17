@@ -1,6 +1,7 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -12,6 +13,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionSingleResponse;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -93,6 +95,11 @@ public class QuestionSimpleResponse implements QuestionResponse {
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionSimple.class;
+    }
+
+    @Override
+    public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
+        return ViewQuestionSingleResponse.class;
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +15,9 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
+import com.alfoirazabal.studyquizmaker.gui.helpers.IconColorPicker;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
+import com.alfoirazabal.studyquizmaker.helpers.icons.IconColors;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -26,6 +30,8 @@ public class UpdateSubject extends AppCompatActivity {
     private TextInputLayout txtilSubjectDescription;
     private TextInputEditText txtSubjectName;
     private TextInputEditText txtSubjectDescription;
+    private Spinner spinnerIconColor;
+    private ImageView imgSubjectIcon;
     private Button btnUpdate;
 
     private List<String> subjectNames;
@@ -42,7 +48,12 @@ public class UpdateSubject extends AppCompatActivity {
         txtilSubjectDescription = findViewById(R.id.txtil_subject_description);
         txtSubjectName = findViewById(R.id.txt_subject_name);
         txtSubjectDescription = findViewById(R.id.txt_subject_description);
+        spinnerIconColor = findViewById(R.id.spinner_icon_color);
+        imgSubjectIcon = findViewById(R.id.img_subject_icon);
         btnUpdate = findViewById(R.id.btn_update);
+
+        IconColorPicker iconColorPicker = new IconColorPicker(this);
+        iconColorPicker.setIconColorPicker(spinnerIconColor, imgSubjectIcon);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -60,6 +71,7 @@ public class UpdateSubject extends AppCompatActivity {
             runOnUiThread(() -> {
                 txtSubjectName.setText(this.subject.name);
                 txtSubjectDescription.setText(this.subject.description);
+                iconColorPicker.setCurrentColorInSpinner(this.subject.color);
                 txtilSubjectName.setEnabled(true);
                 txtilSubjectDescription.setEnabled(true);
                 btnUpdate.setEnabled(true);
@@ -92,6 +104,8 @@ public class UpdateSubject extends AppCompatActivity {
             subject.description = Objects.requireNonNull(
                     txtSubjectDescription.getText()
             ).toString();
+            IconColors.ColorForIcon colorSelected = iconColorPicker.getSelectedColor();
+            subject.color = colorSelected.color;
             new Thread(() -> {
                 db.subjectDAO().update(subject);
                 finish();

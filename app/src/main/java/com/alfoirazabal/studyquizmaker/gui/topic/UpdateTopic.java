@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Topic;
+import com.alfoirazabal.studyquizmaker.gui.helpers.IconColorPicker;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,7 +45,12 @@ public class UpdateTopic extends AppCompatActivity {
         txtilTopicDescription = findViewById(R.id.txtil_topic_description);
         txtTopicName = findViewById(R.id.txt_topic_name);
         txtTopicDescription = findViewById(R.id.txt_topic_description);
+        ImageView imgTopicIcon = findViewById(R.id.img_topic_icon);
+        Spinner spinnerIconColor = findViewById(R.id.spinner_icon_color);
         btnUpdate = findViewById(R.id.btn_update);
+
+        IconColorPicker iconColorPicker = new IconColorPicker(this);
+        iconColorPicker.setIconColorPicker(spinnerIconColor, imgTopicIcon);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -60,6 +68,7 @@ public class UpdateTopic extends AppCompatActivity {
             runOnUiThread(() -> {
                 txtTopicName.setText(topic.name);
                 txtTopicDescription.setText(topic.description);
+                iconColorPicker.setCurrentColorInSpinner(topic.color);
                 txtilTopicName.setEnabled(true);
                 txtilTopicDescription.setEnabled(true);
                 btnUpdate.setEnabled(true);
@@ -89,6 +98,7 @@ public class UpdateTopic extends AppCompatActivity {
         btnUpdate.setOnClickListener((view) -> {
             topic.name = txtTopicName.getText().toString();
             topic.description = txtTopicDescription.getText().toString();
+            topic.color = iconColorPicker.getSelectedColor().color;
             new Thread(() -> {
                 db.topicDAO().update(topic);
                 finish();

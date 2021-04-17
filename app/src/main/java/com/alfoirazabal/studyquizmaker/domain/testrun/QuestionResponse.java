@@ -1,5 +1,7 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
@@ -14,6 +16,7 @@ public interface QuestionResponse extends Serializable {
     Question getQuestion(AppDatabase db);
     String getAnswered(AppDatabase db);
     Class<? extends AnswerQuestionActivity> getAnswerQuestionClass();
+    Class<? extends AppCompatActivity> getViewQuestionResponseClass();
     int getAskOrder();
     void setAskOrder(int askOrder);
 

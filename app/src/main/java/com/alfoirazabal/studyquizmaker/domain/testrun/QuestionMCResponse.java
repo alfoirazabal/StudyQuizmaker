@@ -14,8 +14,10 @@ import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.ViewQuestion;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMC;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionMCResponse;
 
 import java.util.UUID;
 
@@ -100,6 +102,11 @@ public class QuestionMCResponse implements QuestionResponse {
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
         return AnswerQuestionMC.class;
+    }
+
+    @Override
+    public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
+        return ViewQuestionMCResponse.class;
     }
 
     @Override
