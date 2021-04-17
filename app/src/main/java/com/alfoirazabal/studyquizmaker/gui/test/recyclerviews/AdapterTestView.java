@@ -3,10 +3,12 @@ package com.alfoirazabal.studyquizmaker.gui.test.recyclerviews;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -31,12 +33,14 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtTestName;
         private final TextView txtTestDescription;
+        private final ImageView imgTestIcon;
 
         public ViewHolder(View view) {
             super(view);
 
             txtTestName = view.findViewById(R.id.txt_test_name);
             txtTestDescription = view.findViewById(R.id.txt_test_description);
+            imgTestIcon = view.findViewById(R.id.img_test_icon);
 
             view.setOnLongClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), txtTestName);
@@ -115,6 +119,10 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
         public TextView getTxtTestDescription() {
             return txtTestDescription;
         }
+
+        public ImageView getImgTestIcon() {
+            return imgTestIcon;
+        }
     }
 
     public AdapterTestView(List<Test> tests) {
@@ -138,6 +146,7 @@ public class AdapterTestView extends RecyclerView.Adapter<AdapterTestView.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Test currentTest = tests.get(position);
+        holder.getImgTestIcon().setColorFilter(currentTest.color, PorterDuff.Mode.MULTIPLY);
         holder.getTxtTestName().setText(currentTest.name);
         if (currentTest.description.equals("")) {
             holder.getTxtTestDescription().setVisibility(View.GONE);

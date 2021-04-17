@@ -83,4 +83,16 @@
     <string name="response_question_mc">Multiple choice response</string>
     <string name="response_question_single">Simple question response</string>
     <string name="response_question_tf">True or false question response</string>
+    <string name="color_gray">Gray</string>
+    <string name="color_red">Red</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_green">Green</string>
+    <string name="color_green_water">Water green</string>
+    <string name="color_light_blue">Light blue</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_violet">Violet</string>
+    <string name="color_pink">Pink</string>
+    <string name="color_fucsia">Fucsia</string>
+    <string name="icon_color">Icon color</string>
 </resources>

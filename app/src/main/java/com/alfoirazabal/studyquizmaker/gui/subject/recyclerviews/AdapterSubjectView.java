@@ -3,10 +3,12 @@ package com.alfoirazabal.studyquizmaker.gui.subject.recyclerviews;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -30,12 +32,14 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtSubjectName;
         private final TextView txtSubjectDescription;
+        private final ImageView imgSubjectIcon;
 
         public ViewHolder(View view) {
             super(view);
 
             txtSubjectName = view.findViewById(R.id.txt_subject_name);
             txtSubjectDescription = view.findViewById(R.id.txt_subject_description);
+            imgSubjectIcon = view.findViewById(R.id.img_subject_icon);
 
             view.setOnLongClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), txtSubjectName);
@@ -116,6 +120,10 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
         public TextView getTxtSubjectDescription() {
             return txtSubjectDescription;
         }
+
+        public ImageView getImgSubjectIcon() {
+            return imgSubjectIcon;
+        }
     }
 
     public AdapterSubjectView(List<Subject> subjects) {
@@ -139,6 +147,7 @@ public class AdapterSubjectView extends RecyclerView.Adapter<AdapterSubjectView.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Subject currentSubject = subjects.get(position);
+        holder.getImgSubjectIcon().setColorFilter(currentSubject.color, PorterDuff.Mode.MULTIPLY);
         holder.getTxtSubjectName().setText(currentSubject.name);
         if (currentSubject.description.equals("")) {
             holder.getTxtSubjectDescription().setVisibility(View.GONE);
