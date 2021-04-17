@@ -3,10 +3,12 @@ package com.alfoirazabal.studyquizmaker.gui.topic.recyclerviews;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -30,12 +32,14 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtSubjectName;
         private final TextView txtSubjectDescription;
+        private final ImageView imgTopicIcon;
 
         public ViewHolder(View view) {
             super(view);
 
             txtSubjectName = view.findViewById(R.id.txt_topic_name);
             txtSubjectDescription = view.findViewById(R.id.txt_topic_description);
+            imgTopicIcon = view.findViewById(R.id.img_topic_icon);
 
             view.setOnLongClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), txtSubjectName);
@@ -116,6 +120,10 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
         public TextView getTxtSubjectDescription() {
             return txtSubjectDescription;
         }
+
+        public ImageView getImgTopicIcon() {
+            return imgTopicIcon;
+        }
     }
 
     public AdapterTopicView(List<Topic> topics) {
@@ -139,6 +147,7 @@ public class AdapterTopicView extends RecyclerView.Adapter<AdapterTopicView.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Topic currentTopic = topics.get(position);
+        holder.getImgTopicIcon().setColorFilter(currentTopic.color, PorterDuff.Mode.MULTIPLY);
         holder.getTxtSubjectName().setText(currentTopic.name);
         if (currentTopic.description.equals("")) {
             holder.getTxtSubjectDescription().setVisibility(View.GONE);

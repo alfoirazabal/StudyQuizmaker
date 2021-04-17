@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/img_test_icon" />
 
     <TextView
         android:id="@+id/txt_test_description"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_test_name" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/img_test_icon"
         android:layout_width="0dp"
         android:layout_height="20pt"
         android:contentDescription="@string/test"

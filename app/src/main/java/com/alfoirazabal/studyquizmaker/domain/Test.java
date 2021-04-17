@@ -2,6 +2,7 @@ package com.alfoirazabal.studyquizmaker.domain;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -43,8 +44,12 @@ public class Test implements Comparable<Test> {
     @ColumnInfo(name = "description")
     public String description;
 
+    @ColumnInfo(name = "color")
+    public int color;
+
     public Test() {
         this.id = UUID.randomUUID().toString();
+        this.color = Color.BLACK;
     }
 
     public String toString(Context context) {

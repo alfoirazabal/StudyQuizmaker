@@ -84,4 +84,14 @@
     <string name="response_question_mc">Respuesta múltiple opción</string>
     <string name="response_question_single">Respuesta de pregunta simple</string>
     <string name="response_question_tf">Respuesta de pregunta verdadero o falso</string>
+    <string name="color_red">Rojo</string>
+    <string name="color_orange">Naranja</string>
+    <string name="color_yellow">Amarillo</string>
+    <string name="color_green">Verde</string>
+    <string name="color_green_water">Verde agua</string>
+    <string name="color_light_blue">Celeste</string>
+    <string name="color_blue">Azul</string>
+    <string name="color_violet">Violeta</string>
+    <string name="color_pink">Rosado</string>
+    <string name="color_fucsia">Fucsia</string>
 </resources>
