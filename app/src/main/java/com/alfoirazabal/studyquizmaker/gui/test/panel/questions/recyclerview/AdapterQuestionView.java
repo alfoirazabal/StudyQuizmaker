@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,13 +71,23 @@ public class AdapterQuestionView extends
         private void handleEdit() {
             int questionToEditPosition = getAdapterPosition();
             Question questionToEdit = questions.get(questionToEditPosition);
-            Intent intentEditQuestionSimple = new Intent(
-                    itemView.getContext(),
-                    questionToEdit.getUpdateGUIClass()
-            );
-            intentEditQuestionSimple.putExtra("TESTID", questionToEdit.getTestId());
-            intentEditQuestionSimple.putExtra("QUESTIONID", questionToEdit.getId());
-            itemView.getContext().startActivity(intentEditQuestionSimple);
+            try {
+                Intent intentEditQuestionSimple = new Intent(
+                        itemView.getContext(),
+                        questionToEdit.getUpdateGUIClass()
+                );
+                intentEditQuestionSimple.putExtra("TESTID", questionToEdit.getTestId());
+                intentEditQuestionSimple.putExtra("QUESTIONID", questionToEdit.getId());
+                itemView.getContext().startActivity(intentEditQuestionSimple);
+            }
+            catch (UnsupportedOperationException ex) {
+                Toast.makeText(
+                        itemView.getContext(),
+                        itemView.getContext().getString(R.string.error) + ": " +
+                                ex.getMessage(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
         }
 
         private void handleDelete() {
