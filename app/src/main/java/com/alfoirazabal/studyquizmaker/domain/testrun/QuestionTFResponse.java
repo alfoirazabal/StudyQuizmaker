@@ -13,6 +13,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionTF;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionTFResponse;
 
 import java.util.UUID;
 
@@ -114,7 +115,7 @@ public class QuestionTFResponse implements QuestionResponse {
 
     @Override
     public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
-        throw new UnsupportedOperationException("No view question response class implemented yet!");
+        return ViewQuestionTFResponse.class;
     }
 
     @Override

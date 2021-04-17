@@ -40,6 +40,7 @@
         <activity android:name=".gui.test.panel.questions.questionmc.AddQuestionMC" />
         <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionMC" />
         <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionMCResponse" />
+        <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionTFResponse" />
     </application>
 
 </manifest>
