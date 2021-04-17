@@ -14,6 +14,8 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionTFResponse;
 
+import java.util.Objects;
+
 public class ViewQuestionTFResponse extends AppCompatActivity {
 
     private TextView txtQuestionTitle;
@@ -27,6 +29,8 @@ public class ViewQuestionTFResponse extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testrun_result_question_tf);
+
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.response_question_tf);
 
         txtQuestionTitle = findViewById(R.id.txt_question_title);
         txtScore = findViewById(R.id.txt_score);
@@ -45,7 +49,9 @@ public class ViewQuestionTFResponse extends AppCompatActivity {
 
         new Thread(() -> {
             QuestionTF questionTF = db.questionTFDAO().getById(questionResponse.questionTFId);
+            String testName = db.testDAO().getById(questionTF.testId).name;
             runOnUiThread(() -> {
+                getSupportActionBar().setTitle(testName);
                 txtQuestionTitle.setText(questionTF.title);
                 String scoreText = questionResponse.score + "/" + questionTF.score;
                 txtScore.setText(scoreText);

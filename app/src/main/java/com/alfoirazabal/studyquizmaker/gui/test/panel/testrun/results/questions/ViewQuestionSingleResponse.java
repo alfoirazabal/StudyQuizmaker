@@ -14,6 +14,8 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
 
+import java.util.Objects;
+
 public class ViewQuestionSingleResponse extends AppCompatActivity {
 
     private TextView txtQuestionTitle;
@@ -27,6 +29,8 @@ public class ViewQuestionSingleResponse extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testrun_result_question_simple);
+
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.response_question_single);
 
         txtQuestionTitle = findViewById(R.id.txt_question_title);
         txtScore = findViewById(R.id.txt_score);
@@ -46,7 +50,9 @@ public class ViewQuestionSingleResponse extends AppCompatActivity {
         new Thread(() -> {
             QuestionSimple questionSimple =
                     db.questionSimpleDAO().getById(questionResponse.questionSimpleId);
+            String testName = db.testDAO().getById(questionSimple.testId).name;
             runOnUiThread(() -> {
+                getSupportActionBar().setTitle(testName);
                 txtQuestionTitle.setText(questionSimple.title);
                 String scoreText =questionResponse.score + "/" + questionSimple.score;
                 txtScore.setText(scoreText);

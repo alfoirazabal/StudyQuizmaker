@@ -80,4 +80,7 @@
     <string name="add_option">Add option</string>
     <string name="clear_all_checks">Clear all</string>
     <string name="error">Error</string>
+    <string name="response_question_mc">Multiple choice response</string>
+    <string name="response_question_single">Simple question response</string>
+    <string name="response_question_tf">True or false question response</string>
 </resources>

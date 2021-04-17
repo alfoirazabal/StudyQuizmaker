@@ -3,7 +3,6 @@ package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -19,6 +18,8 @@ import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.guiextensions.MCRadioButton;
 
+import java.util.Objects;
+
 public class ViewQuestionMCResponse extends AppCompatActivity {
 
     private TextView txtQuestionTitle;
@@ -29,6 +30,8 @@ public class ViewQuestionMCResponse extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testrun_result_question_mc);
+
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.response_question_mc);
 
         txtQuestionTitle = findViewById(R.id.txt_question_title);
         txtScore = findViewById(R.id.txt_score);
@@ -51,7 +54,9 @@ public class ViewQuestionMCResponse extends AppCompatActivity {
             questionMC.questionOptionMCs = db.questionOptionMCDAO().getFromQuestionMC(questionMC.id)
                     .toArray(new QuestionOptionMC[0]);
             questionMCResponse.questionOptionMCs = questionMC.questionOptionMCs;
+            String testName = db.testDAO().getById(questionMC.testId).name;
             runOnUiThread(() -> {
+                getSupportActionBar().setTitle(testName);
                 txtQuestionTitle.setText(questionMC.title);
                 String scoreText = questionMCResponse.getScore() + "/" + questionMC.getScore();
                 txtScore.setText(scoreText);
