@@ -13,6 +13,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionSingleResponse;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -98,7 +99,7 @@ public class QuestionSimpleResponse implements QuestionResponse {
 
     @Override
     public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
-        throw new UnsupportedOperationException("No view question response class implemented yet!");
+        return ViewQuestionSingleResponse.class;
     }
 
     @Override

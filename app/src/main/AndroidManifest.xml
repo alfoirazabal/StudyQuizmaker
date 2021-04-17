@@ -39,6 +39,8 @@
         <activity android:name=".gui.test.panel.testrun.answer.ScoreSimpleQuestions" />
         <activity android:name=".gui.test.panel.questions.questionmc.AddQuestionMC" />
         <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionMC" />
+        <activity
+            android:name=".gui.test.panel.testrun.results.questions.ViewQuestionSingleResponse" />
         <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionMCResponse" />
         <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionTFResponse" />
     </application>

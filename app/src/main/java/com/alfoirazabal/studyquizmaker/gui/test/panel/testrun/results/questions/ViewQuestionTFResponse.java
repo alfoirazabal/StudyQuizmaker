@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class ViewQuestionTFResponse extends AppCompatActivity {
                 txtScore.setText(scoreText);
                 if (!questionResponse.isAnswered) {
                     txtAnswered.setText(R.string.unanswered);
+                    txtAnswered.setTextColor(Color.RED);
                     if (questionResponse.askedTrueStatement) {
                         txtRightAnswer.setText(R.string.is_true);
                     }

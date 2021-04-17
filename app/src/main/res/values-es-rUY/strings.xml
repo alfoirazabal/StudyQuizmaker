@@ -80,4 +80,5 @@
     <string name="add_answer_option">Agregar opción de pregunta</string>
     <string name="add_option">Agregar opción</string>
     <string name="clear_all_checks">Desmarcar todos</string>
+    <string name="error">Error</string>
 </resources>
