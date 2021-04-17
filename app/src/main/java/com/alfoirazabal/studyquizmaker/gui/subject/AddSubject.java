@@ -1,9 +1,15 @@
 package com.alfoirazabal.studyquizmaker.gui.subject;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,12 +19,16 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Subject;
+import com.alfoirazabal.studyquizmaker.gui.helpers.IconColorPicker;
+import com.alfoirazabal.studyquizmaker.helpers.ArrayShuffler;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
+import com.alfoirazabal.studyquizmaker.helpers.icons.IconColors;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class AddSubject extends AppCompatActivity {
 
@@ -26,6 +36,8 @@ public class AddSubject extends AppCompatActivity {
     private TextInputLayout txtilSubjectDescription;
     private TextInputEditText txtSubjectName;
     private TextInputEditText txtSubjectDescription;
+    private ImageView imgSubjectIcon;
+    private Spinner spinnerIconColor;
     private Button btnAdd;
 
     private List<String> subjectNames;
@@ -41,7 +53,12 @@ public class AddSubject extends AppCompatActivity {
         txtilSubjectDescription = findViewById(R.id.txtil_subject_description);
         txtSubjectName = findViewById(R.id.txt_subject_name);
         txtSubjectDescription = findViewById(R.id.txt_subject_description);
+        imgSubjectIcon = findViewById(R.id.img_subject_icon);
+        spinnerIconColor = findViewById(R.id.spinner_icon_color);
         btnAdd = findViewById(R.id.btn_add);
+
+        IconColorPicker iconColorPicker = new IconColorPicker(this);
+        iconColorPicker.setIconColorPicker(spinnerIconColor, imgSubjectIcon);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -84,6 +101,8 @@ public class AddSubject extends AppCompatActivity {
             newSubject.description = Objects.requireNonNull(
                     txtSubjectDescription.getText()
             ).toString();
+            IconColors.ColorForIcon colorSelected = iconColorPicker.getSelectedColor();
+            newSubject.color = colorSelected.color;
             db.subjectDAO().insert(newSubject);
             finish();
         }).start());

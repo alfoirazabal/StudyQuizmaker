@@ -3,8 +3,9 @@ package com.alfoirazabal.studyquizmaker.helpers.icons;
 import android.content.Context;
 import android.graphics.Color;
 
+import androidx.annotation.NonNull;
+
 import com.alfoirazabal.studyquizmaker.R;
-import com.alfoirazabal.studyquizmaker.helpers.ArrayShuffler;
 
 public class IconColors {
 
@@ -16,6 +17,12 @@ public class IconColors {
             this.color = color;
             this.colorName = colorName;
         }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.colorName;
+        }
     }
 
     private final Context context;
@@ -25,7 +32,11 @@ public class IconColors {
     }
 
     public ColorForIcon[] getColors() {
-        ColorForIcon[] colorForIcons = new ColorForIcon[] {
+        return new ColorForIcon[] {
+                new ColorForIcon(
+                        Color.rgb(125, 125, 125),
+                        this.context.getString(R.string.color_gray)
+                ),
                 new ColorForIcon(
                         Color.rgb(252, 3, 3),
                         this.context.getString(R.string.color_red)
@@ -67,9 +78,6 @@ public class IconColors {
                         this.context.getString(R.string.color_fucsia)
                 )
         };
-        ArrayShuffler<ColorForIcon> shuffler = new ArrayShuffler<>();
-        shuffler.shuffleFisherYates(colorForIcons);
-        return colorForIcons;
     }
 
 }
