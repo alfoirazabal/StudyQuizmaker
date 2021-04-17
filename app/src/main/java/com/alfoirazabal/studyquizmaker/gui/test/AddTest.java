@@ -5,6 +5,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
+import com.alfoirazabal.studyquizmaker.gui.helpers.IconColorPicker;
 import com.alfoirazabal.studyquizmaker.helpers.SearchInList;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -45,7 +48,12 @@ public class AddTest extends AppCompatActivity {
         txtilTestDescription = findViewById(R.id.txtil_test_description);
         txtTestName = findViewById(R.id.txt_test_name);
         txtTestDescription = findViewById(R.id.txt_test_description);
+        ImageView imgTestIcon = findViewById(R.id.img_test_icon);
+        Spinner spinnerIconColor = findViewById(R.id.spinner_icon_color);
         btnAdd = findViewById(R.id.btn_add);
+
+        IconColorPicker iconColorPicker = new IconColorPicker(this);
+        iconColorPicker.setIconColorPicker(spinnerIconColor, imgTestIcon);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -92,6 +100,7 @@ public class AddTest extends AppCompatActivity {
                     test.name = txtTestName.getText().toString();
                     test.description = txtTestDescription.getText().toString();
                     test.topicId = topicId;
+                    test.color = iconColorPicker.getSelectedColor().color;
                     db.testDAO().insert(test);
                     finish();
                 }).start();
