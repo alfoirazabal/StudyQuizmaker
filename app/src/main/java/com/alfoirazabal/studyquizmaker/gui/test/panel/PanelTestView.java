@@ -41,6 +41,7 @@ public class PanelTestView extends AppCompatActivity {
     private TextView txtAmountOfQuestions;
     private TextView txtAmountOfSimpleQuestions;
     private TextView txtAmountOfMCQuestions;
+    private TextView txtAmountOfMOQuestions;
     private TextView txtAmountOfTrueOrFalseQuestions;
     private TextView txtTopic;
     private TextView txtSubject;
@@ -63,6 +64,8 @@ public class PanelTestView extends AppCompatActivity {
         txtAmountOfSimpleQuestions = findViewById(R.id.txt_amount_of_simple_questions);
         txtAmountOfMCQuestions =
                 findViewById(R.id.txt_amount_of_multiple_choice_questions);
+        txtAmountOfMOQuestions =
+                findViewById(R.id.txt_amount_of_multiple_options_questions);
         txtAmountOfTrueOrFalseQuestions = findViewById(R.id.txt_amount_of_true_or_false_questions);
         txtTopic = findViewById(R.id.txt_topic);
         txtSubject = findViewById(R.id.txt_subject);
@@ -162,12 +165,14 @@ public class PanelTestView extends AppCompatActivity {
         super.onResume();
         new Thread(() -> {
             int amountOfQuestionsMC = db.questionMCDAO().getCountFromTest(testId);
+            int amountOfQuestionsMO = db.questionMODAO().getCountFromTest(testId);
             int amountOfQuestionsSimple = db.questionSimpleDAO().getCountFromTest(testId);
             int amountOfQuestionsTF = db.questionTFDAO().getCountFromTest(testId);
-            int totalAmountOfQuestions = amountOfQuestionsMC + amountOfQuestionsSimple +
-                    amountOfQuestionsTF;
+            int totalAmountOfQuestions = amountOfQuestionsMC + amountOfQuestionsMO +
+                    amountOfQuestionsSimple + amountOfQuestionsTF;
             runOnUiThread(() -> {
                 txtAmountOfMCQuestions.setText(String.valueOf(amountOfQuestionsMC));
+                txtAmountOfMOQuestions.setText(String.valueOf(amountOfQuestionsMO));
                 txtAmountOfSimpleQuestions.setText(String.valueOf(amountOfQuestionsSimple));
                 txtAmountOfTrueOrFalseQuestions.setText(String.valueOf(amountOfQuestionsTF));
                 txtAmountOfQuestions.setText(String.valueOf(totalAmountOfQuestions));

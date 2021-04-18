@@ -16,7 +16,10 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(
@@ -58,6 +61,8 @@ public class QuestionMO implements Question {
 
     public QuestionMO() {
         this.id = UUID.randomUUID().toString();
+        this.dateCreated = new Date();
+        this.dateModified = this.dateCreated;
     }
 
     @Override
@@ -79,34 +84,48 @@ public class QuestionMO implements Question {
     public double getScore() {
         double score = 0;
         for (QuestionOptionMO questionOptionMO : this.questionOptionMOs) {
-            score += questionOptionMO.score;
+            if (questionOptionMO.score > 0) {
+                score += questionOptionMO.score;
+            }
         }
         return score;
     }
 
     @Override
     public String getWrongAnswers() throws NoWrongAnswers {
-        StringBuilder wrongAnswers = new StringBuilder();
-        for (int i = 0 ; i < this.questionOptionMOs.length ; i++) {
-            if (this.questionOptionMOs[i].score <= 0) {
-                wrongAnswers.append(this.questionOptionMOs[i].answerText);
-                if (i != this.questionOptionMOs.length - 1) {
-                    wrongAnswers.append("\n");
-                }
+        List<String> wrongAnswers = new ArrayList<>();
+        for (QuestionOptionMO questionOptionMO : this.questionOptionMOs) {
+            if (questionOptionMO.score <= 0) {
+                wrongAnswers.add(questionOptionMO.answerText);
             }
         }
-        return wrongAnswers.toString();
+        StringBuilder wrongAnswersText = new StringBuilder();
+        Iterator<String> itWrongAnswers = wrongAnswers.iterator();
+        while (itWrongAnswers.hasNext()) {
+            String wrongAnswer = itWrongAnswers.next();
+            wrongAnswersText.append(wrongAnswer);
+            if (itWrongAnswers.hasNext()) {
+                wrongAnswersText.append("\n");
+            }
+        }
+        return wrongAnswersText.toString();
     }
 
     @Override
     public String getAnswer() {
+        List<String> rightAnswers = new ArrayList<>();
+        for (QuestionOptionMO questionOptionMO : this.questionOptionMOs) {
+            if (questionOptionMO.score > 0) {
+                rightAnswers.add(questionOptionMO.answerText);
+            }
+        }
         StringBuilder answers = new StringBuilder();
-        for (int i = 0 ; i < this.questionOptionMOs.length ; i++) {
-            if (this.questionOptionMOs[i].score > 0) {
-                answers.append(this.questionOptionMOs[i].answerText);
-                if (i != this.questionOptionMOs.length - 1) {
-                    answers.append("\n");
-                }
+        Iterator<String> itRightAnswers = rightAnswers.iterator();
+        while (itRightAnswers.hasNext()) {
+            String answer = itRightAnswers.next();
+            answers.append(answer);
+            if (itRightAnswers.hasNext()) {
+                answers.append("\n");
             }
         }
         return answers.toString();

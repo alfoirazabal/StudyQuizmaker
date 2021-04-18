@@ -10,6 +10,7 @@ import com.alfoirazabal.studyquizmaker.db.dao.TopicDAO;
 import com.alfoirazabal.studyquizmaker.db.dao.question.QuestionMCDAO;
 import com.alfoirazabal.studyquizmaker.db.dao.question.QuestionMODAO;
 import com.alfoirazabal.studyquizmaker.db.dao.question.QuestionOptionMCDAO;
+import com.alfoirazabal.studyquizmaker.db.dao.question.QuestionOptionMODAO;
 import com.alfoirazabal.studyquizmaker.db.dao.question.QuestionSimpleDAO;
 import com.alfoirazabal.studyquizmaker.db.dao.question.QuestionTFDAO;
 import com.alfoirazabal.studyquizmaker.db.dao.testrun.QuestionMCResponseDAO;
@@ -24,6 +25,7 @@ import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
@@ -45,6 +47,7 @@ import com.alfoirazabal.studyquizmaker.domain.testrun.TestRun;
                 QuestionSimple.class,
                 QuestionTF.class,
                 QuestionMO.class,
+                QuestionOptionMO.class,
                 QuestionTFResponse.class,
                 QuestionMCResponse.class,
                 QuestionMOResponse.class,
@@ -65,6 +68,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract QuestionSimpleDAO questionSimpleDAO();
     public abstract QuestionTFDAO questionTFDAO();
     public abstract QuestionMODAO questionMODAO();
+    public abstract QuestionOptionMODAO questionOptionMODAO();
     public abstract QuestionTFResponseDAO questionTFResponseDAO();
     public abstract QuestionMCResponseDAO questionMCResponseDAO();
     public abstract QuestionMOResponseDAO questionMOResponseDAO();

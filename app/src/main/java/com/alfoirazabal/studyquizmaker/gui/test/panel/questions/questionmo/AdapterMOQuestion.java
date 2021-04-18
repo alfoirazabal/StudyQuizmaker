@@ -1,4 +1,4 @@
-package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmc;
+package com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmo;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,19 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alfoirazabal.studyquizmaker.R;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 
 import java.util.List;
 
-public class AdapterMCQuestion extends RecyclerView.Adapter<AdapterMCQuestion.ViewHolder> {
+public class AdapterMOQuestion extends RecyclerView.Adapter<AdapterMOQuestion.ViewHolder> {
 
-    private final List<QuestionOptionMC> questionOptionsMC;
+    private List<QuestionOptionMO> questionOptionMOs;
+
+    public AdapterMOQuestion(
+            List<QuestionOptionMO> questionOptionMOs
+    ) {
+        this.questionOptionMOs = questionOptionMOs;
+
+        this.setHasStableIds(true);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView txtScore;
-        private final TextView txtAnswer;
-        private final ImageView imgbtnDelete;
+        private TextView txtScore;
+        private TextView txtAnswer;
+        private ImageView imgbtnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -45,40 +53,32 @@ public class AdapterMCQuestion extends RecyclerView.Adapter<AdapterMCQuestion.Vi
         }
     }
 
-    public AdapterMCQuestion(
-            List<QuestionOptionMC> questionOptionsMC
-    ) {
-        this.questionOptionsMC = questionOptionsMC;
-
-        this.setHasStableIds(true);
-    }
-
     @NonNull
     @Override
-    public AdapterMCQuestion.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.recyclerview_adapter_question_mc_and_mo_add,
                 parent,
                 false
         );
 
-        return new AdapterMCQuestion.ViewHolder(view);
+        return new AdapterMOQuestion.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterMCQuestion.ViewHolder holder, int position) {
-        QuestionOptionMC questionOptionMC = questionOptionsMC.get(position);
-        holder.getTxtScore().setText(String.valueOf(questionOptionMC.score));
-        holder.getTxtAnswer().setText(questionOptionMC.answerText);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        QuestionOptionMO questionOptionMO = this.questionOptionMOs.get(position);
+        holder.getTxtScore().setText(String.valueOf(questionOptionMO.score));
+        holder.getTxtAnswer().setText(questionOptionMO.answerText);
         holder.getImgbtnDelete().setOnClickListener(v -> {
-            questionOptionsMC.remove(questionOptionMC);
-            notifyDataSetChanged();
+            this.questionOptionMOs.remove(questionOptionMO);
+            this.notifyDataSetChanged();
         });
     }
 
     @Override
     public int getItemCount() {
-        return questionOptionsMC.size();
+        return this.questionOptionMOs.size();
     }
 
     @Override
@@ -90,4 +90,5 @@ public class AdapterMCQuestion extends RecyclerView.Adapter<AdapterMCQuestion.Vi
     public long getItemId(int position) {
         return position;
     }
+
 }
