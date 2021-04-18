@@ -11,9 +11,11 @@ import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMO;
 
 import java.util.UUID;
 
@@ -104,7 +106,7 @@ public class QuestionMOResponse implements QuestionResponse {
 
     @Override
     public Class<? extends AnswerQuestionActivity> getAnswerQuestionClass() {
-        throw new UnsupportedOperationException("Not yet implemented!");
+        return AnswerQuestionMO.class;
     }
 
     @Override
@@ -130,6 +132,15 @@ public class QuestionMOResponse implements QuestionResponse {
     @Override
     public void setQuestion(Question question) {
         this.questionMOId = question.getId();
+        QuestionMO questionMO = (QuestionMO) question;
+        this.questionOptionMOs = questionMO.questionOptionMOs;
+        this.questionMOResponseOptions =
+                new QuestionMOResponseOption[questionMO.questionOptionMOs.length];
+        for (int i = 0 ; i < questionMO.questionOptionMOs.length ; i++) {
+            this.questionMOResponseOptions[i] = new QuestionMOResponseOption();
+            this.questionMOResponseOptions[i].optionSelected = false;
+            this.questionMOResponseOptions[i].optionScore = questionMO.questionOptionMOs[i].score;
+        }
     }
 
     @Override

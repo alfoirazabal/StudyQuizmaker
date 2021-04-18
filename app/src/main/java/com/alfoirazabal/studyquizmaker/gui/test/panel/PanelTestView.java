@@ -19,7 +19,9 @@ import com.alfoirazabal.studyquizmaker.domain.Topic;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionComparators;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
@@ -108,6 +110,9 @@ public class PanelTestView extends AppCompatActivity {
             List<QuestionMC> questionMCs = db.questionMCDAO().getFromTest(testId);
             setQuestionMCAnswers(questionMCs);
             questions.addAll(questionMCs);
+            List<QuestionMO> questionMOs = db.questionMODAO().getFromTest(testId);
+            setQuestionMOAnswers(questionMOs);
+            questions.addAll(questionMOs);
             questions.addAll(db.questionTFDAO().getFromTest(testId));
             if (questions.isEmpty()) {
                 runOnUiThread(() -> Toast.makeText(
@@ -157,6 +162,15 @@ public class PanelTestView extends AppCompatActivity {
                     db.questionOptionMCDAO().getFromQuestionMC(questionMC.id);
             Collections.shuffle(questionOptions);
             questionMC.questionOptionMCs = questionOptions.toArray(new QuestionOptionMC[0]);
+        }
+    }
+
+    private void setQuestionMOAnswers(List<QuestionMO> questionMOs) {
+        for (QuestionMO questionMO : questionMOs) {
+            List<QuestionOptionMO> questionOptions =
+                    db.questionOptionMODAO().getFromQuestionMO(questionMO.id);
+            Collections.shuffle(questionOptions);
+            questionMO.questionOptionMOs = questionOptions.toArray(new QuestionOptionMO[0]);
         }
     }
 
