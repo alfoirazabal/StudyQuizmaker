@@ -36,6 +36,7 @@
     <string name="questions_multiple_choice">Múltiple opción</string>
     <string name="questions_simple">Preguntas simples</string>
     <string name="questions_true_or_false">Verdadero o falso</string>
+    <string name="questions_multiple_options">Múltiples opciones</string>
     <string name="score_total">"Puntaje: "</string>
     <string name="answer">Respuesta</string>
     <string name="title">Título</string>
@@ -84,6 +85,7 @@
     <string name="response_question_mc">Respuesta múltiple opción</string>
     <string name="response_question_single">Respuesta de pregunta simple</string>
     <string name="response_question_tf">Respuesta de pregunta verdadero o falso</string>
+    <string name="response_question_mo">Respuesta múltiples opciones</string>
     <string name="color_gray">Gris</string>
     <string name="color_red">Rojo</string>
     <string name="color_orange">Naranja</string>

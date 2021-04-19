@@ -1,5 +1,6 @@
 package com.alfoirazabal.studyquizmaker.domain.testrun;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
