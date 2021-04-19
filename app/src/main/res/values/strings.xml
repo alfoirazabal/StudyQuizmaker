@@ -84,6 +84,7 @@
     <string name="response_question_mc">Multiple choice response</string>
     <string name="response_question_single">Simple question response</string>
     <string name="response_question_tf">True or false question response</string>
+    <string name="response_question_mo">Multiple options response</string>
     <string name="color_gray">Gray</string>
     <string name="color_red">Red</string>
     <string name="color_orange">Orange</string>

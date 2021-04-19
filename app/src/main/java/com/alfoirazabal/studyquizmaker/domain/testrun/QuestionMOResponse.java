@@ -16,6 +16,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.QuestionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMO;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionMOResponse;
 
 import java.util.UUID;
 
@@ -128,7 +129,7 @@ public class QuestionMOResponse implements QuestionResponse {
 
     @Override
     public Class<? extends AppCompatActivity> getViewQuestionResponseClass() {
-        throw new UnsupportedOperationException("Not yet implemented!");
+        return ViewQuestionMOResponse.class;
     }
 
     @Override
