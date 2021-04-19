@@ -73,7 +73,11 @@ public class QuestionMOResponse implements QuestionResponse {
 
     @Override
     public boolean isAnswered() {
-        return true;
+        boolean answered = false;
+        for (int i = 0 ; !answered && i < this.questionMOResponseOptions.length ; i++) {
+            answered = this.questionMOResponseOptions[i].optionSelected;
+        }
+        return answered;
     }
 
     @Override
@@ -81,7 +85,11 @@ public class QuestionMOResponse implements QuestionResponse {
         double score = 0;
         for (QuestionMOResponseOption questionMOResponseOption : questionMOResponseOptions) {
             if (questionMOResponseOption.optionSelected) {
-                score += questionMOResponseOption.optionScore;
+                for (QuestionOptionMO questionOptionMO : questionOptionMOs) {
+                    if (questionOptionMO.id.equals(questionMOResponseOption.questionOptionMOId)) {
+                        score += questionOptionMO.score;
+                    }
+                }
             }
         }
         return score;
@@ -89,15 +97,24 @@ public class QuestionMOResponse implements QuestionResponse {
 
     @Override
     public Question getQuestion(AppDatabase db) {
-        return db.questionMODAO().getById(this.questionMOId);
+        QuestionMO question = db.questionMODAO().getById(this.questionMOId);
+        question.questionOptionMOs = db.questionOptionMODAO().getFromQuestionMO(this.questionMOId)
+                .toArray(new QuestionOptionMO[0]);
+        return question;
     }
 
     @Override
     public String getAnswered(AppDatabase db) {
+        this.questionOptionMOs = db.questionOptionMODAO().getFromQuestionMO(this.questionMOId)
+                .toArray(new QuestionOptionMO[0]);
         StringBuilder answer = new StringBuilder();
         for (int i = 0 ; i < questionMOResponseOptions.length ; i++) {
             if (questionMOResponseOptions[i].optionSelected) {
-                answer.append(questionOptionMOs[i].answerText);
+                for (int j = 0 ; j < questionOptionMOs.length ; j++) {
+                    if (questionOptionMOs[j].id.equals(questionMOResponseOptions[i].questionOptionMOId)) {
+                        answer.append(questionOptionMOs[j].answerText);
+                    }
+                }
                 answer.append("\n");
             }
         }
@@ -138,13 +155,17 @@ public class QuestionMOResponse implements QuestionResponse {
                 new QuestionMOResponseOption[questionMO.questionOptionMOs.length];
         for (int i = 0 ; i < questionMO.questionOptionMOs.length ; i++) {
             this.questionMOResponseOptions[i] = new QuestionMOResponseOption();
+            this.questionMOResponseOptions[i].questionMOResponseId = this.id;
+            this.questionMOResponseOptions[i].questionOptionMOId = questionOptionMOs[i].id;
             this.questionMOResponseOptions[i].optionSelected = false;
-            this.questionMOResponseOptions[i].optionScore = questionMO.questionOptionMOs[i].score;
         }
     }
 
     @Override
     public void insertToDb(AppDatabase db) {
         db.questionMOResponseDAO().insert(this);
+        for (QuestionMOResponseOption questionMOResponseOption : this.questionMOResponseOptions) {
+            db.questionMOResponseOptionDAO().insert(questionMOResponseOption);
+        }
     }
 }

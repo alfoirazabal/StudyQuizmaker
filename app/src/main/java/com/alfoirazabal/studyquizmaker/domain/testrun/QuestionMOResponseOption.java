@@ -7,6 +7,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -18,10 +20,18 @@ import java.util.UUID;
                         childColumns = "questionMOResponseId",
                         onDelete = ForeignKey.CASCADE,
                         onUpdate = ForeignKey.CASCADE
+                ),
+                @ForeignKey(
+                        entity = QuestionOptionMO.class,
+                        parentColumns = "id",
+                        childColumns = "questionOptionMOId",
+                        onDelete = ForeignKey.CASCADE,
+                        onUpdate = ForeignKey.CASCADE
                 )
         },
         indices = {
-                @Index(value = {"questionMOResponseId"})
+                @Index(value = {"questionMOResponseId"}),
+                @Index(value = {"questionOptionMOId"})
         }
 )
 public class QuestionMOResponseOption implements Serializable {
@@ -33,11 +43,11 @@ public class QuestionMOResponseOption implements Serializable {
     @ColumnInfo(name = "questionMOResponseId")
     public String questionMOResponseId;
 
+    @ColumnInfo(name = "questionOptionMOId")
+    public String questionOptionMOId;
+
     @ColumnInfo(name = "optionSelected")
     public boolean optionSelected;
-
-    @ColumnInfo(name = "optionScore")
-    public double optionScore;
 
     public QuestionMOResponseOption() {
         this.id = UUID.randomUUID().toString();
