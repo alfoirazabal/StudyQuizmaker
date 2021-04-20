@@ -8,9 +8,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity(
         foreignKeys = {
@@ -50,7 +50,7 @@ public class QuestionMOResponseOption implements Serializable {
     public boolean optionSelected;
 
     public QuestionMOResponseOption() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
     }
 
 }
