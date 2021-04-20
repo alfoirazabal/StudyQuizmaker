@@ -11,14 +11,12 @@ import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMO;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionMOResponse;
-
-import java.util.UUID;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 @Entity(
         foreignKeys = {
@@ -64,7 +62,7 @@ public class QuestionMOResponse implements QuestionResponse {
     public QuestionOptionMO[] questionOptionMOs;
 
     public QuestionMOResponse() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
     }
 
     @Override

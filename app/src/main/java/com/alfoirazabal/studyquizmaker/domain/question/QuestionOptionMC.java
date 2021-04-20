@@ -7,8 +7,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
+
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity(
         foreignKeys = {
@@ -40,7 +41,7 @@ public class QuestionOptionMC implements Serializable, Comparable<QuestionOption
     public double score;
 
     public QuestionOptionMC() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
     }
 
     @Override

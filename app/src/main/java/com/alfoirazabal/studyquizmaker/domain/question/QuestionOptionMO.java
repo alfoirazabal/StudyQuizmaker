@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
+
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity(
         foreignKeys = {
@@ -41,7 +41,7 @@ public class QuestionOptionMO implements Serializable, Comparable<QuestionOption
     public double score;
 
     public QuestionOptionMO() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
     }
 
     @Override

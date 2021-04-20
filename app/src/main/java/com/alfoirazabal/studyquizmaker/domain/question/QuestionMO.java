@@ -16,12 +16,12 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMOResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 @Entity(
         foreignKeys = {
@@ -61,7 +61,7 @@ public class QuestionMO implements Question {
     public QuestionOptionMO[] questionOptionMOs;
 
     public QuestionMO() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
         this.dateCreated = new Date();
         this.dateModified = this.dateCreated;
     }

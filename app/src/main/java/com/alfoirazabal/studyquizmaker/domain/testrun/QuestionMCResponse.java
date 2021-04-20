@@ -13,13 +13,10 @@ import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
-import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.ViewQuestion;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionMC;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionMCResponse;
-
-import java.util.UUID;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 @Entity(
         foreignKeys = {
@@ -68,7 +65,7 @@ public class QuestionMCResponse implements QuestionResponse {
     public QuestionOptionMC[] questionOptionMCs;
 
     public QuestionMCResponse() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
     }
 
     @Override

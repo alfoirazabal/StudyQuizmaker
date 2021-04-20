@@ -12,8 +12,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.R;
-
-import java.util.UUID;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 @Entity(
         foreignKeys = {
@@ -49,7 +48,7 @@ public class Topic implements Comparable<Topic> {
     public int color;
 
     public Topic() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
         this.color = Color.BLACK;
     }
 
