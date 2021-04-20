@@ -14,6 +14,7 @@ import com.alfoirazabal.studyquizmaker.AppConstants;
 import com.alfoirazabal.studyquizmaker.R;
 import com.alfoirazabal.studyquizmaker.db.AppDatabase;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMCResponse;
+import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionMOResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponse;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionResponseComparators;
 import com.alfoirazabal.studyquizmaker.domain.testrun.QuestionSimpleResponse;
@@ -64,10 +65,14 @@ public class ViewRunResults extends AppCompatActivity {
                     db.questionTFResponseDAO().getResponsesFromTestRun(testRunId);
             QuestionMCResponse[] questionMCResponses =
                     db.questionMCResponseDAO().getResponsesFromTestRun(testRunId);
+            QuestionMOResponse[] questionMOResponses =
+                    db.questionMOResponseDAO().getResponsesFromTestRun(testRunId);
+            setQuestionMOResponsesOptions(questionMOResponses);
             List<QuestionResponse> questionResponses = new ArrayList<>();
             questionResponses.addAll(Arrays.asList(questionSimpleResponses));
             questionResponses.addAll(Arrays.asList(questionTFResponses));
             questionResponses.addAll(Arrays.asList(questionMCResponses));
+            questionResponses.addAll(Arrays.asList(questionMOResponses));
             Collections.sort(questionResponses, new QuestionResponseComparators.CompareByAskOrder());
             testRun.questionResponses = questionResponses.toArray(new QuestionResponse[0]);
             runOnUiThread(() -> {
@@ -83,5 +88,12 @@ public class ViewRunResults extends AppCompatActivity {
             });
         }).start();
 
+    }
+
+    private void setQuestionMOResponsesOptions(QuestionMOResponse[] questionMOResponses) {
+        for (int i = 0 ; i < questionMOResponses.length ; i++) {
+            questionMOResponses[i].questionMOResponseOptions =
+                    db.questionMOResponseOptionDAO().getByQuestionMOResponse(questionMOResponses[i].id);
+        }
     }
 }

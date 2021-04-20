@@ -43,6 +43,9 @@
             android:name=".gui.test.panel.testrun.results.questions.ViewQuestionSingleResponse" />
         <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionMCResponse" />
         <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionTFResponse" />
+        <activity android:name=".gui.test.panel.questions.questionmo.AddQuestionMO" />
+        <activity android:name=".gui.test.panel.testrun.answer.AnswerQuestionMO" />
+        <activity android:name=".gui.test.panel.testrun.results.questions.ViewQuestionMOResponse" />
     </application>
 
 </manifest>

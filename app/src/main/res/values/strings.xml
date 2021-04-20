@@ -35,6 +35,7 @@
     <string name="questions_multiple_choice">Multiple choice</string>
     <string name="questions_simple">Simple questions</string>
     <string name="questions_true_or_false">True or false</string>
+    <string name="questions_multiple_options">Multiple options</string>
     <string name="score_total">"Score: "</string>
     <string name="answer">Answer</string>
     <string name="title">Title</string>
@@ -83,6 +84,7 @@
     <string name="response_question_mc">Multiple choice response</string>
     <string name="response_question_single">Simple question response</string>
     <string name="response_question_tf">True or false question response</string>
+    <string name="response_question_mo">Multiple options response</string>
     <string name="color_gray">Gray</string>
     <string name="color_red">Red</string>
     <string name="color_orange">Orange</string>

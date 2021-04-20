@@ -13,4 +13,8 @@
         android:title="@string/questions_true_or_false"
         android:id="@+id/item_true_or_false" />
 
+    <item
+        android:title="@string/questions_multiple_options"
+        android:id="@+id/item_multiple_options" />
+
 </menu>

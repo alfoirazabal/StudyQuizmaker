@@ -14,8 +14,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.QuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionTFResponse;
-
-import java.util.UUID;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 @Entity(
         foreignKeys = {
@@ -67,7 +66,7 @@ public class QuestionTFResponse implements QuestionResponse {
     public double score;
 
     public QuestionTFResponse() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
         if (Math.random() > 0.5) {
             this.askedTrueStatement = true;
         }

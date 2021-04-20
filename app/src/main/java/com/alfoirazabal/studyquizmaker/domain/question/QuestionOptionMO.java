@@ -14,25 +14,25 @@ import java.io.Serializable;
 @Entity(
         foreignKeys = {
                 @ForeignKey(
-                        entity = QuestionMC.class,
+                        entity = QuestionMO.class,
                         parentColumns = "id",
-                        childColumns = "questionMCId",
+                        childColumns = "questionMOId",
                         onDelete = ForeignKey.CASCADE,
                         onUpdate = ForeignKey.CASCADE
                 )
         },
         indices = {
-                @Index(value = {"questionMCId"})
+                @Index(value = "questionMOId")
         }
 )
-public class QuestionOptionMC implements Serializable, Comparable<QuestionOptionMC> {
+public class QuestionOptionMO implements Serializable, Comparable<QuestionOptionMO> {
 
     @PrimaryKey
     @NonNull
     public String id;
 
-    @ColumnInfo(name = "questionMCId")
-    public String questionMCId;
+    @ColumnInfo(name = "questionMOId")
+    public String questionMOId;
 
     @ColumnInfo(name = "answerText")
     public String answerText;
@@ -40,12 +40,12 @@ public class QuestionOptionMC implements Serializable, Comparable<QuestionOption
     @ColumnInfo(name = "score")
     public double score;
 
-    public QuestionOptionMC() {
+    public QuestionOptionMO() {
         this.id = IdGenerator.generateId();
     }
 
     @Override
-    public int compareTo(QuestionOptionMC o) {
+    public int compareTo(QuestionOptionMO o) {
         return Double.compare(o.score, this.score);
     }
 }

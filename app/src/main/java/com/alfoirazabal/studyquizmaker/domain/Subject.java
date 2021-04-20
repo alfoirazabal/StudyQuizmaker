@@ -10,8 +10,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.R;
-
-import java.util.UUID;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 @Entity
 public class Subject implements Comparable<Subject> {
@@ -30,7 +29,7 @@ public class Subject implements Comparable<Subject> {
     public int color;
 
     public Subject() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
         this.color = Color.BLACK;
     }
 

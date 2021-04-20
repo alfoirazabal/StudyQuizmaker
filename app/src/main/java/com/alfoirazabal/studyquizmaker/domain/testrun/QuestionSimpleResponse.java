@@ -14,9 +14,7 @@ import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionActivity;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.answer.AnswerQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.testrun.results.questions.ViewQuestionSingleResponse;
-
-import java.io.Serializable;
-import java.util.UUID;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 @Entity(
         foreignKeys = {
@@ -62,7 +60,7 @@ public class QuestionSimpleResponse implements QuestionResponse {
     public double score;
 
     public QuestionSimpleResponse() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
         this.answered = "";
         this.score = 0;
     }

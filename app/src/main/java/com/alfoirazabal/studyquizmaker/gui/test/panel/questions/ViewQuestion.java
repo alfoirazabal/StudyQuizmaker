@@ -18,8 +18,11 @@ import com.alfoirazabal.studyquizmaker.domain.Test;
 import com.alfoirazabal.studyquizmaker.domain.question.Question;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionComparators;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionMO;
 import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMC;
+import com.alfoirazabal.studyquizmaker.domain.question.QuestionOptionMO;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmc.AddQuestionMC;
+import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionmo.AddQuestionMO;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questionsimple.AddQuestionSimple;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.questiontf.AddQuestionTF;
 import com.alfoirazabal.studyquizmaker.gui.test.panel.questions.recyclerview.AdapterQuestionView;
@@ -50,7 +53,7 @@ public class ViewQuestion extends AppCompatActivity {
         RecyclerView recyclerviewSimpleQuestions = findViewById(R.id.recyclerview_simple_questions);
         fabtnAdd = findViewById(R.id.fabtn_add);
 
-        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.questions_simple);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(R.string.manage_questions);
 
         db = Room.databaseBuilder(
                 getApplicationContext(),
@@ -93,6 +96,11 @@ public class ViewQuestion extends AppCompatActivity {
                                 this, AddQuestionTF.class
                         );
                         break;
+                    case R.id.item_multiple_options:
+                        intentAddQuestion = new Intent(
+                                this, AddQuestionMO.class
+                        );
+                        break;
                 }
                 intentAddQuestion.putExtra("TESTID", currentTestId);
                 startActivity(intentAddQuestion);
@@ -118,11 +126,18 @@ public class ViewQuestion extends AppCompatActivity {
             questions.addAll(db.questionTFDAO().getFromTest(currentTestId));
             List<QuestionMC> questionsMC = db.questionMCDAO().getFromTest(currentTestId);
             for (QuestionMC questionMC : questionsMC) {
-                QuestionOptionMC[] questionOptionMCS = db.questionOptionMCDAO().
-                        getFromQuestionMC(questionMC.id).toArray(new QuestionOptionMC[0]);
+                QuestionOptionMC[] questionOptionMCS = db.questionOptionMCDAO()
+                        .getFromQuestionMC(questionMC.id).toArray(new QuestionOptionMC[0]);
                 questionMC.questionOptionMCs = questionOptionMCS;
             }
             questions.addAll(questionsMC);
+            List<QuestionMO> questionsMO = db.questionMODAO().getFromTest(currentTestId);
+            for (QuestionMO questionMO : questionsMO) {
+                QuestionOptionMO[] questionOptionMOS = db.questionOptionMODAO()
+                        .getFromQuestionMO(questionMO.id).toArray(new QuestionOptionMO[0]);
+                questionMO.questionOptionMOs = questionOptionMOS;
+            }
+            questions.addAll(questionsMO);
             Comparator<Question> questionsComparator =
                     new QuestionComparators.CompareByDateCreated();
             questionsComparator = Collections.reverseOrder(questionsComparator);

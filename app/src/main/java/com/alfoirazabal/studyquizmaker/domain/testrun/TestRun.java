@@ -9,14 +9,12 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.alfoirazabal.studyquizmaker.domain.Test;
-import com.alfoirazabal.studyquizmaker.domain.question.Question;
-import com.alfoirazabal.studyquizmaker.domain.question.QuestionSimple;
+import com.alfoirazabal.studyquizmaker.helpers.IdGenerator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity(
         foreignKeys = {
@@ -63,7 +61,7 @@ public class TestRun implements Serializable, Comparable<TestRun> {
     public int currentQuestionIndex;
 
     public TestRun() {
-        this.id = UUID.randomUUID().toString();
+        this.id = IdGenerator.generateId();
         this.currentQuestionIndex = 0;
         this.dateTimeStarted = new Date();
     }
